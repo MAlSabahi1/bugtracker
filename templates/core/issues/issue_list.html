@@ -1,0 +1,249 @@
+{% extends 'layout/layout_vertical.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Issues List" %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center border-bottom mb-4">
+    <h5 class="card-title mb-0">{% trans "Issues List" %}</h5>
+    <a href="{% url 'issue-create' %}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> {% trans "Add Issue" %}</a>
+  </div>
+
+  <!-- Filters -->
+  <div class="card-body border-bottom pt-0 pb-3 mb-3">
+    <form method="get" class="row gx-3 gy-2 align-items-center">
+        {% load crispy_forms_tags %}
+        <div class="col-md-4">
+            {{ filter_form.search|as_crispy_field }}
+        </div>
+        <div class="col-md-3">
+            {{ filter_form.status|as_crispy_field }}
+        </div>
+        <div class="col-md-3">
+            {{ filter_form.priority|as_crispy_field }}
+        </div>
+        <div class="col-md-2 mt-4">
+            <button type="submit" class="btn btn-secondary w-100">{% trans "Filter" %}</button>
+        </div>
+    </form>
+  </div>
+  
+  <div class="table-responsive text-nowrap">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{% trans "ID" %}</th>
+          <th>{% trans "Title" %}</th>
+          <th>{% trans "System" %}</th>
+          <th>{% trans "Team" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Priority" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {% for issue in issues %}
+        <tr>
+          <td><a href="{% url 'issue-detail' issue.pk %}">#{{ issue.pk }}</a></td>
+          <td><strong>{{ issue.title|truncatechars:40 }}</strong></td>
+          <td>{{ issue.system.name }}</td>
+          <td>
+              <span class="badge bg-label-{% if issue.target_team == 'frontend' %}primary{% else %}success{% endif %}">
+                  {{ issue.get_target_team_display }}
+              </span>
+          </td>
+          <td>{{ issue.get_issue_type_display }}</td>
+          <td>
+            {% if issue.priority == 'critical' %}<span class="badge bg-label-danger">{% trans "Critical" %}</span>
+            {% elif issue.priority == 'high' %}<span class="badge bg-label-warning">{% trans "High" %}</span>
+            {% elif issue.priority == 'medium' %}<span class="badge bg-label-info">{% trans "Medium" %}</span>
+            {% else %}<span class="badge bg-label-secondary">{% trans "Low" %}</span>{% endif %}
+          </td>
+          <td>
+            {% if request.user.is_admin %}
+              <div class="dropdown">
+                <button type="button" class="btn btn-sm p-0 dropdown-toggle hide-arrow status-indicator-btn" data-bs-toggle="dropdown">
+                  {% if issue.status == 'open' %}<span class="badge bg-label-warning px-2">{% trans "Open" %}</span>
+                  {% elif issue.status == 'in_progress' %}<span class="badge bg-label-info px-2">{% trans "In Progress" %}</span>
+                  {% elif issue.status == 'resolved' %}<span class="badge bg-label-success px-2">{% trans "Resolved" %}</span>
+                  {% elif issue.status == 'closed' %}<span class="badge bg-label-secondary px-2">{% trans "Closed" %}</span>
+                  {% else %}<span class="badge bg-label-danger px-2">{% trans "Reopened" %}</span>{% endif %}
+                </button>
+                <div class="dropdown-menu dropdown-menu-end shadow-sm border-0 animate-scale">
+                  <h6 class="dropdown-header small text-muted">{% trans "Transition To" %}</h6>
+                  <a class="dropdown-item change-status" href="javascript:void(0);" data-id="{{ issue.pk }}" data-status="open"><i class="bx bx-circle me-2 text-warning"></i> {% trans "Open" %}</a>
+                  <a class="dropdown-item change-status" href="javascript:void(0);" data-id="{{ issue.pk }}" data-status="in_progress"><i class="bx bx-play-circle me-2 text-info"></i> {% trans "In Progress" %}</a>
+                  <a class="dropdown-item change-status" href="javascript:void(0);" data-id="{{ issue.pk }}" data-status="resolved"><i class="bx bx-check-circle me-2 text-success"></i> {% trans "Resolved" %}</a>
+                  <a class="dropdown-item change-status" href="javascript:void(0);" data-id="{{ issue.pk }}" data-status="closed"><i class="bx bx-lock-alt me-2 text-secondary"></i> {% trans "Closed" %}</a>
+                  <a class="dropdown-item change-status" href="javascript:void(0);" data-id="{{ issue.pk }}" data-status="reopened"><i class="bx bx-undo me-2 text-danger"></i> {% trans "Reopened" %}</a>
+                </div>
+              </div>
+            {% else %}
+              {% if issue.status == 'open' %}<span class="badge bg-label-warning">{% trans "Open" %}</span>
+              {% elif issue.status == 'in_progress' %}<span class="badge bg-label-info">{% trans "In Progress" %}</span>
+              {% elif issue.status == 'resolved' %}<span class="badge bg-label-success">{% trans "Resolved" %}</span>
+              {% elif issue.status == 'closed' %}<span class="badge bg-label-secondary">{% trans "Closed" %}</span>
+              {% else %}<span class="badge bg-label-danger">{% trans "Reopened" %}</span>{% endif %}
+            {% endif %}
+          </td>
+          <td>
+            <div class="dropdown">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'issue-detail' issue.pk %}"><i class="icon-base bx bx-show-alt me-1"></i> {% trans "View" %}</a>
+                {% if request.user.is_admin %}
+                <a class="dropdown-item" href="{% url 'issue-update' issue.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
+                <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'issue-delete' issue.pk %}" data-name="{{ issue.title }}">
+                  <i class="icon-base bx bx-trash me-1"></i> {% trans "Delete" %}
+                </button>
+                {% endif %}
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" class="text-center py-4">{% trans "No issues found matching your criteria." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  {% if is_paginated %}
+      <div class="card-footer d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm m-0">
+            {% if page_obj.has_previous %}
+            <li class="page-item prev"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i class="tf-icon icon-base bx bx-chevron-left"></i></a></li>
+            {% endif %}
+            <li class="page-item active"><a class="page-link" href="javascript:void(0);">{{ page_obj.number }}</a></li>
+            {% if page_obj.has_next %}
+            <li class="page-item next"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="tf-icon icon-base bx bx-chevron-right"></i></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Status Update Confirmation Modal -->
+<div class="modal fade" id="confirmStatusModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalStatusCenterTitle">
+            <i class="bx bx-refresh me-2"></i>{% trans "Confirm Status Change" %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col mb-3">
+            <p>{% trans "Are you sure you want to change the status of this problem?" %}</p>
+          </div>
+        </div>
+        <div class="row g-2">
+            <div class="col mb-0">
+                <div class="d-flex align-items-center p-3 border rounded bg-lighter">
+                    <i class="bx bx-info-circle me-3 fs-3 text-primary"></i>
+                    <div>
+                        <label class="form-label mb-0">{% trans "Target Status" %}</label>
+                        <span id="targetStatusLabel" class="d-block fw-bold text-heading"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+        <button type="button" id="confirmStatusBtn" class="btn btn-primary">{% trans "Confirm Update" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Notification Modal -->
+<div class="modal fade" id="statusSuccessModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title">
+            <i class="bx bx-check-circle text-success fs-3 me-2 align-middle"></i>{% trans "Update Successful" %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-4">
+        <p class="fs-6 mb-0">{% trans "The problem status has been synchronized across the system." %}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">{% trans "OK" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block page_js %}
+<script>
+$(function() {
+    let currentIssueId = null;
+    let currentStatus = null;
+    let currentStatusText = null;
+    let $activeBtn = null;
+
+    $('.change-status').on('click', function() {
+        currentIssueId = $(this).data('id');
+        currentStatus = $(this).data('status');
+        currentStatusText = $(this).text().trim();
+        $activeBtn = $(this).closest('.dropdown').find('.status-indicator-btn');
+
+        $('#targetStatusLabel').text(currentStatusText);
+        $('#confirmStatusModal').modal('show');
+    });
+
+    $('#confirmStatusBtn').on('click', function() {
+        const $confirmBtn = $(this);
+        $confirmBtn.attr('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>' + '{% trans "Updating..." %}');
+
+        $.ajax({
+            url: "{% url 'ajax-update-status' 0 %}".replace('0', currentIssueId),
+            type: "POST",
+            data: {
+                'status': currentStatus,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    var badgeClass = '';
+                    switch(currentStatus) {
+                        case 'open': badgeClass = 'bg-label-warning'; break;
+                        case 'in_progress': badgeClass = 'bg-label-info'; break;
+                        case 'resolved': badgeClass = 'bg-label-success'; break;
+                        case 'closed': badgeClass = 'bg-label-secondary'; break;
+                        case 'reopened': badgeClass = 'bg-label-danger'; break;
+                    }
+                    
+                    $activeBtn.html('<span class="badge ' + badgeClass + ' px-2">' + response.new_status + '</span>');
+                    
+                    $('#confirmStatusModal').modal('hide');
+                    setTimeout(() => {
+                        $('#statusSuccessModal').modal('show');
+                    }, 500);
+                } else {
+                    alert('Error: ' + response.error);
+                }
+            },
+            error: function() {
+                alert('Update failed');
+            },
+            complete: function() {
+                $confirmBtn.attr('disabled', false).text('{% trans "Confirm Update" %}');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+{% endblock content %}

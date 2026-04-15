@@ -1,0 +1,128 @@
+/* Sneat Free Theme - Dark Mode Polyfill */
+[data-bs-theme="dark"] body {
+  background-color: #232333;
+  color: #a1b0cb;
+}
+
+[data-bs-theme="dark"] .bg-menu-theme,
+[data-bs-theme="dark"] .menu {
+  background-color: #2b2c40 !important;
+  color: #a1b0cb;
+}
+[data-bs-theme="dark"] .menu-link {
+  color: #a1b0cb !important;
+}
+[data-bs-theme="dark"] .menu-item.active > .menu-link {
+  background-color: rgba(105, 108, 255, 0.16) !important;
+  color: #696cff !important;
+}
+
+[data-bs-theme="dark"] .bg-navbar-theme,
+[data-bs-theme="dark"] .navbar {
+  background-color: #2b2c40 !important;
+  color: #a1b0cb;
+}
+
+[data-bs-theme="dark"] .card {
+  background-color: #2b2c40;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.16);
+  border: 0 solid #d9dee3;
+}
+[data-bs-theme="dark"] .card-header {
+  border-bottom: 1px solid #444564;
+}
+
+[data-bs-theme="dark"] .table {
+  --bs-table-color: #a1b0cb;
+  --bs-table-bg: transparent;
+  --bs-table-border-color: #444564;
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
+}
+[data-bs-theme="dark"] .table th {
+  color: #d5ddef;
+}
+[data-bs-theme="dark"] .table-hover > tbody > tr:hover > * {
+  --bs-table-bg-state: rgba(255, 255, 255, 0.04);
+}
+[data-bs-theme="dark"] .table-border-bottom-0 tr:last-child td,
+[data-bs-theme="dark"] .table-border-bottom-0 tr:last-child th {
+  border-bottom-width: 0;
+}
+[data-bs-theme="dark"] tbody td a {
+  color: #d5ddef; /* Better contrast for links in dark mode */
+}
+[data-bs-theme="dark"] tbody td a:hover {
+  color: #696cff;
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select,
+[data-bs-theme="dark"] .input-group-text {
+  background-color: #232333;
+  border-color: #444564;
+  color: #a1b0cb;
+}
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+  background-color: #232333;
+  border-color: #696cff;
+  color: #a1b0cb;
+  box-shadow: 0 0 0.25rem 0.05rem rgba(105, 108, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .dropdown-menu {
+  background-color: #2b2c40;
+  border-color: #444564;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
+}
+[data-bs-theme="dark"] .dropdown-menu .dropdown-item {
+  color: #a1b0cb;
+}
+[data-bs-theme="dark"] .dropdown-menu .dropdown-item:hover,
+[data-bs-theme="dark"] .dropdown-menu .dropdown-item:focus {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+[data-bs-theme="dark"] .dropdown-divider {
+  border-top-color: #444564;
+}
+
+[data-bs-theme="dark"] .text-heading,
+[data-bs-theme="dark"] h1, [data-bs-theme="dark"] h2, [data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4, [data-bs-theme="dark"] h5, [data-bs-theme="dark"] h6 {
+  color: #d5ddef !important;
+}
+
+[data-bs-theme="dark"] .bg-white {
+  background-color: #2b2c40 !important;
+}
+[data-bs-theme="dark"] .text-dark {
+  color: #d5ddef !important;
+}
+
+[data-bs-theme="dark"] .modal-content {
+  background-color: #2b2c40;
+  color: #a1b0cb;
+  border: 1px solid #444564;
+}
+[data-bs-theme="dark"] .modal-header {
+  border-bottom: 1px solid #444564;
+}
+[data-bs-theme="dark"] .modal-footer {
+  border-top: 1px solid #444564;
+}
+
+/* Close button inversion */
+[data-bs-theme="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Fix CSS variables for dynamically added elements and Select2 */
+[data-bs-theme="dark"] {
+  --bs-body-bg: #232333;
+  --bs-paper-bg: #2b2c40;
+  --bs-body-color: #a1b0cb;
+  --bs-border-color: #444564;
+  --bs-primary: #696cff;
+}

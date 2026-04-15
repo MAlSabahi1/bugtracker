@@ -1,0 +1,1569 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-15 15:41+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\config\template.py:8 .\config\template.py:10
+msgid "BugTracker"
+msgstr "متتبع الأخطاء"
+
+#: .\config\template.py:11
+msgid "Bug Tracking System"
+msgstr "نظام تتبع الأخطاء"
+
+#: .\config\template.py:14
+msgid ""
+"Bug Tracking & Security Testing System built with Django and Sneat Bootstrap "
+"Template."
+msgstr ""
+"نظام تتبع الأخطاء واختبار الأمان مبني باستخدام Django وقالب Sneat Bootstrap."
+
+#: .\config\template.py:33
+msgid "BugTracker — Bug Tracking & Security Testing System"
+msgstr "BugTracker — نظام تتبع الأخطاء واختبار الأمان"
+
+#: .\core\forms.py:14
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: .\core\forms.py:17
+msgid "Enter your username"
+msgstr "أدخل اسم المستخدم"
+
+#: .\core\forms.py:23 .\core\forms.py:37
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: .\core\forms.py:39
+msgid "Leave blank to keep same password"
+msgstr "اتركه فارغاً للاحتفاظ بكلمة المرور نفسها"
+
+#: .\core\forms.py:40
+msgid ""
+"Provide a password to set/change it. Leave blank to keep the existing "
+"password."
+msgstr ""
+"أدخل كلمة مرور لتحديدها أو تغييرها. اتركها فارغة للاحتفاظ بكلمة المرور "
+"الحالية."
+
+#: .\core\forms.py:52
+#, fuzzy
+#| msgid "Save Group"
+msgid "Select groups"
+msgstr "حفظ المجموعة"
+
+#: .\core\forms.py:61
+msgid "Required for new users."
+msgstr "مطلوب للمستخدمين الجدد"
+
+#: .\core\forms.py:98
+msgid "Issue title"
+msgstr "عنوان المشكلة"
+
+#: .\core\forms.py:99
+msgid "Describe the issue..."
+msgstr "وصف المشكلة..."
+
+#: .\core\forms.py:107
+msgid "Steps to reproduce..."
+msgstr "خطوات التكرار..."
+
+#: .\core\forms.py:108
+msgid "Expected result..."
+msgstr "النتيجة المتوقعة..."
+
+#: .\core\forms.py:109
+msgid "Actual result..."
+msgstr "النتيجة الفعلية..."
+
+#: .\core\forms.py:111
+msgid "Explain the root cause of this issue..."
+msgstr "اشرح السبب الرئيسي لهذه المشكلة..."
+
+#: .\core\forms.py:169
+msgid "All Statuses"
+msgstr "كل الحالات"
+
+#: .\core\forms.py:170
+msgid "All Priorities"
+msgstr "كل الأولويات"
+
+#: .\core\forms.py:171
+msgid "All Types"
+msgstr "كل الأنواع"
+
+#: .\core\forms.py:190
+msgid "Search issues..."
+msgstr "بحث..."
+
+#: .\core\forms.py:205
+msgid "Write a comment..."
+msgstr "اكتب تعليقاً..."
+
+#: .\core\forms.py:219
+msgid "System name"
+msgstr "اسم النظام"
+
+#: .\core\forms.py:220
+msgid "System description..."
+msgstr "وصف النظام..."
+
+#: .\core\forms.py:221 .\core\forms.py:236
+#, fuzzy
+#| msgid "Assigned Groups"
+msgid "Assign to groups"
+msgstr "المجموعات المعينة"
+
+#: .\core\forms.py:235
+msgid "Screen name"
+msgstr "اسم الشاشة"
+
+#: .\core\forms.py:247
+#, fuzzy
+#| msgid "Systems"
+msgid "Select systems"
+msgstr "الأنظمة"
+
+#: .\core\forms.py:248
+msgid "Systems Accessible"
+msgstr "الأنظمة المتاحة"
+
+#: .\core\forms.py:253
+#, fuzzy
+#| msgid "Screens"
+msgid "Select screens"
+msgstr "الشاشات"
+
+#: .\core\forms.py:254
+msgid "Specific Screens Assigned"
+msgstr "شاشات محددة معينة"
+
+#: .\core\forms.py:261
+msgid "Group name"
+msgstr "اسم المجموعة"
+
+#: .\core\models.py:10 .\core\models.py:40
+#: .\templates\core\systems\system_list.html:19
+msgid "Name"
+msgstr "الاسم"
+
+#: .\core\models.py:11 .\core\models.py:130
+#: .\templates\core\issues\issue_detail.html:52
+#: .\templates\core\systems\system_list.html:20
+msgid "Description"
+msgstr "الوصف"
+
+#: .\core\models.py:12
+msgid "Is Active"
+msgstr "نشط"
+
+#: .\core\models.py:16 .\core\models.py:44
+#: .\templates\core\groups\group_form.html:4
+#: .\templates\core\groups\group_list.html:4
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:103
+msgid "Groups"
+msgstr "المجموعات"
+
+#: .\core\models.py:18
+msgid "Groups that have access to this system."
+msgstr "المجموعات التي لديها صلاحية الوصول لهذا النظام."
+
+#: .\core\models.py:22 .\core\models.py:38 .\core\models.py:136
+#: .\templates\core\issues\issue_detail.html:172
+#: .\templates\core\issues\issue_list.html:38
+#: .\templates\core\screens\screen_list.html:19
+#: .\templates\layout\partials\navbar\navbar.html:71
+msgid "System"
+msgstr "النظام"
+
+#: .\core\models.py:23 .\templates\core\systems\system_form.html:4
+#: .\templates\core\systems\system_list.html:4
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:63
+msgid "Systems"
+msgstr "الأنظمة"
+
+#: .\core\models.py:46
+msgid "Groups that have access to this specific screen."
+msgstr "المجموعات التي لديها صلاحية الوصول لهذه الشاشة المحددة."
+
+#: .\core\models.py:50 .\core\models.py:142
+#: .\templates\core\issues\issue_detail.html:179
+msgid "Screen"
+msgstr "الشاشة"
+
+#: .\core\models.py:51 .\templates\core\screens\screen_form.html:4
+#: .\templates\core\screens\screen_list.html:4
+#: .\templates\core\systems\system_list.html:23
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:83
+msgid "Screens"
+msgstr "الشاشات"
+
+#: .\core\models.py:63 .\templates\core\teams\team_list.html:32
+msgid "Admin"
+msgstr "مدير نظام"
+
+#: .\core\models.py:64 .\core\models.py:118 .\core\views.py:227
+#: .\templates\core\teams\team_list.html:30
+msgid "FrontEnd"
+msgstr "واجهة أمامية"
+
+#: .\core\models.py:65 .\core\models.py:119 .\core\views.py:227
+#: .\templates\core\teams\team_list.html:31
+msgid "BackEnd"
+msgstr "واجهة خلفية"
+
+#: .\core\models.py:68 .\templates\core\users\user_list.html:22
+msgid "Role"
+msgstr "الصلاحية"
+
+#: .\core\models.py:75 .\core\models.py:230
+#: .\templates\core\users\user_list.html:21
+msgid "User"
+msgstr "المستخدم"
+
+#: .\core\models.py:76 .\templates\core\users\user_list.html:4
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:123
+msgid "Users"
+msgstr "المستخدمين"
+
+#: .\core\models.py:100 .\core\views.py:218
+msgid "Bug"
+msgstr "عطل برمجي"
+
+#: .\core\models.py:101 .\core\views.py:218
+msgid "Security"
+msgstr "أمني"
+
+#: .\core\models.py:102 .\core\views.py:218
+msgid "UI"
+msgstr "واجهة المستخدم"
+
+#: .\core\models.py:105 .\core\views.py:210
+#: .\templates\core\issues\issue_detail.html:36
+#: .\templates\core\issues\issue_list.html:62
+msgid "Low"
+msgstr "منخفض"
+
+#: .\core\models.py:106 .\core\views.py:210
+#: .\templates\core\issues\issue_detail.html:35
+#: .\templates\core\issues\issue_list.html:61
+msgid "Medium"
+msgstr "متوسط"
+
+#: .\core\models.py:107 .\core\views.py:210
+#: .\templates\core\issues\issue_detail.html:34
+#: .\templates\core\issues\issue_list.html:60
+msgid "High"
+msgstr "عالي"
+
+#: .\core\models.py:108 .\core\views.py:210
+#: .\templates\core\issues\issue_detail.html:33
+#: .\templates\core\issues\issue_list.html:59
+msgid "Critical"
+msgstr "حرج"
+
+#: .\core\models.py:111 .\templates\core\issues\issue_detail.html:38
+#: .\templates\core\issues\issue_list.html:65
+#: .\templates\core\member_dashboard.html:57
+msgid "Open"
+msgstr "مفتوح"
+
+#: .\core\models.py:112 .\templates\core\dashboard.html:115
+#: .\templates\core\issues\issue_detail.html:39
+#: .\templates\core\issues\issue_list.html:66
+msgid "In Progress"
+msgstr "قيد المعالجة"
+
+#: .\core\models.py:113 .\templates\core\dashboard.html:48
+#: .\templates\core\dashboard.html:127 .\templates\core\dashboard.html:295
+#: .\templates\core\issues\issue_detail.html:40
+#: .\templates\core\issues\issue_list.html:67
+msgid "Resolved"
+msgstr "تم حلها"
+
+#: .\core\models.py:114 .\templates\core\issues\issue_detail.html:41
+#: .\templates\core\issues\issue_list.html:68
+msgid "Closed"
+msgstr "مغلق"
+
+#: .\core\models.py:115 .\templates\core\issues\issue_detail.html:42
+#: .\templates\core\issues\issue_list.html:69
+msgid "Reopened"
+msgstr "أعيد فتحه"
+
+#: .\core\models.py:122
+msgid "Fixed"
+msgstr "تم الإصلاح"
+
+#: .\core\models.py:123
+msgid "Duplicate"
+msgstr "مكرر"
+
+#: .\core\models.py:124
+msgid "Won't Fix"
+msgstr "لن يتم الحل"
+
+#: .\core\models.py:125
+msgid "Works For Me"
+msgstr "يعمل لدي"
+
+#: .\core\models.py:126
+msgid "Not a Bug"
+msgstr "ليس خطأ برمجي"
+
+#: .\core\models.py:127
+msgid "Unresolved"
+msgstr "غير محلول"
+
+#: .\core\models.py:129 .\templates\core\issues\issue_list.html:37
+msgid "Title"
+msgstr "العنوان"
+
+#: .\core\models.py:149
+msgid "Reported By"
+msgstr "بواسطة"
+
+#: .\core\models.py:157
+msgid "Assigned To"
+msgstr "المُسند إليه"
+
+#: .\core\models.py:161
+msgid "Issue Type"
+msgstr "نوع المشكلة"
+
+#: .\core\models.py:166 .\templates\core\issues\issue_list.html:41
+msgid "Priority"
+msgstr "الأولوية"
+
+#: .\core\models.py:172 .\templates\core\issues\issue_list.html:42
+#: .\templates\core\systems\system_list.html:21
+#: .\templates\core\users\user_list.html:24
+msgid "Status"
+msgstr "الحالة"
+
+#: .\core\models.py:179 .\templates\core\issues\issue_detail.html:193
+msgid "Target Team"
+msgstr "الفريق المختص"
+
+#: .\core\models.py:185 .\templates\core\issues\issue_detail.html:57
+msgid "Steps to Reproduce"
+msgstr "خطوات التكرار"
+
+#: .\core\models.py:186 .\templates\core\issues\issue_detail.html:66
+msgid "Expected Result"
+msgstr "النتيجة المتوقعة"
+
+#: .\core\models.py:187 .\templates\core\issues\issue_detail.html:75
+msgid "Actual Result"
+msgstr "النتيجة الفعلية"
+
+#: .\core\models.py:190 .\templates\core\issues\issue_detail.html:92
+msgid "Resolution"
+msgstr "سبب الإغلاق"
+
+#: .\core\models.py:195 .\templates\core\issues\issue_detail.html:96
+msgid "Root Cause"
+msgstr "السبب الرئيسي"
+
+#: .\core\models.py:198
+msgid "Image Attachment"
+msgstr "مرفق صورة"
+
+#: .\core\models.py:204 .\core\models.py:234 .\core\models.py:265
+#: .\core\models.py:294
+msgid "Created At"
+msgstr "تاريخ الإنشاء"
+
+#: .\core\models.py:205
+msgid "Updated At"
+msgstr "تاريخ التحديث"
+
+#: .\core\models.py:208 .\core\models.py:224 .\core\models.py:253
+#: .\core\models.py:290 .\templates\core\issues\issue_detail.html:4
+msgid "Issue"
+msgstr "مشكلة"
+
+#: .\core\models.py:209 .\templates\core\systems\system_list.html:22
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:38
+msgid "Issues"
+msgstr "المشاكل"
+
+#: .\core\models.py:232
+msgid "Comment Content"
+msgstr "محتوى التعليق"
+
+#: .\core\models.py:237
+msgid "Comment"
+msgstr "تعليق"
+
+#: .\core\models.py:238
+msgid "Comments"
+msgstr "التعليقات"
+
+#: .\core\models.py:255
+msgid "Action"
+msgstr "العملية"
+
+#: .\core\models.py:256
+msgid "Old Value"
+msgstr "القيمة السابقة"
+
+#: .\core\models.py:257
+msgid "New Value"
+msgstr "القيمة الجديدة"
+
+#: .\core\models.py:262
+msgid "Changed By"
+msgstr "تعديل بواسطة"
+
+#: .\core\models.py:268
+msgid "Issue Log"
+msgstr "سجل المشكلة"
+
+#: .\core\models.py:269
+msgid "Issue Logs"
+msgstr "سجلات المشاكل"
+
+#: .\core\models.py:284
+msgid "Recipient"
+msgstr ""
+
+#: .\core\models.py:292
+msgid "Message"
+msgstr ""
+
+#: .\core\models.py:293
+msgid "Is Read"
+msgstr ""
+
+#: .\core\models.py:297 .\templates\layout\partials\modal_notifications.html:54
+msgid "Notification"
+msgstr "تنبيه"
+
+#: .\core\models.py:298 .\templates\layout\partials\navbar\navbar.html:89
+msgid "Notifications"
+msgstr "الإشعارات"
+
+#: .\core\signals.py:15
+#, fuzzy, python-format
+#| msgid "Edit Issue: %(title)s"
+msgid "New issue reported: %(title)s"
+msgstr "تعديل المشكلة: %(title)s"
+
+#: .\core\views.py:189
+msgid "Other"
+msgstr ""
+
+#: .\core\views.py:248
+msgid "Good Morning"
+msgstr "صباح الخير"
+
+#: .\core\views.py:250
+msgid "Good Afternoon"
+msgstr "مساء الخير"
+
+#: .\core\views.py:252
+msgid "Good Evening"
+msgstr "مساء النور"
+
+#: .\core\views.py:347
+msgid "New Issue"
+msgstr "مشكلة جديدة"
+
+#: .\core\views.py:363
+msgid "Issue Created"
+msgstr "تم إنشاء المشكلة"
+
+#: .\core\views.py:364
+#, python-format
+msgid "Issue '%(title)s' created for team: %(team)s"
+msgstr ""
+
+#: .\core\views.py:370
+#, python-format
+msgid "Issue '%s' created successfully."
+msgstr "تم إنشاء المشكلة '%s' بنجاح."
+
+#: .\core\views.py:404
+#, python-format
+msgid "Edit Issue: %(title)s"
+msgstr "تعديل المشكلة: %(title)s"
+
+#: .\core\views.py:426
+#, fuzzy, python-format
+#| msgid "Assigned To Changed"
+msgid "%(field)s Changed"
+msgstr "تم تغيير المسؤول"
+
+#: .\core\views.py:431
+#, python-format
+msgid "Issue '%s' updated successfully."
+msgstr "تم تحديث المشكلة '%s' بنجاح."
+
+#: .\core\views.py:445
+#, python-format
+msgid "Issue '%s' deleted successfully."
+msgstr "تم حذف المشكلة '%s' بنجاح."
+
+#: .\core\views.py:466
+msgid "Comment Added"
+msgstr "تم إضافة تعليق"
+
+#: .\core\views.py:470
+msgid "Comment added successfully."
+msgstr "تم إضافة التعليق بنجاح."
+
+#: .\core\views.py:505
+msgid "Add New System"
+msgstr "إضافة نظام جديد"
+
+#: .\core\views.py:510
+#, python-format
+msgid "System '%s' created successfully."
+msgstr "تم إنشاء النظام '%s' بنجاح."
+
+#: .\core\views.py:522
+#, python-format
+msgid "Edit System: %(name)s"
+msgstr "تعديل النظام: %(name)s"
+
+#: .\core\views.py:527
+#, python-format
+msgid "System '%s' updated successfully."
+msgstr "تم تحديث النظام '%s' بنجاح."
+
+#: .\core\views.py:541
+#, python-format
+msgid "System '%s' deleted successfully."
+msgstr "تم حذف النظام '%s' بنجاح."
+
+#: .\core\views.py:572
+msgid "Add New Group"
+msgstr "إضافة مجموعة جديدة"
+
+#: .\core\views.py:577
+#, python-format
+msgid "Group '%s' created successfully."
+msgstr "تم إنشاء المجموعة '%s' بنجاح."
+
+#: .\core\views.py:589
+#, python-format
+msgid "Edit Group: %(name)s"
+msgstr "تعديل المجموعة: %(name)s"
+
+#: .\core\views.py:594
+#, python-format
+msgid "Group '%s' updated successfully."
+msgstr "تم تحديث المجموعة '%s' بنجاح."
+
+#: .\core\views.py:608
+#, python-format
+msgid "Group '%s' deleted successfully."
+msgstr "تم حذف المجموعة '%s' بنجاح."
+
+#: .\core\views.py:636
+msgid "Add New Screen"
+msgstr "إضافة شاشة جديدة"
+
+#: .\core\views.py:641
+#, python-format
+msgid "Screen '%s' created successfully."
+msgstr "تم إنشاء الشاشة '%s' بنجاح."
+
+#: .\core\views.py:653
+#, python-format
+msgid "Edit Screen: %(name)s"
+msgstr "تعديل الشاشة: %(name)s"
+
+#: .\core\views.py:658
+#, python-format
+msgid "Screen '%s' updated successfully."
+msgstr "تم تحديث الشاشة '%s' بنجاح."
+
+#: .\core\views.py:672
+#, python-format
+msgid "Screen '%s' deleted successfully."
+msgstr "تم حذف الشاشة '%s' بنجاح."
+
+#: .\core\views.py:700
+#, python-format
+msgid "User '%s' created successfully."
+msgstr "تم إنشاء المستخدم '%s' بنجاح."
+
+#: .\core\views.py:705
+msgid "Create User"
+msgstr "إنشاء مستخدم"
+
+#: .\core\views.py:717
+#, python-format
+msgid "Edit User: %(username)s"
+msgstr "تعديل المستخدم: %(username)s"
+
+#: .\core\views.py:722
+#, python-format
+msgid "User '%s' updated successfully."
+msgstr "تم تحديث المستخدم '%s' بنجاح."
+
+#: .\core\views.py:736
+#, python-format
+msgid "User '%s' deleted successfully."
+msgstr "تم حذف المستخدم '%s' بنجاح."
+
+#: .\templates\core\auth\login.html:5 .\templates\core\auth\login.html:99
+msgid "Login"
+msgstr "دخول"
+
+#: .\templates\core\auth\login.html:72
+msgid "Welcome to"
+msgstr "مرحباً بك في"
+
+#: .\templates\core\auth\login.html:73
+msgid "Please sign-in to your account and start the adventure"
+msgstr "الرجاء تسجيل الدخول للمتابعة"
+
+#: .\templates\core\auth\login.html:93
+msgid "Remember Me"
+msgstr "تذكرني"
+
+#: .\templates\core\auth\login.html:104
+msgid "New on our platform?"
+msgstr "جديد؟"
+
+#: .\templates\core\auth\login.html:106
+msgid "Create an account"
+msgstr "إنشاء حساب"
+
+#: .\templates\core\dashboard.html:6
+msgid "Executive Dashboard"
+msgstr "لوحة متابعة المشاكل"
+
+#: .\templates\core\dashboard.html:37
+msgid "Welcome back to your operational control center."
+msgstr "مرحباً بك مجدداً في مركز التحكم والعمليات الخاص بك."
+
+#: .\templates\core\dashboard.html:44
+msgid "Problems Found"
+msgstr "مشاكل مكتشفة"
+
+#: .\templates\core\dashboard.html:54
+#, python-format
+msgid ""
+"System analysis confirms high performance: You have successfully resolved "
+"%(total)s critical problems in the last cycle, exceeding target benchmarks."
+msgstr ""
+"يؤكد تحليل النظام على الأداء العالي: لقد نجحت في حل %(total)s مشكلة حرجة خلال "
+"الدورة الأخيرة، وهو ما يتجاوز المعايير المستهدفة."
+
+#: .\templates\core\dashboard.html:56
+#, python-format
+msgid ""
+"Operational status: Currently, %(open)s problems require immediate audit. "
+"Dashboard focus has been adjusted to prioritize high-risk incidents."
+msgstr ""
+"الحالة التشغيلية: حالياً، هناك %(open)s مشكلة تتطلب التدقيق الفوري. تم ضبط "
+"تركيز لوحة التحكم لإعطاء الأولوية للحوادث عالية الخطورة."
+
+#: .\templates\core\dashboard.html:62
+msgid "Problem Tracking"
+msgstr "تتبع المشاكل"
+
+#: .\templates\core\dashboard.html:65
+msgid "New Problem"
+msgstr "مشكلة جديدة"
+
+#: .\templates\core\dashboard.html:91
+msgid "Total Logs"
+msgstr "إجمالي المشاكل"
+
+#: .\templates\core\dashboard.html:103
+msgid "Open Alerts"
+msgstr "مشاكل مفتوحة"
+
+#: .\templates\core\dashboard.html:141
+msgid "Weekly Performance Matrix"
+msgstr "مخطط الإنجاز الأسبوعي"
+
+#: .\templates\core\dashboard.html:143
+msgid "7 Days"
+msgstr "آخر 7 أيام"
+
+#: .\templates\core\dashboard.html:153
+msgid "Current Efficiency"
+msgstr "كفاءة المعالجة الحالية"
+
+#: .\templates\core\dashboard.html:158
+msgid "Consolidated Resolution Rate"
+msgstr "معدل الحل المجمع"
+
+#: .\templates\core\dashboard.html:169
+msgid "Priority Analytics"
+msgstr "تحليل الأولويات"
+
+#: .\templates\core\dashboard.html:175
+msgid "System Distribution"
+msgstr "توزيع المشاكل حسب الأنظمة"
+
+#: .\templates\core\dashboard.html:181
+msgid "Domain Type Analysis"
+msgstr "تحليل تصنيفات المشاكل"
+
+#: .\templates\core\dashboard.html:192
+msgid "6-Month Longitudinal Reporting Trend"
+msgstr "اتجاه التقارير خلال 6 أشهر"
+
+#: .\templates\core\dashboard.html:193
+msgid "Trend Analysis"
+msgstr "تحليل مسار المشاكل"
+
+#: .\templates\core\dashboard.html:207
+msgid "Operational Audit Trail"
+msgstr "سجل التدقيق العملي"
+
+#: .\templates\core\dashboard.html:208
+msgid "View Logs"
+msgstr "عرض السجلات"
+
+#: .\templates\core\dashboard.html:219
+#: .\templates\layout\partials\navbar\navbar.html:104
+msgid "ago"
+msgstr "منذ"
+
+#: .\templates\core\dashboard.html:233
+msgid "Team Deployment Balance"
+msgstr "توازن عبء عمل الفرق"
+
+#: .\templates\core\dashboard.html:294
+msgid "New"
+msgstr "جديد"
+
+#: .\templates\core\dashboard.html:318
+msgid "Efficiency"
+msgstr "الكفاءة"
+
+#: .\templates\core\dashboard.html:362 .\templates\core\dashboard.html:421
+#: .\templates\core\member_dashboard.html:62
+msgid "Total"
+msgstr "الإجمالي"
+
+#: .\templates\core\dashboard.html:387
+msgid "Activity Volume"
+msgstr "حجم تدفق المشاكل"
+
+#: .\templates\core\groups\group_confirm_delete.html:4
+#: .\templates\core\groups\group_confirm_delete.html:22
+msgid "Delete Group"
+msgstr ""
+
+#: .\templates\core\groups\group_confirm_delete.html:11
+#: .\templates\core\issues\issue_confirm_delete.html:21
+#: .\templates\core\screens\screen_confirm_delete.html:21
+#: .\templates\core\systems\system_confirm_delete.html:21
+#: .\templates\core\teams\team_confirm_delete.html:21
+#: .\templates\core\users\user_confirm_delete.html:23
+#: .\templates\layout\partials\modal_notifications.html:27
+msgid "Confirm Delete"
+msgstr "تأكيد الحذف"
+
+#: .\templates\core\groups\group_confirm_delete.html:15
+#, python-format
+msgid ""
+"Are you sure you want to delete the user group \"<strong>%(name)s</"
+"strong>\"? This action cannot be undone and will remove group-based access "
+"for all its members."
+msgstr ""
+
+#: .\templates\core\groups\group_confirm_delete.html:21
+#: .\templates\core\groups\group_form.html:25
+#: .\templates\core\issues\issue_confirm_delete.html:20
+#: .\templates\core\screens\screen_confirm_delete.html:20
+#: .\templates\core\screens\screen_form.html:25
+#: .\templates\core\systems\system_confirm_delete.html:20
+#: .\templates\core\systems\system_form.html:25
+#: .\templates\core\teams\team_confirm_delete.html:20
+#: .\templates\core\users\user_confirm_delete.html:22
+#: .\templates\core\users\user_form.html:25
+#: .\templates\layout\partials\modal_notifications.html:36
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: .\templates\core\groups\group_form.html:12
+msgid "Permission Group Profile"
+msgstr "بيانات المجموعة"
+
+#: .\templates\core\groups\group_form.html:23
+msgid "Save Group"
+msgstr "حفظ المجموعة"
+
+#: .\templates\core\groups\group_list.html:9
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:108
+msgid "Groups List"
+msgstr "قائمة المجموعات"
+
+#: .\templates\core\groups\group_list.html:11
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:113
+msgid "Add Group"
+msgstr "إضافة مجموعة"
+
+#: .\templates\core\groups\group_list.html:18
+msgid "Group Name"
+msgstr "اسم المجموعة"
+
+#: .\templates\core\groups\group_list.html:19
+msgid "Assigned Systems"
+msgstr "الأنظمة المعينة"
+
+#: .\templates\core\groups\group_list.html:20
+msgid "Members Count"
+msgstr "عدد الأعضاء"
+
+#: .\templates\core\groups\group_list.html:21
+#: .\templates\core\issues\issue_list.html:43
+#: .\templates\core\screens\screen_list.html:21
+#: .\templates\core\systems\system_list.html:24
+#: .\templates\core\teams\team_list.html:22
+#: .\templates\core\users\user_list.html:25
+msgid "Actions"
+msgstr "الإجراءات"
+
+#: .\templates\core\groups\group_list.html:34
+msgid "No systems"
+msgstr "لا توجد أنظمة"
+
+#: .\templates\core\groups\group_list.html:44
+#: .\templates\core\issues\issue_list.html:77
+#: .\templates\core\screens\screen_list.html:42
+#: .\templates\core\systems\system_list.html:51
+#: .\templates\core\teams\team_list.html:45
+#: .\templates\core\users\user_list.html:70
+msgid "Edit"
+msgstr "تعديل"
+
+#: .\templates\core\groups\group_list.html:46
+#: .\templates\core\issues\issue_detail.html:23
+#: .\templates\core\issues\issue_list.html:79
+#: .\templates\core\screens\screen_list.html:44
+#: .\templates\core\systems\system_list.html:53
+#: .\templates\core\teams\team_list.html:48
+#: .\templates\core\users\user_list.html:72
+#: .\templates\layout\partials\modal_notifications.html:37
+msgid "Delete"
+msgstr "حذف"
+
+#: .\templates\core\groups\group_list.html:54
+msgid "No user groups configured."
+msgstr "لا توجد مجموعات مستخدمين مهيأة."
+
+#: .\templates\core\issues\issue_confirm_delete.html:4
+msgid "Delete Issue"
+msgstr "حذف المشكلة"
+
+#: .\templates\core\issues\issue_confirm_delete.html:11
+#: .\templates\core\screens\screen_confirm_delete.html:11
+#: .\templates\core\systems\system_confirm_delete.html:11
+#: .\templates\core\teams\team_confirm_delete.html:11
+msgid "Confirm Deletion"
+msgstr "تأكيد الحذف"
+
+#: .\templates\core\issues\issue_confirm_delete.html:14
+#, python-format
+msgid ""
+"Are you sure you want to delete the issue: <strong>\"%(title)s\"</strong>?"
+msgstr ""
+
+#: .\templates\core\issues\issue_confirm_delete.html:15
+msgid ""
+"This action cannot be undone and will delete all associated comments and "
+"activity logs."
+msgstr ""
+"هذا الإجراء لا يمكن التراجع عنه وسيتم حذف كافة التعليقات وسجلات النشاط "
+"المرتبطة."
+
+#: .\templates\core\issues\issue_detail.html:21
+msgid "Edit Issue"
+msgstr "تعديل المشكلة"
+
+#: .\templates\core\issues\issue_detail.html:85
+msgid "Resolution details"
+msgstr "تفاصيل الإغلاق"
+
+#: .\templates\core\issues\issue_detail.html:107
+msgid "Evidence / Attachment"
+msgstr "الدليل / المرفقات"
+
+#: .\templates\core\issues\issue_detail.html:111
+msgid "Screenshot"
+msgstr ""
+
+#: .\templates\core\issues\issue_detail.html:121
+msgid "Discussion"
+msgstr "المناقشة"
+
+#: .\templates\core\issues\issue_detail.html:132
+#, python-format
+msgid "%(timesince)s ago"
+msgstr ""
+
+#: .\templates\core\issues\issue_detail.html:142
+msgid "No communication on this issue yet."
+msgstr ""
+
+#: .\templates\core\issues\issue_detail.html:153
+msgid "Post Comment"
+msgstr "نشر التعليق"
+
+#: .\templates\core\issues\issue_detail.html:165
+msgid "Information"
+msgstr "المعلومات"
+
+#: .\templates\core\issues\issue_detail.html:186
+msgid "Assignee"
+msgstr "المسؤول"
+
+#: .\templates\core\issues\issue_detail.html:187
+msgid "Unassigned"
+msgstr "غير معين"
+
+#: .\templates\core\issues\issue_detail.html:200
+msgid "Last Update"
+msgstr "آخر تحديث"
+
+#: .\templates\core\issues\issue_detail.html:211
+msgid "History Timeline"
+msgstr "سجل الأحداث"
+
+#: .\templates\core\issues\issue_detail.html:223
+msgid "By"
+msgstr "بواسطة"
+
+#: .\templates\core\issues\issue_detail.html:226
+msgid "To"
+msgstr "إلى"
+
+#: .\templates\core\issues\issue_detail.html:232
+msgid "Zero activity recorded."
+msgstr "لم يتم تسجيل أي نشاط."
+
+#: .\templates\core\issues\issue_form.html:12
+msgid "Back to List"
+msgstr "رجوع"
+
+#: .\templates\core\issues\issue_form.html:23
+msgid "Save Issue"
+msgstr "حفظ المشكلة"
+
+#: .\templates\core\issues\issue_list.html:4
+#: .\templates\core\issues\issue_list.html:9
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:43
+msgid "Issues List"
+msgstr "قائمة المشاكل"
+
+#: .\templates\core\issues\issue_list.html:10
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:48
+msgid "Add Issue"
+msgstr "إضافة مشكلة"
+
+#: .\templates\core\issues\issue_list.html:27
+msgid "Filter"
+msgstr "تصفية"
+
+#: .\templates\core\issues\issue_list.html:36
+msgid "ID"
+msgstr ""
+
+#: .\templates\core\issues\issue_list.html:39
+msgid "Team"
+msgstr ""
+
+#: .\templates\core\issues\issue_list.html:40
+#: .\templates\core\teams\team_list.html:19
+msgid "Type"
+msgstr ""
+
+#: .\templates\core\issues\issue_list.html:75
+msgid "View"
+msgstr ""
+
+#: .\templates\core\issues\issue_list.html:88
+msgid "No issues found matching your criteria."
+msgstr "لا يوجد نتائج."
+
+#: .\templates\core\member_dashboard.html:5
+msgid "My Dashboard"
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:15
+msgid "Welcome back"
+msgstr "مرحباً بك"
+
+#: .\templates\core\member_dashboard.html:17
+msgid "Select a system below to track its issues and operational progress."
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:18
+msgid ""
+"Your assigned systems represent the environments you are authorized to "
+"monitor."
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:33
+msgid "My Systems"
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:51
+msgid "No description provided."
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:68
+msgid "Enter Dashboard"
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:81
+msgid "No Operational Access"
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:82
+msgid "You are not currently assigned to any systems."
+msgstr ""
+
+#: .\templates\core\member_dashboard.html:83
+msgid ""
+"Please coordinate with your superior to obtain the necessary credentials."
+msgstr ""
+
+#: .\templates\core\screens\screen_confirm_delete.html:4
+msgid "Delete Screen"
+msgstr ""
+
+#: .\templates\core\screens\screen_confirm_delete.html:14
+#, python-format
+msgid ""
+"Are you sure you want to delete the screen: <strong>\"%(name)s\"</strong>?"
+msgstr ""
+
+#: .\templates\core\screens\screen_confirm_delete.html:15
+msgid "This will delete all issues associated with this screen."
+msgstr ""
+
+#: .\templates\core\screens\screen_form.html:12
+msgid "System Screen Profile"
+msgstr "بيانات شاشة النظام"
+
+#: .\templates\core\screens\screen_form.html:23
+msgid "Save Screen"
+msgstr "حفظ الشاشة"
+
+#: .\templates\core\screens\screen_list.html:9
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:88
+msgid "Screens List"
+msgstr "قائمة الشاشات"
+
+#: .\templates\core\screens\screen_list.html:11
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:93
+msgid "Add Screen"
+msgstr "إضافة شاشة"
+
+#: .\templates\core\screens\screen_list.html:18
+msgid "Screen Name"
+msgstr "اسم الشاشة"
+
+#: .\templates\core\screens\screen_list.html:20
+#: .\templates\core\users\user_list.html:23
+msgid "Assigned Groups"
+msgstr "المجموعات المعينة"
+
+#: .\templates\core\screens\screen_list.html:35
+#: .\templates\core\users\user_list.html:55
+msgid "No assignments"
+msgstr "لا توجد تعيينات"
+
+#: .\templates\core\screens\screen_list.html:52
+msgid "No screens defined yet."
+msgstr "لم يتم تعريف أي شاشات بعد."
+
+#: .\templates\core\systems\system_confirm_delete.html:4
+msgid "Delete System"
+msgstr ""
+
+#: .\templates\core\systems\system_confirm_delete.html:14
+#, python-format
+msgid ""
+"Are you sure you want to delete the system: <strong>\"%(name)s\"</strong>?"
+msgstr ""
+
+#: .\templates\core\systems\system_confirm_delete.html:15
+msgid ""
+"This action will cascade and delete all associated screens, teams, issues, "
+"and comments. This is a highly destructive action."
+msgstr ""
+
+#: .\templates\core\systems\system_form.html:12
+msgid "Core System Profile"
+msgstr "بيانات النظام الأساسية"
+
+#: .\templates\core\systems\system_form.html:23
+msgid "Save System"
+msgstr "حفظ النظام"
+
+#: .\templates\core\systems\system_list.html:9
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:68
+msgid "Systems List"
+msgstr "قائمة الأنظمة"
+
+#: .\templates\core\systems\system_list.html:11
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:73
+msgid "Add System"
+msgstr "إضافة نظام"
+
+#: .\templates\core\systems\system_list.html:36
+#: .\templates\core\users\user_list.html:60
+msgid "Active"
+msgstr "نشط"
+
+#: .\templates\core\systems\system_list.html:38
+#: .\templates\core\users\user_list.html:62
+msgid "Inactive"
+msgstr "غير نشط"
+
+#: .\templates\core\systems\system_list.html:61
+msgid "No systems defined yet."
+msgstr "لا يوجد أنظمة."
+
+#: .\templates\core\teams\team_confirm_delete.html:4
+msgid "Delete Team"
+msgstr "حذف الفريق"
+
+#: .\templates\core\teams\team_confirm_delete.html:14
+#, python-format
+msgid ""
+"Are you sure you want to delete the team: <strong>\"%(name)s\"</strong>?"
+msgstr ""
+
+#: .\templates\core\teams\team_confirm_delete.html:15
+msgid ""
+"Note: Deleting a team will leave its members without a team assignment but "
+"will not delete the users."
+msgstr ""
+
+#: .\templates\core\teams\team_form.html:4
+#: .\templates\core\teams\team_list.html:4
+msgid "Teams"
+msgstr "الفرق"
+
+#: .\templates\core\teams\team_form.html:12
+msgid "Deployment Team Configuration"
+msgstr "إعدادات فريق التطوير"
+
+#: .\templates\core\teams\team_form.html:23
+msgid "Save Team"
+msgstr "حفظ الفريق"
+
+#: .\templates\core\teams\team_list.html:9
+msgid "Team Directory"
+msgstr "قائمة الفرق"
+
+#: .\templates\core\teams\team_list.html:11
+msgid "Add Team"
+msgstr "إضافة فريق"
+
+#: .\templates\core\teams\team_list.html:18
+msgid "Team Name"
+msgstr "اسم الفريق"
+
+#: .\templates\core\teams\team_list.html:20
+msgid "Systems Access"
+msgstr ""
+
+#: .\templates\core\teams\team_list.html:21
+msgid "Member Count"
+msgstr "الأعضاء"
+
+#: .\templates\core\teams\team_list.html:60
+msgid "No teams configured."
+msgstr "لا يوجد فرق مهيأة."
+
+#: .\templates\core\users\user_confirm_delete.html:4
+msgid "Delete User"
+msgstr "حذف المستخدم"
+
+#: .\templates\core\users\user_confirm_delete.html:11
+msgid "Confirm User Deletion"
+msgstr "تأكيد حذف المستخدم"
+
+#: .\templates\core\users\user_confirm_delete.html:14
+#, python-format
+msgid ""
+"Are you sure you want to delete the user account: <strong>\"%(username)s\"</"
+"strong>?"
+msgstr ""
+
+#: .\templates\core\users\user_confirm_delete.html:16
+msgid ""
+"Warning: Deleting a user will also delete all issues they reported and all "
+"comments they posted."
+msgstr ""
+
+#: .\templates\core\users\user_form.html:12
+msgid "User Account Information"
+msgstr "بيانات حساب المستخدم"
+
+#: .\templates\core\users\user_form.html:23
+msgid "Save User"
+msgstr "حفظ المستخدم"
+
+#: .\templates\core\users\user_list.html:9
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:128
+msgid "Users List"
+msgstr "قائمة المستخدمين"
+
+#: .\templates\core\users\user_list.html:12
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:133
+msgid "Add User"
+msgstr "إضافة مستخدم"
+
+#: .\templates\core\users\user_list.html:75
+msgid "Read Only"
+msgstr "قراءة فقط"
+
+#: .\templates\core\users\user_list.html:83
+msgid "No users found in the system."
+msgstr "لا يوجد مستخدمين."
+
+#: .\templates\layout\partials\footer\footer.html:12
+msgid "made with"
+msgstr "صُنع بـ"
+
+#: .\templates\layout\partials\footer\footer.html:12
+msgid "by"
+msgstr "بواسطة"
+
+#: .\templates\layout\partials\footer\footer.html:15
+msgid "Admin Templates"
+msgstr "قوالب الإدارة"
+
+#: .\templates\layout\partials\footer\footer.html:16
+msgid "License"
+msgstr "الترخيص"
+
+#: .\templates\layout\partials\footer\footer.html:17
+msgid "Bootstrap Dashboard"
+msgstr "لوحة تحكم بوتستراب"
+
+#: .\templates\layout\partials\footer\footer.html:18
+msgid "Documentation"
+msgstr "التوثيق"
+
+#: .\templates\layout\partials\footer\footer.html:19
+msgid "Support"
+msgstr "الدعم الفني"
+
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:26
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:31
+msgid "Tracking Management"
+msgstr "إدارة المشاكل"
+
+#: .\templates\layout\partials\menu\vertical\vertical_menu.html:56
+msgid "System Administration"
+msgstr "إدارة النظام"
+
+#: .\templates\layout\partials\modal_notifications.html:8
+#, fuzzy
+#| msgid "Confirm Delete"
+msgid "Confirm Save"
+msgstr "تأكيد الحذف"
+
+#: .\templates\layout\partials\modal_notifications.html:12
+msgid "Are you sure you want to save these changes?"
+msgstr "هل أنت متأكد من رغبتك في حفظ هذه التغييرات؟"
+
+#: .\templates\layout\partials\modal_notifications.html:15
+#, fuzzy
+#| msgid "Closed"
+msgid "Close"
+msgstr "مغلق"
+
+#: .\templates\layout\partials\modal_notifications.html:16
+#, fuzzy
+#| msgid "Save Screen"
+msgid "Save changes"
+msgstr "حفظ الشاشة"
+
+#: .\templates\layout\partials\modal_notifications.html:31
+msgid "Are you sure you want to delete:"
+msgstr "هل أنت متأكد من حذف:"
+
+#: .\templates\layout\partials\modal_notifications.html:52
+msgid "Success"
+msgstr "تم بنجاح"
+
+#: .\templates\layout\partials\modal_notifications.html:53
+msgid "Error"
+msgstr "خطأ"
+
+#: .\templates\layout\partials\modal_notifications.html:63
+msgid "OK"
+msgstr "موافق"
+
+#: .\templates\layout\partials\navbar\navbar.html:19
+msgid "Search..."
+msgstr "بحث..."
+
+#: .\templates\layout\partials\navbar\navbar.html:61
+msgid "Light"
+msgstr "فاتح"
+
+#: .\templates\layout\partials\navbar\navbar.html:66
+msgid "Dark"
+msgstr "داكن"
+
+#: .\templates\layout\partials\navbar\navbar.html:115
+msgid "No notifications"
+msgstr "لا توجد إشعارات"
+
+#: .\templates\layout\partials\navbar\navbar.html:122
+msgid "View all issues"
+msgstr "عرض جميع المشاكل"
+
+#: .\templates\layout\partials\navbar\navbar.html:157
+msgid "My Profile"
+msgstr "ملفي الشخصي"
+
+#: .\templates\layout\partials\navbar\navbar.html:162
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: .\templates\layout\partials\navbar\navbar.html:172
+msgid "Log Out"
+msgstr "خروج"
+
+#~ msgid "7-Day Pulse"
+#~ msgstr "نبض المشاكل (7 أيام)"
+
+#~ msgid "Logs"
+#~ msgstr "سجلات"
+
+#~ msgid "Resolution Rate"
+#~ msgstr "نسبة حل المشاكل"
+
+#~ msgid "Report Growth"
+#~ msgstr "نمو المشاكل"
+
+#, python-format
+#~ msgid ""
+#~ "Excellent performance metrics detected: You have successfully closed "
+#~ "%(total)s system issues in the last 24 hours. This exceeds your daily "
+#~ "average."
+#~ msgstr ""
+#~ "تم رصد مؤشرات أداء ممتازة: لقد قمت بإغلاق %(total)s مشكلة في آخر 24 ساعة. "
+#~ "هذا يتجاوز المتوسط اليومي المعتاد."
+
+#~ msgid "Analytical Board"
+#~ msgstr "قائمة المشاكل"
+
+#~ msgid "New Incident Report"
+#~ msgstr "إضافة مشكلة جديدة"
+
+#~ msgid "FrontEnd Ops"
+#~ msgstr "عمليات الواجهة الأمامية"
+
+#~ msgid "BackEnd Ops"
+#~ msgstr "عمليات الواجهة الخلفية"
+
+#~ msgid "Assignments"
+#~ msgstr "توزيع المهام المسندة"
+
+#~ msgid "Check your latest reports below."
+#~ msgstr "تحقق من آخر المشاكل المرفوعة أدناه."
+
+#~ msgid "View Issues"
+#~ msgstr "عرض المشاكل"
+
+#~ msgid "High Priority"
+#~ msgstr "أولوية عالية"
+
+#~ msgid "Recent Issues"
+#~ msgstr "أحدث المشاكل"
+
+#~ msgid "View All"
+#~ msgstr "عرض الكل"
+
+#~ msgid "No recent issues found."
+#~ msgstr "لا توجد مشاكل حديثة."
+
+#~ msgid "In Registry"
+#~ msgstr "في السجل"
+
+#~ msgid "Top Performers"
+#~ msgstr "الأكثر إنجازاً"
+
+#~ msgid "Tasks"
+#~ msgstr "المهام"
+
+#~ msgid "System Activity Log"
+#~ msgstr "سجل النشاط"
+
+#~ msgid "Date"
+#~ msgstr "التاريخ"
+
+#~ msgid "No activity recorded."
+#~ msgstr "لا يوجد أنشطة."
+
+#, fuzzy
+#~| msgid "BackEnd"
+#~ msgid "and"
+#~ msgstr "واجهة خلفية"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Duration"
+#~ msgstr "الوصف"
+
+#, fuzzy
+#~| msgid "Changed By"
+#~ msgid "Change"
+#~ msgstr "تعديل بواسطة"
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "Sat"
+#~ msgstr "الحالة"
+
+#, fuzzy
+#~| msgid "Remember Me"
+#~ msgid "September"
+#~ msgstr "تذكرني"
+
+#, fuzzy
+#~| msgid "Remember Me"
+#~ msgid "December"
+#~ msgstr "تذكرني"
+
+#, fuzzy
+#~| msgid "Bug"
+#~ msgid "aug"
+#~ msgstr "عطل برمجي"
+
+#, fuzzy, python-format
+#~| msgid "No issues found matching your criteria."
+#~ msgid "No %(verbose_name)s found matching the query"
+#~ msgstr "لا يوجد نتائج."
+
+#~ msgid "Accessible"
+#~ msgstr "الأنظمة المتاحة"
+
+#~ msgid "- List"
+#~ msgstr "قائمة الأنظمة"
+
+#~ msgid "-"
+#~ msgstr "الأنظمة"
+
+#~ msgid "Status Changed"
+#~ msgstr "تم تغيير الحالة"
+
+#~ msgid "Priority Changed"
+#~ msgstr "تم تغيير الأهمية"
+
+#~ msgid "Issue Type Changed"
+#~ msgstr "تم تغيير نوع المشكلة"
+
+#~ msgid "Target Team Changed"
+#~ msgstr "تم تغيير الفريق المستهدف"
+
+#~ msgid "Profile"
+#~ msgstr "الملف الشخصي"
+
+#~ msgid "Logout"
+#~ msgstr "تسجيل الخروج"
+
+#~ msgid "Status Overview"
+#~ msgstr "نظرة عامة على الحالات"
+
+#~ msgid "Reports by System"
+#~ msgstr "التقارير حسب النظام"
+
+#~ msgid "Last 6 Months"
+#~ msgstr "آخر 6 أشهر"
+
+#~ msgid "Issue Type Distribution"
+#~ msgstr "توزيع أنواع المشاكل"
+
+#~ msgid "Team Workload"
+#~ msgstr "عبء العمل حسب الفريق"
+
+#~ msgid "Open vs Resolved"
+#~ msgstr "المفتوحة مقابل المحلولة"
+
+#~ msgid "Issues Reported"
+#~ msgstr "المشاكل المرفوعة"
+
+msgid "Technical Details"
+msgstr "التفاصيل الفنية"
+
+msgid "Closure Information"
+msgstr "معلومات الإغلاق"
+
+msgid "Confirm Status Change"
+msgstr "تأكيد تغيير الحالة"
+
+msgid "Target Status"
+msgstr "الحالة المستهدفة"
+
+msgid "Confirm Update"
+msgstr "تأكيد التحديث"
+
+msgid "Update Successful"
+msgstr "تم التحديث بنجاح"
+
+msgid "The problem status has been synchronized across the system."
+msgstr "تم مزامنة حالة المشكلة في كامل النظام بنجاح."
+
+msgid "Updating..."
+msgstr "جاري التحديث..."
+
+msgid "Session & User"
+msgstr "الجلسة والمستخدم"
+
+msgid "Administrator"
+msgstr "المدير العام"
+
+msgid "Report Bug"
+msgstr "إبلاغ عن مشكلة"
+
+msgid "Search issues (Ctrl+K)..."
+msgstr "البحث عن مشاكل (Ctrl+K)..."
+
+msgid "Shortcuts"
+msgstr "اختصارات سريعة"
+
+msgid "Manage Bugs"
+msgstr "إدارة المشاكل"
+
+msgid "Team Access"
+msgstr "صلاحيات الفريق"
+
+msgid "Project Nodes"
+msgstr "عقد المشاريع"
+
+msgid "Account Prefs"
+msgstr "تفضيلات الحساب"
+
+msgid "Systems Operational"
+msgstr "الأنظمة تعمل بكفاءة"

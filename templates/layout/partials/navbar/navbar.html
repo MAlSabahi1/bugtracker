@@ -1,0 +1,241 @@
+{% load i18n %}
+{% load static %}
+
+<nav class="layout-navbar {{container_class}} navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+  {% if not navbar_hide_toggle %}
+  <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+      <i class="icon-base bx bx-menu bx-sm"></i>
+    </a>
+  </div>
+  {% endif %}
+
+  <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+    <!-- Search & Quick Action -->
+    <div class="navbar-nav align-items-center flex-grow-1">
+      <div class="nav-item d-flex align-items-center w-100 me-4">
+        <div class="input-group input-group-merge shadow-none border-0 w-100 bg-label-secondary rounded-pill px-3">
+          <span class="input-group-text border-0 ps-0 pe-2 bg-transparent"><i class="icon-base bx bx-search fs-4 text-muted"></i></span>
+          <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 bg-transparent" placeholder="{% trans 'Search issues (Ctrl+K)...' %}" aria-label="{% trans 'Search...' %}">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Quick Report Button -->
+    <div class="navbar-nav align-items-center d-none d-md-flex me-4">
+      <a href="{% url 'issue-create' %}" class="btn btn-primary d-flex align-items-center shadow-sm">
+        <i class="bx bx-plus me-1"></i>
+        <span class="d-none d-lg-inline">{% trans "Report Bug" %}</span>
+      </a>
+    </div>
+    <!-- /Search & Quick Action -->
+
+    <ul class="navbar-nav flex-row align-items-center ms-auto">
+      <!-- Shortcuts Grid -->
+      <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+          <i class="bx bx-grid-alt bx-sm"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end py-0">
+          <div class="dropdown-menu-header border-bottom">
+            <div class="dropdown-header d-flex align-items-center py-3">
+              <h5 class="text-body mb-0 me-auto">{% trans "Shortcuts" %}</h5>
+              <a href="{% url 'issue-create' %}" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Issue"><i class="bx bx-sm bx-plus-circle"></i></a>
+            </div>
+          </div>
+          <div class="dropdown-shortcuts-list scrollable-container">
+            <div class="row row-bordered overflow-visible g-0">
+              <div class="dropdown-shortcuts-item col">
+                <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                  <i class="bx bx-bug fs-4"></i>
+                </span>
+                <a href="{% url 'issue-list' %}" class="stretched-link">{% trans "Issues" %}</a>
+                <small class="text-muted mb-0">{% trans "Manage Bugs" %}</small>
+              </div>
+              <div class="dropdown-shortcuts-item col">
+                <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                  <i class="bx bx-user fs-4"></i>
+                </span>
+                <a href="{% url 'user-list' %}" class="stretched-link">{% trans "Users" %}</a>
+                <small class="text-muted mb-0">{% trans "Team Access" %}</small>
+              </div>
+            </div>
+            <div class="row row-bordered overflow-visible g-0">
+              <div class="dropdown-shortcuts-item col">
+                <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                  <i class="bx bx-collection fs-4"></i>
+                </span>
+                <a href="{% url 'system-list' %}" class="stretched-link">{% trans "Systems" %}</a>
+                <small class="text-muted mb-0">{% trans "Project Nodes" %}</small>
+              </div>
+              <div class="dropdown-shortcuts-item col">
+                <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                  <i class="bx bx-cog fs-4"></i>
+                </span>
+                <a href="javascript:void(0);" class="stretched-link">{% trans "Settings" %}</a>
+                <small class="text-muted mb-0">{% trans "Account Prefs" %}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- /Shortcuts Grid -->
+      <!-- Language -->
+      <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <i class="icon-base bx bx-globe icon-md"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+              <button type="submit" name="language" value="en" class="dropdown-item {% if current_language == 'en' %}active{% endif %}">
+                <span class="align-middle">English</span>
+              </button>
+            </form>
+          </li>
+          <li>
+            <form action="{% url 'set_language' %}" method="post">
+              {% csrf_token %}
+              <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+              <button type="submit" name="language" value="ar" class="dropdown-item {% if current_language == 'ar' %}active{% endif %}">
+                <span class="align-middle">العربية (Arabic)</span>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </li>
+      <!-- /Language -->
+      
+      <!-- Style Switcher -->
+      <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <i class="icon-base bx bx-sun icon-md theme-icon-active"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
+              <span class="align-middle"><i class="icon-base bx bx-sun icon-md me-3"></i>{% trans "Light" %}</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);" data-theme="dark">
+              <span class="align-middle"><i class="icon-base bx bx-moon icon-md me-3"></i>{% trans "Dark" %}</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);" data-theme="system">
+              <span class="align-middle"><i class="icon-base bx bx-desktop icon-md me-3"></i>{% trans "System" %}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- / Style Switcher -->
+      
+      <!-- Notifications -->
+      <li class="nav-item dropdown-notifications dropdown me-2 me-xl-0">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <i class="icon-base bx bx-bell icon-md {% if unread_notifications_count > 0 %}animate-bell{% endif %}"></i>
+          {% if unread_notifications_count > 0 %}
+          <span class="badge bg-danger rounded-pill badge-notifications">{{ unread_notifications_count }}</span>
+          {% endif %}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end py-0" style="min-width: 350px;">
+          <li class="dropdown-menu-header border-bottom">
+            <div class="dropdown-header d-flex align-items-center py-3">
+              <h5 class="text-body mb-0 me-auto">{% trans "Notifications" %}</h5>
+            </div>
+          </li>
+          <li class="dropdown-notifications-list scrollable-container">
+            <ul class="list-group list-group-flush">
+              {% for notification in recent_notifications %}
+              <li class="list-group-item list-group-item-action dropdown-notifications-item {% if not notification.is_read %}marked-as-read{% endif %}">
+                <a href="{% url 'mark-notification-read' notification.pk %}" class="d-flex">
+                  <div class="flex-shrink-0 me-3">
+                    <div class="avatar">
+                      <span class="avatar-initial rounded-circle bg-label-{% if not notification.is_read %}primary{% else %}secondary{% endif %}"><i class="icon-base bx bx-bug"></i></span>
+                    </div>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1">{{ notification.message }}</h6>
+                    <p class="mb-0 small text-muted">{{ notification.created_at|timesince }} {% trans "ago" %}</p>
+                  </div>
+                  {% if not notification.is_read %}
+                  <div class="flex-shrink-0 dropdown-notifications-actions">
+                    <span class="badge badge-dot bg-primary"></span>
+                  </div>
+                  {% endif %}
+                </a>
+              </li>
+              {% empty %}
+              <li class="list-group-item text-center py-4">
+                <p class="mb-0 text-muted">{% trans "No notifications" %}</p>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li class="dropdown-menu-footer border-top p-3">
+            <a href="{% url 'issue-list' %}" class="btn btn-primary d-flex justify-content-center">
+              {% trans "View all issues" %}
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!-- /Notifications -->
+
+      <!-- User -->
+      <li class="nav-item navbar-dropdown dropdown-user dropdown">
+        <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
+          <div class="avatar avatar-online">
+            <img src="{% static 'img/avatars/1.png' %}" alt class="rounded-circle" />
+          </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);">
+              <div class="d-flex">
+                <div class="flex-shrink-0 me-3">
+                  <div class="avatar avatar-online">
+                    <img src="{% static 'img/avatars/1.png' %}" alt class="w-px-40 h-auto rounded-circle" />
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-0 text-heading fw-semibold lh-1">{{ request.user.username }}</h6>
+                  <small>{{ request.user.get_role_display }}</small>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-divider my-1"></div>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="icon-base bx bx-user icon-md me-3"></i><span>{% trans "My Profile" %}</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="javascript:void(0);">
+              <i class="icon-base bx bx-cog icon-md me-3"></i><span>{% trans "Settings" %}</span>
+            </a>
+          </li>
+          <li>
+            <div class="dropdown-divider my-1"></div>
+          </li>
+          <li>
+            <form action="{% url 'logout' %}" method="post" class="m-0 p-0">
+              {% csrf_token %}
+              <button type="submit" class="dropdown-item w-100 text-start">
+                <i class="icon-base bx bx-power-off icon-md me-3 text-danger"></i><span class="text-danger">{% trans "Log Out" %}</span>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </li>
+      <!--/ User -->
+    </ul>
+  </div>
+</nav>
+

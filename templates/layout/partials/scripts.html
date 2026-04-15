@@ -1,0 +1,182 @@
+{% load static %}
+
+<!--Core Javascript-->
+<script src="{% static 'vendor/libs/jquery/jquery.js' %}"></script>
+<script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
+<script src="{% static 'vendor/js/bootstrap.js' %}"></script>
+<script src="{% static 'vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+<script src="{% static 'vendor/js/menu.js' %}"></script>
+
+<!-- Select2 JS -->
+<script src="{% static 'vendor/libs/select2/select2.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+<script async defer src="{% static 'vendor/libs/github-buttons/buttons.js' %}"></script>
+
+<!-- Initialize Select2 -->
+<script>
+  $(document).ready(function() {
+    $('.select2').each(function() {
+      $(this).select2({
+        theme: 'bootstrap-5',
+        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+        placeholder: $(this).data('placeholder'),
+        allowClear: Boolean($(this).data('allow-clear')),
+        dir: document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'
+      });
+    });
+
+    // Global Error Activator: Finds fields with errors and adds the red border
+    // Refined to only target actual form error messages (invalid-feedback)
+    $('.invalid-feedback, .crispy-error-text').each(function() {
+      const errorText = $(this).text().trim();
+      if (errorText.length > 0) {
+        const $container = $(this).closest('.mb-3, .row, .col-sm-10'); 
+        $container.find('.form-control, .form-select, .select2-hidden-accessible').addClass('is-invalid');
+      }
+    });
+
+    // Initialize the Modal Message (Django Messages)
+    const $messageModal = $('#messageModal');
+    if ($messageModal.length > 0) {
+      const msgModal = new bootstrap.Modal($messageModal[0]);
+      msgModal.show();
+    }
+
+    // Handle Confirm Delete Modal
+    const $confirmDeleteModal = $('#confirmDeleteModal');
+    if ($confirmDeleteModal.length > 0) {
+      $confirmDeleteModal.on('show.bs.modal', function(event) {
+        const button = $(event.relatedTarget); // Button that triggered the modal
+        const url = button.data('url'); // Extract info from data-* attributes
+        const name = button.data('name');
+        
+        const modal = $(this);
+        modal.find('#deleteForm').attr('action', url);
+        modal.find('#deleteItemName').text(name);
+      });
+    }
+
+    // Global Form Save Confirmation
+    let formToSubmit = null;
+    $(document).on('submit', 'form.confirm-save', function(e) {
+      if (!this.dataset.confirmed) {
+        e.preventDefault();
+        formToSubmit = this;
+        const saveModal = new bootstrap.Modal(document.getElementById('confirmSaveModal'));
+        saveModal.show();
+      }
+    });
+
+    $('#submitConfirmedSave').on('click', function() {
+      if (formToSubmit) {
+        formToSubmit.dataset.confirmed = "true";
+        formToSubmit.submit();
+      }
+    });
+
+    // Global Search Shortcut (Ctrl+K)
+    $(document).on('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        $('.navbar input[type="text"]').first().focus();
+      }
+    });
+  });
+
+  function initSmartDependency(sourceId, targetId, url) {
+    const $source = $(sourceId);
+    const $target = $(targetId);
+
+    $source.on('change', function() {
+      const val = $(this).val();
+      if (!val || (Array.isArray(val) && val.length === 0)) {
+        $target.val(null).trigger('change').html('');
+        return;
+      }
+
+      const data = {};
+      if (Array.isArray(val)) {
+          data['system_id[]'] = val;
+      } else {
+          data['system_id'] = val;
+      }
+
+      const currentSelection = $target.val();
+
+      $.ajax({
+        url: url,
+        data: data,
+        dataType: 'json',
+        success: function(data) {
+          let options = '';
+          if (!$target.prop('multiple')) {
+              options += `<option value="">${$target.data('placeholder') || 'Select...'}</option>`;
+          }
+
+          data.forEach(function(item) {
+            options += `<option value="${item.id}">${item.name}</option>`;
+          });
+
+          $target.html(options).trigger('change');
+          if (currentSelection) {
+              $target.val(currentSelection).trigger('change.select2');
+          }
+        }
+      });
+    });
+  }
+
+  /* Style Switcher Logic */
+  const themeSwitcherToggle = document.querySelector('.dropdown-style-switcher .dropdown-toggle');
+  const themeSwitcherItems = document.querySelectorAll('.dropdown-styles .dropdown-item');
+  const activeIcon = document.querySelector('.theme-icon-active');
+
+  const icons = {
+    light: 'bx-sun',
+    dark: 'bx-moon',
+    system: 'bx-desktop'
+  };
+
+  function applyTheme(theme) {
+    let resolvedTheme = theme;
+    if (theme === 'system') {
+      resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-bs-theme', resolvedTheme);
+    
+    // Update Active Icon
+    if (activeIcon) {
+      Object.values(icons).forEach(icon => activeIcon.classList.remove(icon));
+      activeIcon.classList.add(icons[theme]);
+    }
+
+    // Mark active in dropdown
+    themeSwitcherItems.forEach(item => {
+      if (item.getAttribute('data-theme') === theme) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  }
+
+  // Initial Sync
+  const currentSavedTheme = localStorage.getItem('theme') || 'light';
+  applyTheme(currentSavedTheme);
+
+  themeSwitcherItems.forEach(item => {
+    item.addEventListener('click', function() {
+      const selectedTheme = this.getAttribute('data-theme');
+      localStorage.setItem('theme', selectedTheme);
+      applyTheme(selectedTheme);
+    });
+  });
+
+  // Watch for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (localStorage.getItem('theme') === 'system') {
+      applyTheme('system');
+    }
+  });
+</script>

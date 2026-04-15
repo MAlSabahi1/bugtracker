@@ -1,0 +1,124 @@
+/* Public Sans - Normal */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-normal-300.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-normal-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-normal-500.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-normal-600.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-normal-700.ttf') format('truetype');
+}
+
+/* Public Sans - Italic */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-italic-300.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-italic-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-italic-500.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-italic-600.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/public-sans/public-sans-v21-italic-700.ttf') format('truetype');
+}
+
+/* Tajawal */
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('../fonts/tajawal/tajawal-200.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/tajawal/tajawal-300.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/tajawal/tajawal-400.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/tajawal/tajawal-500.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/tajawal/tajawal-700.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../fonts/tajawal/tajawal-800.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../fonts/tajawal/tajawal-900.ttf') format('truetype');
+}

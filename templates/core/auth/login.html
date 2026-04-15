@@ -1,0 +1,117 @@
+{% extends 'layout/layout_blank.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Login" %}{% endblock %}
+
+{% block page_css %}
+<!-- Page -->
+<link rel="stylesheet" href="{% static 'vendor/css/pages/page-auth.css' %}" />
+<style>
+  .lang-switcher-login {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  [dir="rtl"] .lang-switcher-login {
+    right: auto;
+    left: 20px;
+  }
+</style>
+{% endblock page_css %}
+
+{% block content %}
+<!-- Language Switcher -->
+<div class="lang-switcher-login">
+  <div class="dropdown">
+    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+      <i class="icon-base bx bx-globe me-1"></i> {{ current_language|upper }}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.get_full_path }}">
+          <input name="language" type="hidden" value="en">
+          <button type="submit" class="dropdown-item {% if current_language == 'en' %}active{% endif %}">
+            <span class="align-middle">English</span>
+          </button>
+        </form>
+      </li>
+      <li>
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.get_full_path }}">
+          <input name="language" type="hidden" value="ar">
+          <button type="submit" class="dropdown-item {% if current_language == 'ar' %}active{% endif %}">
+            <span class="align-middle">العربية (Arabic)</span>
+          </button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <!-- Register -->
+      <div class="card px-sm-6 px-0">
+        <div class="card-body">
+          <!-- Logo -->
+          <div class="app-brand justify-content-center">
+            <a href="{% url 'index' %}" class="app-brand-link gap-2">
+              <span class="app-brand-logo demo">
+                {% include 'partials/logo.html' %}
+              </span>
+              <span class="app-brand-text demo text-heading fw-bold">{% get_theme_variables 'template_name' %}</span>
+            </a>
+          </div>
+          <!-- /Logo -->
+          <h4 class="mb-1 text-center">{% trans "Welcome to" %} {% get_theme_variables 'template_name' %}! 👋</h4>
+          <p class="mb-6 text-center">{% trans "Please sign-in to your account and start the adventure" %}</p>
+
+          <form id="formAuthentication" class="mb-6" action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger mb-4">
+                {% for error in form.non_field_errors %}
+                  {{ error }}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% load crispy_forms_tags %}
+            {{ form|crispy }}
+
+            <div class="mb-8">
+              <div class="form-check mb-0">
+                <input class="form-check-input" type="checkbox" id="remember-me">
+                <label class="form-check-label" for="remember-me">
+                  {% trans "Remember Me" %}
+                </label>
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <button class="btn btn-primary d-grid w-100" type="submit">{% trans "Login" %}</button>
+            </div>
+          </form>
+
+          <p class="text-center">
+            <span>{% trans "New on our platform?" %}</span>
+            <a href="javascript:void(0);">
+              <span>{% trans "Create an account" %}</span>
+            </a>
+          </p>
+
+        </div>
+      </div>
+      <!-- /Register -->
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

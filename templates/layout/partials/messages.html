@@ -1,0 +1,28 @@
+
+{% if messages %}
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+  {% for message in messages %}
+  <div class="bs-toast toast fade show {{ message.tags }}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+    <div class="toast-header">
+      <i class="bx {% if message.tags == 'bg-success' %}bx-check-circle{% elif message.tags == 'bg-danger' %}bx-error-circle{% else %}bx-bell{% endif %} me-2"></i>
+      <div class="me-auto fw-semibold">
+        {% if message.tags == 'bg-success' %}
+          Success
+        {% elif message.tags == 'bg-danger' %}
+          Error
+        {% elif message.tags == 'bg-warning' %}
+          Warning
+        {% else %}
+          Notification
+        {% endif %}
+      </div>
+      <small>Just now</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      {{ message }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

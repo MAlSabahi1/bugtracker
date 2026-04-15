@@ -1,0 +1,68 @@
+{% extends 'layout/layout_vertical.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Systems" %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center border-bottom mb-4">
+    <h5 class="card-title mb-0">{% trans "Systems List" %}</h5>
+    {% if user.role == 'admin' or user.is_superuser %}
+    <a href="{% url 'system-create' %}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> {% trans "Add System" %}</a>
+    {% endif %}
+  </div>
+
+  <div class="table-responsive text-nowrap">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{% trans "Name" %}</th>
+          <th>{% trans "Description" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Issues" %}</th>
+          <th>{% trans "Screens" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {% for system in systems %}
+        <tr>
+          <td>
+            <span class="fw-bold text-heading">{{ system.name }}</span>
+          </td>
+          <td>{{ system.description|truncatechars:100 }}</td>
+          <td>
+            {% if system.is_active %}
+            <span class="badge bg-label-success">{% trans "Active" %}</span>
+            {% else %}
+            <span class="badge bg-label-secondary">{% trans "Inactive" %}</span>
+            {% endif %}
+          </td>
+          <td>
+            <span class="badge badge-center rounded-pill bg-label-warning">{{ system.issue_set.count }}</span>
+          </td>
+          <td>
+            <span class="badge bg-label-info">{{ system.screen_set.count }}</span>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'system-update' system.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
+                <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'system-delete' system.pk %}" data-name="{{ system.name }}">
+                  <i class="icon-base bx bx-trash me-1"></i> {% trans "Delete" %}
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="text-center py-4">{% trans "No systems defined yet." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

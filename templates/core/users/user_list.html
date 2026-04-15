@@ -1,0 +1,91 @@
+{% extends 'layout/layout_vertical.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Users" %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">{% trans "Users List" %}</h5>
+    {% if request.user.is_admin %}
+    <a href="{% url 'user-create' %}" class="btn btn-primary">
+        <i class="icon-base bx bx-user-plus me-1"></i> {% trans "Add User" %}
+    </a>
+    {% endif %}
+  </div>
+
+  <div class="table-responsive text-nowrap">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{% trans "User" %}</th>
+          <th>{% trans "Role" %}</th>
+          <th>{% trans "Assigned Groups" %}</th>
+          <th>{% trans "Status" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {% for member in users_list %}
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="avatar avatar-sm me-3">
+                <span class="avatar-initial rounded-circle bg-label-primary">{{ member.username.0|upper }}</span>
+              </div>
+              <div class="d-flex flex-column">
+                <span class="user-name fw-semibold text-heading">{{ member.username }}</span>
+                {% if member.email %}<small class="text-body-secondary">{{ member.email }}</small>{% endif %}
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="badge bg-label-{% if member.role == 'admin' %}primary{% elif member.role == 'frontend' %}warning{% elif member.role == 'backend' %}success{% else %}secondary{% endif %}">
+              {{ member.get_role_display }}
+            </span>
+          </td>
+          <td>
+            {% if member.groups.all %}
+              <div class="d-flex flex-column">
+                {% for group in member.groups.all %}
+                    <span class="badge bg-label-info mb-1">{{ group.name }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              <span class="text-muted small">{% trans "No assignments" %}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if member.is_active %}
+            <span class="badge bg-label-success">{% trans "Active" %}</span>
+            {% else %}
+            <span class="badge bg-label-danger">{% trans "Inactive" %}</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="dropdown">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+              <div class="dropdown-menu">
+                {% if request.user.is_admin %}
+                <a class="dropdown-item" href="{% url 'user-update' member.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
+                <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'user-delete' member.pk %}" data-name="{{ member.username }}">
+                  <i class="icon-base bx bx-trash me-1"></i> {% trans "Delete" %}
+                </button>
+                {% else %}
+                <span class="dropdown-item disabled text-muted">{% trans "Read Only" %}</span>
+                {% endif %}
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center py-4">{% trans "No users found in the system." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}
+

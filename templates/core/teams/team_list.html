@@ -1,0 +1,67 @@
+{% extends 'layout/layout_vertical.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Teams" %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">{% trans "Team Directory" %}</h5>
+    <a href="{% url 'team-create' %}" class="btn btn-primary">
+      <i class="icon-base bx bx-plus me-1"></i> {% trans "Add Team" %}
+    </a>
+  </div>
+  <div class="table-responsive text-nowrap">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{% trans "Team Name" %}</th>
+          <th>{% trans "Type" %}</th>
+          <th>{% trans "Systems Access" %}</th>
+          <th>{% trans "Member Count" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {% for team in teams %}
+        <tr>
+          <td><span class="fw-bold text-heading">{{ team.name }}</span></td>
+          <td>
+            {% if team.team_type == 'frontend' %}<span class="badge bg-label-warning">{% trans "FrontEnd" %}</span>
+            {% elif team.team_type == 'backend' %}<span class="badge bg-label-success">{% trans "BackEnd" %}</span>
+            {% else %}<span class="badge bg-label-primary">{% trans "Admin" %}</span>{% endif %}
+          </td>
+          <td>
+            {% if team.systems_access.all %}
+              <div class="d-flex flex-wrap gap-1">
+                {% for sys in team.systems_access.all %}
+                  <span class="badge bg-label-info">{{ sys.name }}</span>
+                {% endfor %}
+              </div>
+            {% if user.role == 'admin' or user.is_superuser or team.leader == user %}
+            <div class="dropdown">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'team-update' team.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
+                {% if user.role == 'admin' or user.is_superuser %}
+                <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'team-delete' team.pk %}" data-name="{{ team.name }}">
+                  <i class="icon-base bx bx-trash me-1"></i> {% trans "Delete" %}
+                </button>
+                {% endif %}
+              </div>
+            </div>
+            {% else %}
+               <span class="text-muted small">-</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center py-4">{% trans "No teams configured." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

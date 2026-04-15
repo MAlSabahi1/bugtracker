@@ -1,0 +1,59 @@
+{% extends 'layout/layout_vertical.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Screens" %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">{% trans "Screens List" %}</h5>
+    <a href="{% url 'screen-create' %}" class="btn btn-primary">
+      <i class="icon-base bx bx-plus me-1"></i> {% trans "Add Screen" %}
+    </a>
+  </div>
+  <div class="table-responsive text-nowrap">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>{% trans "Screen Name" %}</th>
+          <th>{% trans "System" %}</th>
+          <th>{% trans "Assigned Groups" %}</th>
+          <th>{% trans "Actions" %}</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {% for screen in screens %}
+        <tr>
+          <td><span class="fw-bold text-heading">{{ screen.name }}</span></td>
+          <td><span class="badge bg-label-primary">{{ screen.system.name }}</span></td>
+          <td>
+            {% if screen.groups.all %}
+              {% for group in screen.groups.all %}
+                <span class="badge bg-label-info">{{ group.name }}</span>
+              {% endfor %}
+            {% else %}
+              <span class="text-muted small">{% trans "No assignments" %}</span>
+            {% endif %}
+          </td>
+          <td>
+            <div class="dropdown">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'screen-update' screen.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
+                <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'screen-delete' screen.pk %}" data-name="{{ screen.name }}">
+                  <i class="icon-base bx bx-trash me-1"></i> {% trans "Delete" %}
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="text-center py-4">{% trans "No screens defined yet." %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'layout/layout_vertical.html' %}
+{% load i18n %}
+
+{% block title %}{{ title }} - {% trans "Groups" %}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xxl">
+    <div class="card mb-6">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">{{ title }}</h5>
+        <small class="text-muted float-end">{% trans "Permission Group Profile" %}</small>
+      </div>
+      <div class="card-body">
+        <form method="post" class="confirm-save">
+          {% csrf_token %}
+          {% load crispy_forms_tags %}
+          {{ form|crispy }}
+          
+          <div class="row justify-content-end mt-6">
+            <div class="col-sm-12 text-end">
+              <button type="submit" class="btn btn-primary me-2">
+                <i class="bx bx-save me-1"></i>{% trans "Save Group" %}
+              </button>
+              <a href="{% url 'group-list' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initSmartDependency(
+            '#{{ form.systems.id_for_label }}', 
+            '#{{ form.screens.id_for_label }}', 
+            '{% url "ajax-load-screens" %}'
+        );
+    });
+</script>
+{% endblock %}

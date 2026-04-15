@@ -1,0 +1,78 @@
+{% load i18n %}
+
+<!-- Vertically Centered Modal (Used for Save Confirmation) -->
+<div class="modal fade" id="confirmSaveModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCenterTitle">{% trans "Confirm Save" %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col mb-3">
+            <p>{% trans "Are you sure you want to save these changes?" %}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+        <button type="button" id="submitConfirmedSave" class="btn btn-primary">{% trans "Save changes" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Vertically Centered Modal (Used for Delete Confirmation) -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{% trans "Confirm Delete" %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col mb-3">
+            <p>{% trans "Are you sure you want to delete:" %} <strong id="deleteItemName"></strong>?</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form id="deleteForm" method="POST" action="">
+          {% csrf_token %}
+          <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+          <button type="submit" class="btn btn-danger">{% trans "Delete" %}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Basic Modal (Used for Success/Error Notifications) -->
+{% if messages %}
+<div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      {% for message in messages %}
+      <div class="modal-header {% if 'success' in message.tags %}border-bottom-0{% endif %}">
+        <h5 class="modal-title">
+            {% if 'success' in message.tags %}<i class="bx bx-check-circle text-success fs-3 me-2 align-middle"></i>{% trans "Success" %}
+            {% elif 'danger' in message.tags %}<i class="bx bx-error-circle text-danger fs-3 me-2 align-middle"></i>{% trans "Error" %}
+            {% else %}<i class="bx bx-info-circle text-primary fs-3 me-2 align-middle"></i>{% trans "Notification" %}{% endif %}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-4">
+        <p class="fs-6 mb-0">{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn {% if 'success' in message.tags %}btn-success{% elif 'danger' in message.tags %}btn-danger{% else %}btn-primary{% endif %}" data-bs-dismiss="modal">
+          {% trans "OK" %}
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
