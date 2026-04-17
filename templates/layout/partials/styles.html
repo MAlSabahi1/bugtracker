@@ -76,14 +76,52 @@
   
   /* Prominent Red Border for fields with actual errors */
   .form-control.is-invalid, 
-  .form-select.is-invalid {
+  .form-select.is-invalid,
+  .was-validated .form-control:invalid,
+  .was-validated .form-select:invalid {
     border-color: #ff3e1d !important;
     border-width: 1px !important;
   }
   
   .form-control.is-invalid:focus, 
-  .form-select.is-invalid:focus {
+  .form-select.is-invalid:focus,
+  .was-validated .form-control:invalid:focus,
+  .was-validated .form-select:invalid:focus {
     box-shadow: 0 0 0.25rem 0.05rem rgba(255, 62, 29, 0.1) !important;
+  }
+
+  /* Disable Green Borders (Success state) completely */
+  .was-validated .form-control:valid,
+  .was-validated .form-select:valid,
+  .form-control.is-valid,
+  .form-select.is-valid,
+  .is-valid + .select2-container--bootstrap-5 .select2-selection,
+  .is-valid.select2-hidden-accessible + .select2-container--bootstrap-5 .select2-selection,
+  .was-validated select:valid + .select2-container--bootstrap-5 .select2-selection {
+    border-color: #d9dee3 !important; /* Force default border color */
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+  
+  [data-bs-theme="dark"] .was-validated .form-control:valid,
+  [data-bs-theme="dark"] .was-validated .form-select:valid,
+  [data-bs-theme="dark"] .form-control.is-valid,
+  [data-bs-theme="dark"] .form-select.is-valid,
+  [data-bs-theme="dark"] .is-valid + .select2-container--bootstrap-5 .select2-selection,
+  [data-bs-theme="dark"] .is-valid.select2-hidden-accessible + .select2-container--bootstrap-5 .select2-selection,
+  [data-bs-theme="dark"] .was-validated select:valid + .select2-container--bootstrap-5 .select2-selection {
+      border-color: #444b54 !important; /* Force default dark border */
+  }
+
+  /* Reset focus state for valid fields */
+  .was-validated .form-control:valid:focus,
+  .was-validated .form-select:valid:focus,
+  .form-control.is-valid:focus,
+  .form-select.is-valid:focus,
+  .is-valid + .select2-container--bootstrap-5.select2-container--focus .select2-selection,
+  .was-validated select:valid + .select2-container--bootstrap-5.select2-container--focus .select2-selection {
+    border-color: var(--bs-primary) !important;
+    box-shadow: none !important;
   }
 
   .invalid-feedback, .text-danger.small {
@@ -179,31 +217,73 @@
 
   /* Shortcuts Grid Polish */
   .dropdown-shortcuts-list {
-    min-width: 300px;
+    min-width: 340px;
     max-height: 480px;
+    background-color: var(--bs-dropdown-bg);
   }
   .dropdown-shortcuts-item {
-    padding: 1.5rem 0.5rem;
+    padding: 1.75rem 1rem;
     text-align: center;
-    transition: background 0.25s;
+    transition: all 0.2s ease;
     border-bottom: 1px solid rgba(var(--bs-border-color-rgb), 0.5);
     border-right: 1px solid rgba(var(--bs-border-color-rgb), 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .dropdown-shortcuts-item:hover {
-    background-color: rgba(var(--bs-primary-rgb), 0.05);
+    background-color: rgba(var(--bs-primary-rgb), 0.04);
+    transform: scale(1.02);
+    z-index: 1;
   }
   .dropdown-shortcuts-icon {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s;
+    background-color: rgba(var(--bs-secondary-rgb), 0.08); /* Default icon bg */
   }
+  .dropdown-shortcuts-item:hover .dropdown-shortcuts-icon {
+    background-color: var(--bs-primary) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.3);
+  }
+  
+  /* Text Alignment & Hierarchy */
+  .dropdown-shortcuts-item a {
+    color: var(--bs-heading-color);
+    font-weight: 600 !important;
+    font-size: 0.9375rem;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+  }
+  .dropdown-shortcuts-item small {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color) !important;
+    display: block;
+  }
+
   [dir="rtl"] .dropdown-shortcuts-item {
     border-right: 0;
     border-left: 1px solid rgba(var(--bs-border-color-rgb), 0.5);
+  }
+
+  /* Trigger Button Professional Touch */
+  .nav-item.dropdown-shortcuts .nav-link {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+  .nav-item.dropdown-shortcuts .nav-link:hover {
+    background-color: rgba(var(--bs-secondary-rgb), 0.1);
   }
 
   /* --- Responsive Mastery & Optimization --- */

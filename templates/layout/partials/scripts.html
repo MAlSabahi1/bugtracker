@@ -61,7 +61,41 @@
     let formToSubmit = null;
     $(document).on('submit', 'form.confirm-save', function(e) {
       if (!this.dataset.confirmed) {
-        e.preventDefault();
+        // Stop default to check validation
+        e.preventDefault(); 
+        
+        // 1. Show Instant Errors (Border + Text) without bubbles
+        if (!this.checkValidity()) {
+          this.classList.add('was-validated');
+          
+          // Force text visibility for client-side catch & clear valid fields
+          $(this).find('.form-control, .form-select, .form-check-input').each(function() {
+            let feedback = $(this).parent().find('.invalid-feedback.dynamic-js');
+            
+            if (!this.checkValidity()) {
+              const errorMsg = this.validationMessage;
+              if ($(this).parent().find('.invalid-feedback:not(.dynamic-js)').length === 0) {
+                 if (feedback.length === 0) {
+                   $(this).after(`<div class="invalid-feedback dynamic-js d-block">${errorMsg}</div>`);
+                 } else {
+                   feedback.text(errorMsg).addClass('d-block');
+                 }
+              }
+            } else {
+              // If valid, remove the dynamic JS feedback it if exists
+              if (feedback.length > 0) {
+                feedback.remove();
+              }
+            }
+          });
+          
+          // Scroll to first error
+          const firstError = this.querySelector(':invalid');
+          if (firstError) firstError.focus();
+          return; 
+        }
+        
+        // 2. If perfectly valid, show the confirmation modal
         formToSubmit = this;
         const saveModal = new bootstrap.Modal(document.getElementById('confirmSaveModal'));
         saveModal.show();

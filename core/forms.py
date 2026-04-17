@@ -292,3 +292,44 @@ class GroupForm(forms.ModelForm):
             group.systems.set(self.cleaned_data["systems"])
             group.screens.set(self.cleaned_data["screens"])
         return group
+
+
+# ──────────────────────────────────────────────
+# Report Filter Form
+# ──────────────────────────────────────────────
+class ReportFilterForm(forms.Form):
+    start_date = forms.DateField(
+        label=_("Start Date"),
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date", "class": "form-control"})
+    )
+    end_date = forms.DateField(
+        label=_("End Date"),
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date", "class": "form-control"})
+    )
+    system = forms.ModelChoiceField(
+        queryset=System.objects.all(),
+        label=_("System"),
+        required=False,
+        empty_label=_("All Systems"),
+        widget=forms.Select(attrs={"class": "form-select"})
+    )
+    status = forms.ChoiceField(
+        choices=[("", _("All Statuses"))] + Issue.Status.choices,
+        label=_("Status"),
+        required=False,
+        widget=forms.Select(attrs={"class": "form-select"})
+    )
+    priority = forms.ChoiceField(
+        choices=[("", _("All Priorities"))] + Issue.Priority.choices,
+        label=_("Priority"),
+        required=False,
+        widget=forms.Select(attrs={"class": "form-select"})
+    )
+    target_team = forms.ChoiceField(
+        choices=[("", _("All Teams"))] + Issue.TargetTeam.choices,
+        label=_("Target Team"),
+        required=False,
+        widget=forms.Select(attrs={"class": "form-select"})
+    )

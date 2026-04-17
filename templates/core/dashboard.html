@@ -158,6 +158,103 @@
   </div>
 </div>
 
+<!-- Ultra-Premium Resolved for Review Command Center -->
+{% if pending_reviews %}
+<div class="row mb-6">
+  <div class="col-12">
+    <div class="card shadow-sm border-0 overflow-hidden" 
+         style="border-inline-start: 6px solid #71dd37 !important; background: var(--bs-card-bg);">
+      <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-3 py-4">
+        <div class="d-flex align-items-center gap-3">
+          <div class="avatar bg-label-success rounded-pill d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+            <i class="bx bx-check-double fs-2"></i>
+          </div>
+          <div>
+            <h5 class="card-title mb-0 fw-bold">{% trans "Resolved for Review" %}</h5>
+            <p class="card-subtitle text-muted mb-0 fs-tiny">{% trans "Verification queue for finalized engineering tasks" %}</p>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-4 py-2 fw-bold">
+               {{ pending_reviews|length }} {% trans "Tasks Pending" %}
+            </span>
+        </div>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="bg-label-secondary border-top-0">
+            <tr>
+              <th class="ps-5 text-uppercase fs-tiny fw-bold">{% trans "Problem Title" %}</th>
+              <th class="text-uppercase fs-tiny fw-bold">{% trans "System & Screen" %}</th>
+              <th class="text-uppercase fs-tiny fw-bold">{% trans "Resolved By" %}</th>
+              <th class="text-center text-uppercase fs-tiny fw-bold pe-5">{% trans "Management Action" %}</th>
+            </tr>
+          </thead>
+          <tbody class="border-top-0">
+            {% for issue in pending_reviews %}
+            <tr class="transition-all">
+              <td class="ps-5 py-4">
+                <div class="d-flex flex-column">
+                  <span class="fw-bold text-heading fs-6 mb-1">{{ issue.title|truncatechars:60 }}</span>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-label-{% if issue.priority == 'critical' %}danger{% elif issue.priority == 'high' %}warning{% else %}primary{% endif %} fs-tiny px-2 py-0">
+                      {{ issue.get_priority_display }}
+                    </span>
+                    <small class="text-muted"><i class="bx bx-time-five fs-tiny"></i> {{ issue.updated_at|timesince }} {% trans "ago" %}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="py-4">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-label-primary px-3">{{ issue.system.name }}</span>
+                  <i class="bx bx-chevron-right text-muted fs-tiny"></i>
+                  <small class="text-secondary fw-medium">{{ issue.screen.name|default:issue.system.name }}</small>
+                </div>
+              </td>
+              <td class="py-4">
+                <div class="d-flex align-items-center">
+                  <div class="avatar avatar-sm me-3">
+                    <span class="avatar-initial rounded-circle bg-label-info shadow-xs fw-bold">{{ issue.reported_by.username|slice:":1"|upper }}</span>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <span class="text-heading fw-semibold fs-7">{{ issue.reported_by.username }}</span>
+                    <small class="text-muted">{% trans "Engineer" %}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="text-center pe-5 py-4">
+                <div class="d-inline-flex gap-2">
+                  <a href="{% url 'issue-detail' issue.pk %}" class="btn btn-primary d-flex align-items-center gap-2 px-4 py-2 hover-elevate">
+                    <i class="bx bx-shield-quarter fs-5"></i> 
+                    <span class="fw-semibold">{% trans "Audit & Close" %}</span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer bg-label-success border-0 py-3 text-center px-4">
+        <small class="text-success fw-medium">
+          <i class="bx bx-info-circle me-1"></i> {% trans "Closing an issue here will archive it and notify the development team." %}
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .fs-tiny { font-size: 0.72rem !important; }
+  .transition-all { transition: all 0.2s ease; }
+  .table-hover tbody tr:hover { background-color: rgba(113, 221, 55, 0.03) !important; }
+  .hover-elevate { transition: transform 0.2s, box-shadow 0.2s; }
+  .hover-elevate:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(113, 221, 55, 0.3); }
+  .shadow-xs { box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+</style>
+{% endif %}
+
 <!-- Second Grid Row: Main Analytics -->
 <div class="row mb-6">
   <div class="col-lg-8">

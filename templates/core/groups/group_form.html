@@ -12,7 +12,7 @@
         <small class="text-muted float-end">{% trans "Permission Group Profile" %}</small>
       </div>
       <div class="card-body">
-        <form method="post" class="confirm-save">
+        <form method="post" class="confirm-save" novalidate>
           {% csrf_token %}
           {% load crispy_forms_tags %}
           {{ form|crispy }}

@@ -48,6 +48,10 @@ urlpatterns = [
     path("ajax/load-screens/", views.load_screens, name="ajax-load-screens"),
     path("ajax/issues/<int:pk>/status/", views.update_issue_status, name="ajax-update-status"),
 
+    # Reports
+    path("reports/", views.ReportFilterView.as_view(), name="report-list"),
+    path("reports/print/", views.ReportPrintView.as_view(), name="report-print"),
+
     # Notifications
     path("notifications/<int:pk>/read/", views.mark_notification_read, name="mark-notification-read"),
 ]

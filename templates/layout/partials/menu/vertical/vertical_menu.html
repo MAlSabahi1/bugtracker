@@ -51,6 +51,15 @@
       </ul>
     </li>
 
+    <!-- Reports -->
+    <li class="menu-item {% if 'report' in request.resolver_match.url_name %}active{% endif %}">
+      <a href="{% url 'report-list' %}" class="menu-link">
+        <i class="menu-icon icon-base bx bx-printer"></i>
+        <div class="text-truncate">{% trans "Reports" %}</div>
+      </a>
+    </li>
+
+
     {% if request.user.is_admin %}
     <li class="menu-header small text-uppercase">
         <span class="menu-header-text">{% trans "System Administration" %}</span>
@@ -137,39 +146,6 @@
     </li>
     {% endif %}
 
-    <!-- Auth / Misc (Session) -->
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">{% trans "Session & User" %}</span>
-    </li>
-    
-    <!-- User Overview Card -->
-    <li class="menu-item mt-2">
-      <div class="menu-link d-flex align-items-center py-4 px-3 mx-3 rounded bg-label-primary border-0" style="cursor: default;">
-        <div class="avatar flex-shrink-0 me-3">
-          <span class="avatar-initial rounded-circle bg-primary">{{ request.user.username|slice:":1"|upper }}</span>
-        </div>
-        <div class="d-flex flex-column overflow-hidden flex-grow-1">
-          <h6 class="mb-0 text-truncate fw-bold">{{ request.user.username }}</h6>
-          <small class="text-muted text-truncate text-uppercase" style="font-size: 0.75rem;">
-            {% if request.user.is_admin %}
-                <span class="badge bg-label-success p-0" style="font-size: 0.65rem;">{% trans "Administrator" %}</span>
-            {% else %}
-                <span class="badge bg-label-info p-0" style="font-size: 0.65rem;">{{ request.user.get_role_display }}</span>
-            {% endif %}
-          </small>
-        </div>
-      </div>
-    </li>
-
-    <li class="menu-item logout-item-sidebar mt-1">
-      <form action="{% url 'logout' %}" method="post" id="sidebarLogoutForm">
-        {% csrf_token %}
-        <a href="javascript:void(0);" onclick="document.getElementById('sidebarLogoutForm').submit();" class="menu-link text-danger">
-          <i class="menu-icon icon-base bx bx-power-off text-danger"></i>
-          <div class="text-truncate">{% trans "Logout" %}</div>
-        </a>
-      </form>
-    </li>
   </ul>
 </aside>
 

@@ -29,6 +29,7 @@ from .forms import (
     ScreenForm,
     GroupForm,
     UserForm,
+    ReportFilterForm,
 )
 
 
@@ -283,6 +284,9 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         context["recent_issues"] = (
             Issue.objects.select_related("system", "reported_by").order_by("-created_at")[:8]
+        )
+        context["pending_reviews"] = (
+            Issue.objects.filter(status="resolved").select_related("system", "reported_by").order_by("-updated_at")[:5]
         )
         context["latest_logs"] = IssueLog.objects.select_related('issue', 'changed_by').order_by('-created_at')[:6]
         return context
@@ -796,3 +800,65 @@ def mark_notification_read(request, pk):
     notification.is_read = True
     notification.save()
     return redirect("issue-detail", pk=notification.issue.pk)
+
+
+# ──────────────────────────────────────────────
+# Report Views
+# ──────────────────────────────────────────────
+class ReportFilterView(LoginRequiredMixin, TemplateView):
+    template_name = "core/reports/report_filter.html"
+
+    def get_context_data(self, **kwargs):
+        context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        context["form"] = ReportFilterForm(self.request.GET or None)
+        context["open_count"] = Issue.objects.filter(status=Issue.Status.OPEN).count()
+        context["resolved_count"] = Issue.objects.filter(status=Issue.Status.RESOLVED).count()
+        return context
+
+
+class ReportPrintView(LoginRequiredMixin, ListView):
+    model = Issue
+    template_name = "core/reports/report_print.html"
+    context_object_name = "issues"
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related("system", "screen", "reported_by").order_by("-created_at")
+        
+        # Apply filters from GET parameters
+        start_date = self.request.GET.get("start_date")
+        end_date = self.request.GET.get("end_date")
+        system_id = self.request.GET.get("system")
+        status = self.request.GET.get("status")
+        priority = self.request.GET.get("priority")
+        target_team = self.request.GET.get("target_team")
+
+        if start_date:
+            queryset = queryset.filter(created_at__date__gte=start_date)
+        if end_date:
+            queryset = queryset.filter(created_at__date__lte=end_date)
+        if system_id:
+            queryset = queryset.filter(system_id=system_id)
+        if status:
+            queryset = queryset.filter(status=status)
+        if priority:
+            queryset = queryset.filter(priority=priority)
+        if target_team:
+            queryset = queryset.filter(target_team=target_team)
+            
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add metadata for the report header
+        context["report_date"] = timezone.now()
+        context["filter_system"] = System.objects.filter(pk=self.request.GET.get("system")).first() if self.request.GET.get("system") else None
+        
+        # Proper lookup for status display name
+        status_val = self.request.GET.get("status")
+        context["filter_status"] = dict(Issue.Status.choices).get(status_val) if status_val else None
+        
+        # Add target team name to context
+        team_val = self.request.GET.get("target_team")
+        context["filter_team"] = dict(Issue.TargetTeam.choices).get(team_val) if team_val else None
+        
+        return context
