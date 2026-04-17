@@ -2162,3 +2162,111 @@ msgstr ""
 
 #~ msgid "Administrator"
 #~ msgstr "المدير العام"
+
+msgid "Reporting Center"
+msgstr "مركز التقارير"
+
+msgid "Administrative Reporting Center"
+msgstr "مركز التقارير الإدارية"
+
+msgid "Generate, filter, and print official audit reports for all teams and systems."
+msgstr "إنشاء وتصفية وطباعة التقارير الرسمية للمراجعة لجميع الفرق والأنظمة."
+
+msgid "Admin Only"
+msgstr "للمدير فقط"
+
+msgid "Print Ready"
+msgstr "جاهز للطباعة"
+
+msgid "Open Issues"
+msgstr "المشاكل المفتوحة"
+
+msgid "Resolved Issues"
+msgstr "المشاكل المحلولة"
+
+msgid "FE"
+msgstr "و.أ"
+
+msgid "FrontEnd Team"
+msgstr "فريق الواجهة الأمامية"
+
+msgid "BE"
+msgstr "و.خ"
+
+msgid "BackEnd Team"
+msgstr "فريق الواجهة الخلفية"
+
+msgid "Filter Criteria"
+msgstr "معايير التصفية"
+
+msgid "All filters are optional"
+msgstr "جميع الفلاتر اختيارية"
+
+msgid "From Date"
+msgstr "من تاريخ"
+
+msgid "To Date"
+msgstr "إلى تاريخ"
+
+msgid "Team"
+msgstr "الفريق"
+
+msgid "The report opens in a new print-ready window. You can save it as PDF from the browser."
+msgstr "يفتح التقرير في نافذة جديدة جاهزة للطباعة. يمكنك حفظه كـ PDF من متصفحك."
+
+msgid "Generate & Print Report"
+msgstr "إنشاء وطباعة التقرير"
+
+msgid "Quick Print Templates"
+msgstr "قوالب الطباعة السريعة"
+
+msgid "One Click"
+msgstr "بنقرة واحدة"
+
+msgid "FrontEnd Audit"
+msgstr "مراجعة الواجهة الأمامية"
+
+msgid "UI/UX Issues"
+msgstr "مشاكل الواجهة والتصميم"
+
+msgid "BackEnd Audit"
+msgstr "مراجعة الواجهة الخلفية"
+
+msgid "API & Database"
+msgstr "API وقاعدة البيانات"
+
+msgid "Urgent Issues"
+msgstr "المشاكل العاجلة"
+
+msgid "Open High-Priority"
+msgstr "مشاكل مفتوحة عالية الأولوية"
+
+msgid "Critical Only"
+msgstr "الحرجة فقط"
+
+msgid "Critical Severity"
+msgstr "المشاكل الحرجة الخطورة"
+
+msgid "Resolution Log"
+msgstr "سجل الحلول"
+
+msgid "Fixed Issues"
+msgstr "المشاكل المُصلحة"
+
+msgid "Vulnerability Issues"
+msgstr "مشاكل الثغرات الأمنية"
+
+msgid "Print"
+msgstr "طباعة"
+
+msgid "Full System Report — Export All Issues"
+msgstr "تقرير النظام الكامل — تصدير جميع المشاكل"
+
+msgid "Generate a complete report with no filters. Includes all systems, teams, and statuses."
+msgstr "إنشاء تقرير شامل بدون فلاتر. يشمل جميع الأنظمة والفرق والحالات."
+
+msgid "Print All"
+msgstr "طباعة الكل"
+
+msgid "Generating..."
+msgstr "جارٍ الإنشاء..."

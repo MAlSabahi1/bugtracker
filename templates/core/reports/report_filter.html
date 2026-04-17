@@ -6,260 +6,479 @@
 
 {% block content %}
 
-<!-- Page Header -->
-<div class="row mb-4">
+<style>
+  /* ── Hero ── */
+  .report-hero {
+    background: linear-gradient(135deg, rgba(105, 108, 255, .12) 0%, rgba(105, 108, 255, .03) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-hero .blob-1 {
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 160px;
+    height: 160px;
+    background: rgba(105, 108, 255, .15);
+    border-radius: 50%;
+    filter: blur(55px);
+    pointer-events: none;
+  }
+
+  .report-hero .blob-2 {
+    position: absolute;
+    bottom: -20px;
+    right: 15%;
+    width: 100px;
+    height: 100px;
+    background: rgba(3, 195, 236, .10);
+    border-radius: 50%;
+    filter: blur(35px);
+    pointer-events: none;
+  }
+
+  /* ── KPI Cards ── */
+  .kpi-card {
+    transition: all .25s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(105, 108, 255, .12) !important;
+  }
+
+  .kpi-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .65rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Filter Bar ── */
+  .filter-bar .form-control,
+  .filter-bar .form-select {
+    border-radius: .5rem;
+    border: 1px solid rgba(105, 108, 255, .2);
+    transition: border-color .2s, box-shadow .2s;
+    font-size: .9rem;
+  }
+
+  .filter-bar .form-control:focus,
+  .filter-bar .form-select:focus {
+    border-color: #696cff;
+    box-shadow: 0 0 0 .18rem rgba(105, 108, 255, .15);
+  }
+
+  .filter-bar label {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #8592a3;
+    margin-bottom: .3rem;
+  }
+
+  /* ── Generate Button ── */
+  #submitBtn {
+    background: linear-gradient(135deg, #696cff 0%, #5a5de8 100%);
+    border: none;
+    border-radius: .65rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    transition: all .2s;
+    box-shadow: 0 4px 14px rgba(105, 108, 255, .38);
+    white-space: nowrap;
+  }
+
+  #submitBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(105, 108, 255, .48);
+  }
+
+  /* ── Quick Cards ── */
+  .quick-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    padding: 1.5rem 1rem;
+    border-radius: .85rem !important;
+    border: 1px solid rgba(0, 0, 0, .06) !important;
+    text-decoration: none;
+    transition: all .22s ease;
+    background: #fff;
+    text-align: center;
+    height: 100%;
+  }
+
+  .quick-card:hover {
+    background: rgba(105, 108, 255, .05) !important;
+    border-color: #696cff !important;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(105, 108, 255, .14);
+    text-decoration: none;
+  }
+
+  .quick-card .qc-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .75rem;
+    transition: transform .2s;
+  }
+
+  .quick-card:hover .qc-icon {
+    transform: scale(1.08);
+  }
+
+  /* ── Full Report Card ── */
+  .full-report-card {
+    background: linear-gradient(135deg, rgba(105, 108, 255, .08) 0%, rgba(105, 108, 255, .02) 100%);
+    border: 1px solid rgba(105, 108, 255, .2) !important;
+    border-radius: .85rem;
+    transition: all .22s ease;
+    text-decoration: none;
+    display: block;
+  }
+
+  .full-report-card:hover {
+    border-color: #696cff !important;
+    box-shadow: 0 8px 24px rgba(105, 108, 255, .16);
+    transform: translateY(-3px);
+    text-decoration: none;
+  }
+</style>
+
+<div class="row mb-5">
   <div class="col-12">
-    <div class="card border-0 shadow-sm overflow-hidden"
-         style="background: linear-gradient(135deg, rgba(105,108,255,0.10) 0%, rgba(105,108,255,0.03) 100%); position: relative; min-height: 100px;">
-      <div style="position:absolute;top:-30px;right:-30px;width:130px;height:130px;background:rgba(105,108,255,0.12);border-radius:50%;filter:blur(50px);pointer-events:none;"></div>
-      <div style="position:absolute;bottom:-15px;left:20%;width:80px;height:80px;background:rgba(3,195,236,0.09);border-radius:50%;filter:blur(30px);pointer-events:none;"></div>
-      <div class="card-body p-4 d-flex align-items-center gap-4">
-        <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3 bg-label-primary" style="width:56px;height:56px;">
-          <i class="bx bx-file-find fs-2 text-primary"></i>
+    <div class="card border-0 shadow-sm report-hero">
+      <div class="blob-1"></div>
+      <div class="blob-2"></div>
+      <div class="card-body p-4 p-md-5 d-flex align-items-center justify-content-between flex-wrap gap-4">
+        <div class="d-flex align-items-center gap-4">
+          <div class="d-flex align-items-center justify-content-center rounded-3 bg-label-primary flex-shrink-0"
+            style="width:64px;height:64px;">
+            <i class="bx bx-file-find fs-1 text-primary"></i>
+          </div>
+          <div>
+            <h4 class="mb-1 fw-bold">{% trans "Administrative Reporting Center" %}</h4>
+            <p class="mb-0 text-muted">
+              {% trans "Generate, filter, and print official audit reports for all teams and systems." %}
+            </p>
+          </div>
         </div>
-        <div>
-          <h4 class="mb-1 fw-bold">{% trans "Administrative Reporting Center" %}</h4>
-          <p class="mb-0 text-muted">{% trans "Generate, filter, and print official audit reports for FrontEnd and BackEnd teams." %}</p>
+        <div class="d-flex gap-2 flex-wrap">
+          <span class="badge bg-label-primary rounded-pill px-3 py-2 fs-6">
+            <i class="bx bx-shield-quarter me-1"></i>{% trans "Admin Only" %}
+          </span>
+          <span class="badge bg-label-success rounded-pill px-3 py-2 fs-6">
+            <i class="bx bx-printer me-1"></i>{% trans "Print Ready" %}
+          </span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Main Content -->
-<div class="row g-4">
+<div class="row g-4 mb-5">
 
-  <!-- Filter Panel -->
-  <div class="col-lg-4">
-    <div class="card border-0 shadow-sm">
-      <div class="card-header bg-transparent border-bottom py-3">
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm h-100 kpi-card">
+      <div class="card-body p-4 d-flex align-items-center gap-3">
+        <div class="kpi-icon bg-label-danger">
+          <i class="bx bx-error-alt fs-3 text-danger"></i>
+        </div>
+        <div>
+          <h3 class="fw-bold mb-0">{{ open_count|default:"0" }}</h3>
+          <p class="text-muted mb-0 small">{% trans "Open Issues" %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm h-100 kpi-card">
+      <div class="card-body p-4 d-flex align-items-center gap-3">
+        <div class="kpi-icon bg-label-success">
+          <i class="bx bx-check-circle fs-3 text-success"></i>
+        </div>
+        <div>
+          <h3 class="fw-bold mb-0">{{ resolved_count|default:"0" }}</h3>
+          <p class="text-muted mb-0 small">{% trans "Resolved Issues" %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm h-100 kpi-card">
+      <div class="card-body p-4 d-flex align-items-center gap-3">
+        <div class="kpi-icon bg-label-primary">
+          <i class="bx bx-layout fs-3 text-primary"></i>
+        </div>
+        <div>
+          <h3 class="fw-bold mb-0">{% trans "FE" %}</h3>
+          <p class="text-muted mb-0 small">{% trans "FrontEnd Team" %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <div class="card border-0 shadow-sm h-100 kpi-card">
+      <div class="card-body p-4 d-flex align-items-center gap-3">
+        <div class="kpi-icon bg-label-warning">
+          <i class="bx bx-server fs-3 text-warning"></i>
+        </div>
+        <div>
+          <h3 class="fw-bold mb-0">{% trans "BE" %}</h3>
+          <p class="text-muted mb-0 small">{% trans "BackEnd Team" %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row mb-5">
+  <div class="col-12">
+    <div class="card border-0 shadow-sm filter-bar">
+      <div class="card-header bg-transparent border-bottom py-3 px-4">
         <div class="d-flex align-items-center gap-2">
           <i class="bx bx-sliders text-primary fs-4"></i>
           <h6 class="mb-0 fw-bold">{% trans "Filter Criteria" %}</h6>
+          <span class="ms-auto badge bg-label-secondary small">{% trans "All filters are optional" %}</span>
         </div>
       </div>
       <div class="card-body p-4">
+        <div class="row g-3 align-items-end">
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold">{% trans "From Date" %}</label>
-          <input type="date" id="id_start_date" class="form-control">
-        </div>
+          <div class="col-6 col-md-2">
+            <label>{% trans "From Date" %}</label>
+            <input type="date" id="id_start_date" class="form-control">
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold">{% trans "To Date" %}</label>
-          <input type="date" id="id_end_date" class="form-control">
-        </div>
+          <div class="col-6 col-md-2">
+            <label>{% trans "To Date" %}</label>
+            <input type="date" id="id_end_date" class="form-control">
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold">{% trans "Target System" %}</label>
-          <select id="id_system" class="form-select">
-            <option value="">{% trans "All Systems" %}</option>
-            {% for system in form.fields.system.queryset %}
+          <div class="col-md-2">
+            <label>{% trans "System" %}</label>
+            <select id="id_system" class="form-select">
+              <option value="">{% trans "All Systems" %}</option>
+              {% for system in form.fields.system.queryset %}
               <option value="{{ system.pk }}">{{ system.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
+              {% endfor %}
+            </select>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold">{% trans "Issue Status" %}</label>
-          <select id="id_status" class="form-select">
-            {% for value, label in form.fields.status.choices %}
+          <div class="col-md-2">
+            <label>{% trans "Status" %}</label>
+            <select id="id_status" class="form-select">
+              {% for value, label in form.fields.status.choices %}
               <option value="{{ value }}">{{ label }}</option>
-            {% endfor %}
-          </select>
-        </div>
+              {% endfor %}
+            </select>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold">{% trans "Priority Level" %}</label>
-          <select id="id_priority" class="form-select">
-            {% for value, label in form.fields.priority.choices %}
+          <div class="col-md-2">
+            <label>{% trans "Priority" %}</label>
+            <select id="id_priority" class="form-select">
+              {% for value, label in form.fields.priority.choices %}
               <option value="{{ value }}">{{ label }}</option>
-            {% endfor %}
-          </select>
-        </div>
+              {% endfor %}
+            </select>
+          </div>
 
-        <div class="mb-4">
-          <label class="form-label fw-semibold">{% trans "Target Team" %}</label>
-          <select id="id_target_team" class="form-select">
-            {% for value, label in form.fields.target_team.choices %}
+          <div class="col-md-2">
+            <label>{% trans "Team" %}</label>
+            <select id="id_target_team" class="form-select">
+              {% for value, label in form.fields.target_team.choices %}
               <option value="{{ value }}">{{ label }}</option>
-            {% endfor %}
-          </select>
+              {% endfor %}
+            </select>
+          </div>
+
         </div>
 
-        <div class="d-grid">
-          <button type="button" id="submitBtn" onclick="printGeneratedReport()" class="btn btn-primary">
-            <i class="bx bx-printer me-1"></i> {% trans "Generate & Print Report" %}
+        <div class="d-flex align-items-center justify-content-between mt-4 pt-3"
+          style="border-top:1px solid rgba(105,108,255,.1);">
+          <p class="text-muted mb-0 small">
+            <i class="bx bx-info-circle text-primary me-1"></i>
+            {% trans "The report opens in a new print-ready window. You can save it as PDF from the browser." %}
+          </p>
+          <button type="button" id="submitBtn" onclick="printGeneratedReport()"
+            class="btn btn-primary px-5 py-2 ms-3 flex-shrink-0">
+            <i class="bx bx-printer me-2"></i>{% trans "Generate & Print Report" %}
           </button>
         </div>
 
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Right Panel -->
-  <div class="col-lg-8">
-    <div class="row g-4">
-
-      <!-- Stat Cards -->
-      <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm text-center p-3 h-100">
-          <div class="d-flex align-items-center justify-content-center mx-auto mb-2 rounded-3 bg-label-danger" style="width:48px;height:48px;">
-            <i class="bx bx-error-alt fs-3 text-danger"></i>
-          </div>
-          <div class="fw-bold fs-5">{{ open_count|default:"—" }}</div>
-          <div class="text-muted small">{% trans "Open Issues" %}</div>
-        </div>
-      </div>
-
-      <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm text-center p-3 h-100">
-          <div class="d-flex align-items-center justify-content-center mx-auto mb-2 rounded-3 bg-label-success" style="width:48px;height:48px;">
-            <i class="bx bx-check-circle fs-3 text-success"></i>
-          </div>
-          <div class="fw-bold fs-5">{{ resolved_count|default:"—" }}</div>
-          <div class="text-muted small">{% trans "Resolved" %}</div>
-        </div>
-      </div>
-
-      <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm text-center p-3 h-100">
-          <div class="d-flex align-items-center justify-content-center mx-auto mb-2 rounded-3 bg-label-primary" style="width:48px;height:48px;">
-            <i class="bx bx-layout fs-3 text-primary"></i>
-          </div>
-          <div class="fw-bold fs-5">{% trans "FrontEnd" %}</div>
-          <div class="text-muted small">{% trans "UI Team" %}</div>
-        </div>
-      </div>
-
-      <div class="col-6 col-md-3">
-        <div class="card border-0 shadow-sm text-center p-3 h-100">
-          <div class="d-flex align-items-center justify-content-center mx-auto mb-2 rounded-3 bg-label-warning" style="width:48px;height:48px;">
-            <i class="bx bx-server fs-3 text-warning"></i>
-          </div>
-          <div class="fw-bold fs-5">{% trans "BackEnd" %}</div>
-          <div class="text-muted small">{% trans "Dev Team" %}</div>
-        </div>
-      </div>
-
-      <!-- Quick Print Cards -->
-      <div class="col-12">
-        <div class="card border-0 shadow-sm">
-          <div class="card-header bg-transparent border-bottom py-3">
-            <div class="d-flex align-items-center gap-2">
-              <i class="bx bx-bolt-circle text-warning fs-4"></i>
-              <h6 class="mb-0 fw-bold">{% trans "Quick Print Templates" %}</h6>
-            </div>
-          </div>
-          <div class="card-body p-4">
-            <div class="row g-3">
-
-              {% for item in quick_templates %}{% endfor %}
-
-              <div class="col-md-6">
-                <a href="javascript:void(0)" onclick="quickPrint('target_team=frontend')"
-                   class="quick-card d-flex align-items-center gap-3 p-3 rounded-3 border text-decoration-none">
-                  <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3 bg-label-primary" style="width:42px;height:42px;">
-                    <i class="bx bx-layout fs-4 text-primary"></i>
-                  </div>
-                  <div class="flex-grow-1 overflow-hidden">
-                    <div class="fw-bold text-dark text-truncate">{% trans "FrontEnd Audit" %}</div>
-                    <div class="text-muted small text-truncate">{% trans "UI/UX & Branding Issues" %}</div>
-                  </div>
-                  <i class="bx bx-printer fs-5 text-primary flex-shrink-0"></i>
-                </a>
-              </div>
-
-              <div class="col-md-6">
-                <a href="javascript:void(0)" onclick="quickPrint('target_team=backend')"
-                   class="quick-card d-flex align-items-center gap-3 p-3 rounded-3 border text-decoration-none">
-                  <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3 bg-label-warning" style="width:42px;height:42px;">
-                    <i class="bx bx-server fs-4 text-warning"></i>
-                  </div>
-                  <div class="flex-grow-1 overflow-hidden">
-                    <div class="fw-bold text-dark text-truncate">{% trans "BackEnd Audit" %}</div>
-                    <div class="text-muted small text-truncate">{% trans "Server, API & Database" %}</div>
-                  </div>
-                  <i class="bx bx-printer fs-5 text-primary flex-shrink-0"></i>
-                </a>
-              </div>
-
-              <div class="col-md-6">
-                <a href="javascript:void(0)" onclick="quickPrint('status=open&priority=high')"
-                   class="quick-card d-flex align-items-center gap-3 p-3 rounded-3 border text-decoration-none">
-                  <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3 bg-label-danger" style="width:42px;height:42px;">
-                    <i class="bx bx-error-alt fs-4 text-danger"></i>
-                  </div>
-                  <div class="flex-grow-1 overflow-hidden">
-                    <div class="fw-bold text-dark text-truncate">{% trans "Urgent Issues" %}</div>
-                    <div class="text-muted small text-truncate">{% trans "Open High-Priority Bugs" %}</div>
-                  </div>
-                  <i class="bx bx-printer fs-5 text-primary flex-shrink-0"></i>
-                </a>
-              </div>
-
-              <div class="col-md-6">
-                <a href="javascript:void(0)" onclick="quickPrint('status=resolved')"
-                   class="quick-card d-flex align-items-center gap-3 p-3 rounded-3 border text-decoration-none">
-                  <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3 bg-label-success" style="width:42px;height:42px;">
-                    <i class="bx bx-check-circle fs-4 text-success"></i>
-                  </div>
-                  <div class="flex-grow-1 overflow-hidden">
-                    <div class="fw-bold text-dark text-truncate">{% trans "Resolution Log" %}</div>
-                    <div class="text-muted small text-truncate">{% trans "All Verified Fixed Issues" %}</div>
-                  </div>
-                  <i class="bx bx-printer fs-5 text-primary flex-shrink-0"></i>
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <i class="bx bx-bolt-circle text-warning fs-4"></i>
+      <h6 class="mb-0 fw-bold">{% trans "Quick Print Templates" %}</h6>
+      <span class="badge bg-label-warning rounded-pill">{% trans "One Click" %}</span>
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(105,108,255,.2),transparent);"></div>
     </div>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+
+  <div class="col-6 col-md-4 col-lg-2">
+    <a href="javascript:void(0)" onclick="quickPrint('target_team=frontend')" class="quick-card">
+      <div class="qc-icon bg-label-primary">
+        <i class="bx bx-layout fs-3 text-primary"></i>
+      </div>
+      <div>
+        <div class="fw-bold text-heading small mb-1">{% trans "FrontEnd Audit" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "UI/UX Issues" %}</div>
+      </div>
+      <span class="badge bg-label-primary rounded-pill mt-1">
+        <i class="bx bx-printer me-1"></i>{% trans "Print" %}
+      </span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-4 col-lg-2">
+    <a href="javascript:void(0)" onclick="quickPrint('target_team=backend')" class="quick-card">
+      <div class="qc-icon bg-label-warning">
+        <i class="bx bx-server fs-3 text-warning"></i>
+      </div>
+      <div>
+        <div class="fw-bold text-heading small mb-1">{% trans "BackEnd Audit" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "API & Database" %}</div>
+      </div>
+      <span class="badge bg-label-warning rounded-pill mt-1">
+        <i class="bx bx-printer me-1"></i>{% trans "Print" %}
+      </span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-4 col-lg-2">
+    <a href="javascript:void(0)" onclick="quickPrint('status=open&priority=high')" class="quick-card">
+      <div class="qc-icon bg-label-danger">
+        <i class="bx bx-error-alt fs-3 text-danger"></i>
+      </div>
+      <div>
+        <div class="fw-bold text-heading small mb-1">{% trans "Urgent Issues" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "Open High-Priority" %}</div>
+      </div>
+      <span class="badge bg-label-danger rounded-pill mt-1">
+        <i class="bx bx-printer me-1"></i>{% trans "Print" %}
+      </span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-4 col-lg-2">
+    <a href="javascript:void(0)" onclick="quickPrint('priority=critical')" class="quick-card">
+      <div class="qc-icon bg-label-danger">
+        <i class="bx bx-shield-x fs-3 text-danger"></i>
+      </div>
+      <div>
+        <div class="fw-bold text-heading small mb-1">{% trans "Critical Only" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "Critical Severity" %}</div>
+      </div>
+      <span class="badge bg-label-danger rounded-pill mt-1">
+        <i class="bx bx-printer me-1"></i>{% trans "Print" %}
+      </span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-4 col-lg-2">
+    <a href="javascript:void(0)" onclick="quickPrint('status=resolved')" class="quick-card">
+      <div class="qc-icon bg-label-success">
+        <i class="bx bx-check-circle fs-3 text-success"></i>
+      </div>
+      <div>
+        <div class="fw-bold text-heading small mb-1">{% trans "Resolution Log" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "Fixed Issues" %}</div>
+      </div>
+      <span class="badge bg-label-success rounded-pill mt-1">
+        <i class="bx bx-printer me-1"></i>{% trans "Print" %}
+      </span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-4 col-lg-2">
+    <a href="javascript:void(0)" onclick="quickPrint('issue_type=security')" class="quick-card">
+      <div class="qc-icon bg-label-info">
+        <i class="bx bx-lock-alt fs-3 text-info"></i>
+      </div>
+      <div>
+        <div class="fw-bold text-heading small mb-1">{% trans "Security" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "Vulnerability Issues" %}</div>
+      </div>
+      <span class="badge bg-label-info rounded-pill mt-1">
+        <i class="bx bx-printer me-1"></i>{% trans "Print" %}
+      </span>
+    </a>
   </div>
 
 </div>
 
-<!-- Hidden iframe for silent printing -->
-<iframe id="printFrame" style="position:absolute;width:0;height:0;border:none;visibility:hidden;left:-9999px;"></iframe>
 
-<style>
-  .quick-card {
-    transition: all 0.2s ease;
-    background: transparent;
-  }
-  .quick-card:hover {
-    background: rgba(105, 108, 255, 0.04);
-    border-color: #696cff !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(105,108,255,0.10);
-  }
-</style>
+<div class="row">
+  <div class="col-12">
+    <a href="javascript:void(0)" onclick="quickPrint('')" class="full-report-card">
+      <div class="card-body p-4 d-flex align-items-center gap-4">
+        <div class="d-flex align-items-center justify-content-center rounded-3 bg-label-primary flex-shrink-0"
+          style="width:56px;height:56px;">
+          <i class="bx bx-file-blank fs-2 text-primary"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold mb-1">{% trans "Full System Report — Export All Issues" %}</h6>
+          <p class="text-muted mb-0 small">
+            {% trans "Generate a complete report with no filters. Includes all systems, teams, and statuses." %}
+          </p>
+        </div>
+        <span class="badge bg-primary rounded-pill px-4 py-2 flex-shrink-0" style="font-size:.85rem;">
+          <i class="bx bx-printer me-1"></i>{% trans "Print All" %}
+        </span>
+      </div>
+    </a>
+  </div>
+</div>
+
+
+<iframe id="printFrame" style="position:absolute;width:0;height:0;border:none;visibility:hidden;left:-9999px;"></iframe>
 
 {% endblock %}
 
 {% block page_js %}
 <script>
   const submitBtn = document.getElementById('submitBtn');
-  const iframe    = document.getElementById('printFrame');
-  const origHTML  = submitBtn.innerHTML;
+  const iframe = document.getElementById('printFrame');
+  const origHTML = submitBtn ? submitBtn.innerHTML : '';
 
   function printGeneratedReport() {
     const p = new URLSearchParams();
-    const s  = id('id_start_date').value;
-    const e  = id('id_end_date').value;
-    const sy = id('id_system').value;
-    const st = id('id_status').value;
-    const pr = id('id_priority').value;
-    const tm = id('id_target_team').value;
+    const s = v('id_start_date');
+    const e = v('id_end_date');
+    const sy = v('id_system');
+    const st = v('id_status');
+    const pr = v('id_priority');
+    const tm = v('id_target_team');
 
-    if (s)  p.append('start_date',  s);
-    if (e)  p.append('end_date',    e);
-    if (sy) p.append('system',      sy);
-    if (st) p.append('status',      st);
-    if (pr) p.append('priority',    pr);
+    if (s) p.append('start_date', s);
+    if (e) p.append('end_date', e);
+    if (sy) p.append('system', sy);
+    if (st) p.append('status', st);
+    if (pr) p.append('priority', pr);
     if (tm) p.append('target_team', tm);
 
     silentPrint("{% url 'report-print' %}?" + p.toString());
@@ -270,8 +489,9 @@
   }
 
   function silentPrint(url) {
+    if (!submitBtn) return;
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> {% trans "Generating..." %}';
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>{% trans "Generating..." %}';
     iframe.src = url;
     iframe.onload = function () {
       setTimeout(() => {
@@ -280,13 +500,16 @@
         try {
           iframe.contentWindow.focus();
           iframe.contentWindow.print();
-        } catch(e) {
+        } catch (err) {
           window.open(url, '_blank');
         }
       }, 900);
     };
   }
 
-  function id(s) { return document.getElementById(s); }
+  function v(id) {
+    const el = document.getElementById(id);
+    return el ? el.value : '';
+  }
 </script>
 {% endblock %}
