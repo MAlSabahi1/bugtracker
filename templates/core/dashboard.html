@@ -20,7 +20,7 @@
 <div class="row items-push">
   <div class="col-12 mb-6">
     <div class="card h-100 border-0 shadow-sm overflow-hidden hero-card-premium" 
-         style="background: linear-gradient(135deg, rgba(105, 108, 255, 0.12) 0%, rgba(105, 108, 255, 0.03) 100%); position: relative; transition: transform 0.3s ease;">
+         style="background-color: var(--bs-card-bg); background-image: linear-gradient(135deg, rgba(105, 108, 255, 0.12) 0%, rgba(105, 108, 255, 0.03) 100%); position: relative; transition: transform 0.3s ease;">
       <!-- Dynamic Background Elements -->
       <div style="position: absolute; top: -40px; left: -40px; width: 140px; height: 140px; background: rgba(105, 108, 255, 0.15); border-radius: 50%; filter: blur(50px);"></div>
       <div style="position: absolute; bottom: -20px; right: 20%; width: 80px; height: 80px; background: rgba(3, 195, 236, 0.1); border-radius: 50%; filter: blur(30px);"></div>
@@ -30,26 +30,26 @@
           <div class="card-body py-6 py-sm-10 px-4 px-sm-9">
             <!-- Part 1: Identity & Context -->
             <div class="d-flex align-items-center align-items-sm-center justify-content-center justify-content-sm-start flex-column flex-sm-row gap-4 mb-6 mb-sm-7">
-              <div class="avatar avatar-md bg-white shadow-sm rounded-circle d-flex align-items-center justify-content-center border" style="width: 54px; height: 54px;">
+              <div class="avatar avatar-md shadow-sm rounded-circle d-flex align-items-center justify-content-center border" style="width: 54px; height: 54px; background-color: var(--bs-card-bg);">
                 <i class="bx bx-user text-primary fs-3"></i>
               </div>
               <div class="text-center text-sm-start">
-                <h3 class="mb-0 fw-bold text-dark">{{ greeting }}, {{ user.get_full_name|default:user.username }}!</h3>
+                <h3 class="mb-0 fw-bold text-heading">{{ greeting }}, {{ user.get_full_name|default:user.username }}!</h3>
                 <p class="text-muted mb-0 fs-6">{% trans "Welcome back to your operational control center." %}</p>
               </div>
             </div>
     
             <!-- Part 2: Premium Status Chips -->
             <div class="d-flex flex-wrap justify-content-center justify-content-sm-start gap-2 gap-sm-3 mb-6 mb-sm-8">
-              <div class="status-chip d-flex align-items-center bg-white shadow-xs rounded-pill px-4 py-2 border">
+              <div class="status-chip d-flex align-items-center shadow-xs rounded-pill px-4 py-2 border" style="background-color: var(--bs-card-bg);">
                 <span class="pulse-indicator me-2" style="width: 8px; height: 8px; background-color: #03c3ec; border-radius: 50%; display: inline-block;"></span>
-                <span class="fs-7 fw-semibold text-heading">{{ week_count }} {% trans "Problems Found" %}</span>
+                <span class="fs-7 fw-semibold text-heading">{{ week_count }} {% trans "Errors Found" %}</span>
               </div>
-              <div class="status-chip d-flex align-items-center bg-white shadow-xs rounded-pill px-4 py-2 border">
+              <div class="status-chip d-flex align-items-center shadow-xs rounded-pill px-4 py-2 border" style="background-color: var(--bs-card-bg);">
                 <i class="bx bx-check-shield text-success me-2 fs-5"></i>
                 <span class="fs-7 fw-semibold text-heading">{{ resolution_rate }}% {% trans "Resolved" %}</span>
               </div>
-              <div class="status-chip d-flex align-items-center bg-white shadow-xs rounded-pill px-4 py-2 border">
+              <div class="status-chip d-flex align-items-center shadow-xs rounded-pill px-4 py-2 border" style="background-color: var(--bs-card-bg);">
                 <i class="bx bx-trending-up text-primary me-2 fs-5"></i>
                 <span class="fs-7 fw-semibold text-heading">{{ report_growth }}% {% trans "Growth" %}</span>
               </div>
@@ -58,19 +58,19 @@
             <!-- Part 3: Operational Description -->
             <p class="mb-8 mb-sm-9 fs-5 text-muted lh-base opacity-90 text-center text-sm-start" style="max-width: 100%;">
               {% if is_performing_well %}
-                {% blocktrans with total=resolved_24h %}Your recent activity is highly efficient: <strong>{{ total }} critical problems</strong> have been successfully resolved in the last 24 hours.{% endblocktrans %}
+                {% blocktrans with total=resolved_24h %}Your recent activity is highly efficient: <strong>{{ total }} critical errors</strong> have been successfully resolved in the last 24 hours.{% endblocktrans %}
               {% else %}
-                {% blocktrans with open=open_issues %}Immediate attention required: <strong>{{ open }} pending problems</strong> are currently awaiting audit.{% endblocktrans %}
+                {% blocktrans with open=open_issues %}Immediate attention required: <strong>{{ open }} pending errors</strong> are currently awaiting audit.{% endblocktrans %}
               {% endif %}
             </p>
     
             <!-- Part 4: High-Action Buttons -->
             <div class="d-flex flex-column flex-md-row gap-3 gap-md-4">
               <a href="{% url 'issue-list' %}" class="btn btn-primary btn-lg shadow-md d-flex align-items-center justify-content-center gap-3 px-sm-8 transition-up">
-                <i class="bx bx-grid-alt fs-4"></i> {% trans "Problem Tracking" %}
+                <i class="bx bx-grid-alt fs-4"></i> {% trans "Error Tracking" %}
               </a>
               <a href="{% url 'issue-create' %}" class="btn btn-label-primary btn-lg d-flex align-items-center justify-content-center gap-3 px-sm-8 transition-up">
-                <i class="bx bx-plus-circle fs-4"></i> {% trans "New Problem" %}
+                <i class="bx bx-plus-circle fs-4"></i> {% trans "New Error" %}
               </a>
             </div>
           </div>
@@ -185,7 +185,7 @@
         <table class="table table-hover align-middle mb-0">
           <thead class="bg-label-secondary border-top-0">
             <tr>
-              <th class="ps-5 text-uppercase fs-tiny fw-bold">{% trans "Problem Title" %}</th>
+              <th class="ps-5 text-uppercase fs-tiny fw-bold">{% trans "Error Title" %}</th>
               <th class="text-uppercase fs-tiny fw-bold">{% trans "System & Screen" %}</th>
               <th class="text-uppercase fs-tiny fw-bold">{% trans "Resolved By" %}</th>
               <th class="text-center text-uppercase fs-tiny fw-bold pe-5">{% trans "Management Action" %}</th>
@@ -238,7 +238,7 @@
       </div>
       <div class="card-footer bg-label-success border-0 py-3 text-center px-4">
         <small class="text-success fw-medium">
-          <i class="bx bx-info-circle me-1"></i> {% trans "Closing an issue here will archive it and notify the development team." %}
+          <i class="bx bx-info-circle me-1"></i> {% trans "Closing an error here will archive it and notify the development team." %}
         </small>
       </div>
     </div>
@@ -354,7 +354,7 @@
       <div class="card-header border-bottom">
         <h6 class="card-title mb-0">{% trans "Team Deployment Balance" %}</h6>
       </div>
-      <div class="card-body py-6 d-flex align-items-center justify-content-center">
+      <div class="card-body p-4 d-flex align-items-center justify-content-center" style="min-height: 320px;">
         <div id="teamWorkloadChart" class="w-100"></div>
       </div>
     </div>
@@ -486,7 +486,7 @@ function initExecutiveDashboard() {
   // 6. Team Deployment
   render('#teamWorkloadChart', {
     ...commonOptions,
-    chart: { ...commonOptions.chart, type: 'radialBar', height: 380 },
+    chart: { ...commonOptions.chart, type: 'radialBar', height: 320 },
     series: {{ chart_team_series|safe }},
     labels: {{ chart_team_labels|safe }},
     colors: [colors[0], colors[4]],

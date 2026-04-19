@@ -1,6 +1,8 @@
 from django.views.generic import TemplateView, ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponseForbidden
@@ -30,6 +32,7 @@ from .forms import (
     GroupForm,
     UserForm,
     ReportFilterForm,
+    UserProfileForm,
 )
 
 
@@ -348,7 +351,7 @@ class IssueCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
-        context["page_title"] = _("New Issue")
+        context["page_title"] = _("New Error")
         return context
 
     def get_form_kwargs(self):
@@ -364,14 +367,14 @@ class IssueCreateView(LoginRequiredMixin, CreateView):
         response = super().form_valid(form)
         IssueLog.objects.create(
             issue=self.object,
-            action=_("Issue Created"),
-            new_value=_("Issue '%(title)s' created for team: %(team)s") % {
+            action=_("Error Created"),
+            new_value=_("Error '%(title)s' created for team: %(team)s") % {
                 "title": self.object.title,
                 "team": self.object.get_target_team_display()
             },
             changed_by=self.request.user,
         )
-        messages.success(self.request, _("Issue '%s' created successfully.") % self.object.title)
+        messages.success(self.request, _("Error '%s' created successfully.") % self.object.title)
         return response
 
 
@@ -405,7 +408,7 @@ class IssueUpdateView(AdminRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
-        context["page_title"] = _("Edit Issue: %(title)s") % {"title": self.object.title}
+        context["page_title"] = _("Edit Error: %(title)s") % {"title": self.object.title}
         return context
 
     def get_form_kwargs(self):
@@ -432,7 +435,7 @@ class IssueUpdateView(AdminRequiredMixin, UpdateView):
                     new_value=new_val,
                     changed_by=self.request.user,
                 )
-        messages.success(self.request, _("Issue '%s' updated successfully.") % self.object.title)
+        messages.success(self.request, _("Error '%s' updated successfully.") % self.object.title)
         return response
 
 
@@ -446,9 +449,46 @@ class IssueDeleteView(AdminRequiredMixin, DeleteView):
         return context
 
     def form_valid(self, form):
-        messages.success(self.request, _("Issue '%s' deleted successfully.") % self.get_object().title)
+        messages.success(self.request, _("Error '%s' deleted successfully.") % self.get_object().title)
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy("dashboard")
+
+
+class UserProfileView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserProfileForm
+    template_name = "core/users/profile.html"
+    success_url = reverse_lazy("user-profile")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        context['password_form'] = PasswordChangeForm(user=self.request.user)
+        return context
+
+    def form_valid(self, form):
+        messages.success(self.request, _("Profile updated successfully."))
+        return super().form_valid(form)
+
+
+class UserPasswordChangeView(LoginRequiredMixin, UpdateView):
+    """Handles password change POST submission from the profile page."""
+
+    def post(self, request, *args, **kwargs):
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)  # Keep session alive
+            messages.success(request, _("Password changed successfully."))
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, error)
+        return redirect("user-profile")
 
 # ──────────────────────────────────────────────
 # AJAX Operations
@@ -813,6 +853,8 @@ class ReportFilterView(LoginRequiredMixin, TemplateView):
         context["form"] = ReportFilterForm(self.request.GET or None)
         context["open_count"] = Issue.objects.filter(status=Issue.Status.OPEN).count()
         context["resolved_count"] = Issue.objects.filter(status=Issue.Status.RESOLVED).count()
+        context["frontend_count"] = Issue.objects.filter(target_team=Issue.TargetTeam.FRONTEND).count()
+        context["backend_count"] = Issue.objects.filter(target_team=Issue.TargetTeam.BACKEND).count()
         return context
 
 

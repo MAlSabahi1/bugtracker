@@ -9,7 +9,8 @@
 <style>
   /* ── Hero ── */
   .report-hero {
-    background: linear-gradient(135deg, rgba(105, 108, 255, .12) 0%, rgba(105, 108, 255, .03) 100%);
+    background-color: var(--bs-card-bg);
+    background-image: linear-gradient(135deg, rgba(105, 108, 255, .12) 0%, rgba(105, 108, 255, .03) 100%);
     position: relative;
     overflow: hidden;
   }
@@ -108,10 +109,10 @@
     gap: .75rem;
     padding: 1.5rem 1rem;
     border-radius: .85rem !important;
-    border: 1px solid rgba(0, 0, 0, .06) !important;
+    border: 1px solid var(--bs-border-color) !important;
     text-decoration: none;
     transition: all .22s ease;
-    background: #fff;
+    background-color: var(--bs-card-bg);
     text-align: center;
     height: 100%;
   }
@@ -140,8 +141,9 @@
 
   /* ── Full Report Card ── */
   .full-report-card {
-    background: linear-gradient(135deg, rgba(105, 108, 255, .08) 0%, rgba(105, 108, 255, .02) 100%);
-    border: 1px solid rgba(105, 108, 255, .2) !important;
+    background-color: var(--bs-card-bg);
+    background-image: linear-gradient(135deg, rgba(105, 108, 255, .08) 0%, rgba(105, 108, 255, .02) 100%);
+    border: 1px solid var(--bs-border-color) !important;
     border-radius: .85rem;
     transition: all .22s ease;
     text-decoration: none;
@@ -197,7 +199,7 @@
         </div>
         <div>
           <h3 class="fw-bold mb-0">{{ open_count|default:"0" }}</h3>
-          <p class="text-muted mb-0 small">{% trans "Open Issues" %}</p>
+          <p class="text-muted mb-0 small">{% trans "Open Errors" %}</p>
         </div>
       </div>
     </div>
@@ -211,7 +213,7 @@
         </div>
         <div>
           <h3 class="fw-bold mb-0">{{ resolved_count|default:"0" }}</h3>
-          <p class="text-muted mb-0 small">{% trans "Resolved Issues" %}</p>
+          <p class="text-muted mb-0 small">{% trans "Resolved Errors" %}</p>
         </div>
       </div>
     </div>
@@ -224,8 +226,8 @@
           <i class="bx bx-layout fs-3 text-primary"></i>
         </div>
         <div>
-          <h3 class="fw-bold mb-0">{% trans "FE" %}</h3>
-          <p class="text-muted mb-0 small">{% trans "FrontEnd Team" %}</p>
+          <h3 class="fw-bold mb-0">{{ frontend_count|default:"0" }}</h3>
+          <p class="text-muted mb-0 small">{% trans "FE" %}</p>
         </div>
       </div>
     </div>
@@ -238,8 +240,8 @@
           <i class="bx bx-server fs-3 text-warning"></i>
         </div>
         <div>
-          <h3 class="fw-bold mb-0">{% trans "BE" %}</h3>
-          <p class="text-muted mb-0 small">{% trans "BackEnd Team" %}</p>
+          <h3 class="fw-bold mb-0">{{ backend_count|default:"0" }}</h3>
+          <p class="text-muted mb-0 small">{% trans "BE" %}</p>
         </div>
       </div>
     </div>
@@ -346,7 +348,7 @@
       </div>
       <div>
         <div class="fw-bold text-heading small mb-1">{% trans "FrontEnd Audit" %}</div>
-        <div class="text-muted" style="font-size:.78rem;">{% trans "UI/UX Issues" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "UI/UX Errors" %}</div>
       </div>
       <span class="badge bg-label-primary rounded-pill mt-1">
         <i class="bx bx-printer me-1"></i>{% trans "Print" %}
@@ -375,7 +377,7 @@
         <i class="bx bx-error-alt fs-3 text-danger"></i>
       </div>
       <div>
-        <div class="fw-bold text-heading small mb-1">{% trans "Urgent Issues" %}</div>
+        <div class="fw-bold text-heading small mb-1">{% trans "Urgent Errors" %}</div>
         <div class="text-muted" style="font-size:.78rem;">{% trans "Open High-Priority" %}</div>
       </div>
       <span class="badge bg-label-danger rounded-pill mt-1">
@@ -406,7 +408,7 @@
       </div>
       <div>
         <div class="fw-bold text-heading small mb-1">{% trans "Resolution Log" %}</div>
-        <div class="text-muted" style="font-size:.78rem;">{% trans "Fixed Issues" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "Fixed Errors" %}</div>
       </div>
       <span class="badge bg-label-success rounded-pill mt-1">
         <i class="bx bx-printer me-1"></i>{% trans "Print" %}
@@ -421,7 +423,7 @@
       </div>
       <div>
         <div class="fw-bold text-heading small mb-1">{% trans "Security" %}</div>
-        <div class="text-muted" style="font-size:.78rem;">{% trans "Vulnerability Issues" %}</div>
+        <div class="text-muted" style="font-size:.78rem;">{% trans "Vulnerability Errors" %}</div>
       </div>
       <span class="badge bg-label-info rounded-pill mt-1">
         <i class="bx bx-printer me-1"></i>{% trans "Print" %}
@@ -441,7 +443,7 @@
           <i class="bx bx-file-blank fs-2 text-primary"></i>
         </div>
         <div class="flex-grow-1">
-          <h6 class="fw-bold mb-1">{% trans "Full System Report — Export All Issues" %}</h6>
+          <h6 class="fw-bold mb-1">{% trans "Full System Report — Export All Errors" %}</h6>
           <p class="text-muted mb-0 small">
             {% trans "Generate a complete report with no filters. Includes all systems, teams, and statuses." %}
           </p>

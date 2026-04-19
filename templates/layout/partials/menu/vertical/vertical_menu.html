@@ -35,17 +35,17 @@
     <li class="menu-item {% if 'issue' in request.resolver_match.url_name %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon icon-base bx bx-bug"></i>
-        <div class="text-truncate">{% trans "Issues" %}</div>
+        <div class="text-truncate">{% trans "Errors" %}</div>
       </a>
       <ul class="menu-sub">
         <li class="menu-item {% if request.resolver_match.url_name == 'issue-list' %}active{% endif %}">
           <a href="{% url 'issue-list' %}" class="menu-link">
-            <div class="text-truncate">{% trans "Issues List" %}</div>
+            <div class="text-truncate">{% trans "Errors List" %}</div>
           </a>
         </li>
         <li class="menu-item {% if request.resolver_match.url_name == 'issue-create' %}active{% endif %}">
           <a href="{% url 'issue-create' %}" class="menu-link">
-            <div class="text-truncate">{% trans "Add Issue" %}</div>
+            <div class="text-truncate">{% trans "Add Error" %}</div>
           </a>
         </li>
       </ul>

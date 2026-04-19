@@ -1,0 +1,148 @@
+{% extends layout_path %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}{% trans "My Profile" %}{% endblock %}
+
+{% block page_css %}
+<style>
+  .profile-avatar-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+  .profile-avatar-wrapper img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #e8e8e8;
+  }
+  .avatar-upload-btn {
+    position: absolute;
+    bottom: 0;
+    {% if LANGUAGE_CODE == 'ar' %}left: 0;{% else %}right: 0;{% endif %}
+    background: var(--bs-primary);
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+    border: 2px solid #fff;
+    transition: background 0.2s;
+  }
+  .avatar-upload-btn:hover { background: #4a4dcc; }
+  .avatar-upload-input { display: none; }
+  .section-divider {
+    border-top: 1px solid rgba(0,0,0,0.07);
+    margin: 0;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+
+    <!-- ─── Profile Info Card ─── -->
+    <div class="card mb-4">
+      <h5 class="card-header">{% trans "Profile Details" %}</h5>
+      <div class="card-body">
+        <div class="d-flex align-items-center gap-4 mb-4">
+          <div class="profile-avatar-wrapper" id="avatarWrapper">
+            {% if request.user.avatar %}
+              <img src="{{ request.user.avatar.url }}" alt="User Avatar" id="avatarPreview">
+            {% else %}
+              <img src="{% static 'img/avatars/1.png' %}" alt="User Avatar" id="avatarPreview">
+            {% endif %}
+            <label for="avatarFileInput" class="avatar-upload-btn" title="{% trans 'Change Photo' %}">
+              <i class="bx bx-camera"></i>
+            </label>
+          </div>
+          <div>
+            {% if request.user.get_full_name %}
+              <h5 class="mb-1">{{ request.user.get_full_name }}</h5>
+            {% endif %}
+            <p class="text-muted mb-0">{{ request.user.username }}</p>
+            <span class="badge bg-label-primary mt-1">{{ request.user.get_role_display }}</span>
+          </div>
+        </div>
+
+        <hr class="section-divider mb-4">
+
+        <form method="POST" action="{% url 'user-profile' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- Hidden avatar input tied to the camera button -->
+          <input type="file" name="avatar" id="avatarFileInput" class="avatar-upload-input" accept="image/*">
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="id_first_name">{% trans "First Name" %}</label>
+              <input type="text" name="first_name" id="id_first_name" class="form-control" value="{{ form.first_name.value|default:'' }}">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="id_last_name">{% trans "Last Name" %}</label>
+              <input type="text" name="last_name" id="id_last_name" class="form-control" value="{{ form.last_name.value|default:'' }}">
+            </div>
+            <div class="col-md-12 mb-3">
+              <label class="form-label" for="id_email">{% trans "Email" %}</label>
+              <input type="email" name="email" id="id_email" class="form-control" value="{{ form.email.value|default:'' }}">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">{% trans "Save Changes" %}</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ─── Change Password Card ─── -->
+    <div class="card mb-4">
+      <h5 class="card-header">{% trans "Change Password" %}</h5>
+      <div class="card-body">
+        <form method="POST" action="{% url 'user-password-change' %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="id_old_password">{% trans "Current Password" %}</label>
+              <input type="password" name="old_password" id="id_old_password" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="id_new_password1">{% trans "New Password" %}</label>
+              <input type="password" name="new_password1" id="id_new_password1" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="id_new_password2">{% trans "Confirm New Password" %}</label>
+              <input type="password" name="new_password2" id="id_new_password2" class="form-control" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-warning">{% trans "Change Password" %}</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+  // Live avatar preview when user picks a new image
+  const avatarInput = document.getElementById('avatarFileInput');
+  const avatarPreview = document.getElementById('avatarPreview');
+  avatarInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => { avatarPreview.src = e.target.result; };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+{% endblock %}

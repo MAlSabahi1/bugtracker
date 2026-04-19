@@ -5,14 +5,14 @@ from django.utils.translation import gettext_lazy as _
 
 # Theme Variables
 THEME_VARIABLES = {
-    "creator_name": _("BugTracker"),
+    "creator_name": _("Rasid"),
     "creator_url": "#",
-    "template_name": _("BugTracker"),
+    "template_name": _("Rasid"),
     "template_suffix": _("Bug Tracking System"),
     "template_version": "1.0.0",
     "template_free": True,
-    "template_description": _("Bug Tracking & Security Testing System built with Django and Sneat Bootstrap Template."),
-    "template_keyword": "django, bug tracker, security testing, dashboard, bootstrap 5",
+    "template_description": _("Rasid — Professional Error Management & Security Testing System built with Django."),
+    "template_keyword": "django, rasid, bug tracking, error management, security testing",
     "facebook_url": "#",
     "twitter_url": "#",
     "github_url": "#",
@@ -30,7 +30,7 @@ THEME_VARIABLES = {
     "git_repo_access": "#",
     "live_preview_free": "#",
     "product_page_free": "#",
-    "og_title": _("BugTracker — Bug Tracking & Security Testing System"),
+    "og_title": _("Rasid — Bug Tracking & Security Testing System"),
     "og_image": "",
     "og_type": "product",
 }

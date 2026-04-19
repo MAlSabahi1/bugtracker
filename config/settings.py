@@ -1,5 +1,5 @@
 """
-Django settings for BugTracker project.
+Django settings for Rasid project.
 """
 import os
 from pathlib import Path

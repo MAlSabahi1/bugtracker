@@ -5,6 +5,9 @@ from django.utils.translation import gettext_lazy as _
 from .models import Issue, Comment, System, Screen, User
 from django.contrib.auth.models import Group
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Row, Column, Submit
+
 
 # ──────────────────────────────────────────────
 # Auth Forms
@@ -60,6 +63,31 @@ class UserForm(forms.ModelForm):
             self.fields['password'].required = True
             self.fields['password'].help_text = _("Required for new users.")
 
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(
+                Column('username', css_class='form-group col-md-6 mb-3'),
+                Column('email', css_class='form-group col-md-6 mb-3'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('first_name', css_class='form-group col-md-6 mb-3'),
+                Column('last_name', css_class='form-group col-md-6 mb-3'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('role', css_class='form-group col-md-6 mb-3'),
+                Column('password', css_class='form-group col-md-6 mb-3'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('groups', css_class='form-group col-md-6 mb-3'),
+                Column('is_active', css_class='form-group col-md-6 mb-3 d-flex align-items-center mt-4'),
+                css_class='form-row'
+            ),
+        )
+
     def save(self, commit=True):
         user = super().save(commit=False)
         password = self.cleaned_data.get("password")
@@ -95,8 +123,8 @@ class IssueForm(forms.ModelForm):
             "image",
         ]
         widgets = {
-            "title": forms.TextInput(attrs={"placeholder": _("Issue title")}),
-            "description": forms.Textarea(attrs={"rows": 4, "placeholder": _("Describe the issue...")}),
+            "title": forms.TextInput(attrs={"placeholder": _("Error title")}),
+            "description": forms.Textarea(attrs={"rows": 4, "placeholder": _("Describe the error...")}),
             "system": forms.Select(),
             "screen": forms.Select(),
             "target_team": forms.Select(),
@@ -108,7 +136,7 @@ class IssueForm(forms.ModelForm):
             "expected_result": forms.Textarea(attrs={"rows": 3, "placeholder": _("Expected result...")}),
             "actual_result": forms.Textarea(attrs={"rows": 3, "placeholder": _("Actual result...")}),
             "resolution": forms.Select(),
-            "root_cause": forms.Textarea(attrs={"rows": 3, "placeholder": _("Explain the root cause of this issue...")}),
+            "root_cause": forms.Textarea(attrs={"rows": 3, "placeholder": _("Explain the root cause of this error...")}),
             "image": forms.ClearableFileInput(),
         }
 
@@ -168,6 +196,50 @@ class IssueForm(forms.ModelForm):
                 qs = qs.filter(groups__user=self.user).distinct()
             self.fields["screen"].queryset = qs
 
+        # ── FormHelper Layout ──
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        
+        layout_items = []
+        layout_items.append(Row(Column('title', css_class='form-group col-md-12 mb-3')))
+        layout_items.append(Row(Column('description', css_class='form-group col-md-12 mb-3')))
+        
+        sys_scr_cols = []
+        if 'system' in self.fields: sys_scr_cols.append(Column('system', css_class='form-group col-md-6 mb-3'))
+        if 'screen' in self.fields: sys_scr_cols.append(Column('screen', css_class='form-group col-md-6 mb-3'))
+        if sys_scr_cols: layout_items.append(Row(*sys_scr_cols, css_class='form-row'))
+        
+        type_prio_cols = []
+        if 'issue_type' in self.fields: type_prio_cols.append(Column('issue_type', css_class='form-group col-md-6 mb-3'))
+        if 'priority' in self.fields: type_prio_cols.append(Column('priority', css_class='form-group col-md-6 mb-3'))
+        if type_prio_cols: layout_items.append(Row(*type_prio_cols, css_class='form-row'))
+
+        team_assign_cols = []
+        if 'target_team' in self.fields: team_assign_cols.append(Column('target_team', css_class='form-group col-md-6 mb-3'))
+        if 'assigned_to' in self.fields: team_assign_cols.append(Column('assigned_to', css_class='form-group col-md-6 mb-3'))
+        if team_assign_cols: layout_items.append(Row(*team_assign_cols, css_class='form-row'))
+        
+        if 'status' in self.fields:
+            layout_items.append(Row(Column('status', css_class='form-group col-md-6 mb-3')))
+            
+        layout_items.append(Row(Column('steps_to_reproduce', css_class='form-group col-md-12 mb-3')))
+        
+        res_cols = []
+        if 'expected_result' in self.fields: res_cols.append(Column('expected_result', css_class='form-group col-md-6 mb-3'))
+        if 'actual_result' in self.fields: res_cols.append(Column('actual_result', css_class='form-group col-md-6 mb-3'))
+        if res_cols: layout_items.append(Row(*res_cols, css_class='form-row'))
+        
+        if 'image' in self.fields:
+            layout_items.append(Row(Column('image', css_class='form-group col-md-12 mb-3')))
+            
+        resol_cols = []
+        if 'resolution' in self.fields: resol_cols.append(Column('resolution', css_class='form-group col-md-12 mb-3'))
+        if 'root_cause' in self.fields: resol_cols.append(Column('root_cause', css_class='form-group col-md-12 mb-3'))
+        if resol_cols: layout_items.append(Row(*resol_cols, css_class='form-row'))
+
+        self.helper.layout = Layout(*layout_items)
+
+
 
 class IssueFilterForm(forms.Form):
     STATUS_CHOICES = [("", _("All Statuses"))] + list(Issue.Status.choices)
@@ -226,6 +298,20 @@ class SystemForm(forms.ModelForm):
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(Column('name', css_class='form-group col-md-12 mb-3')),
+            Row(Column('description', css_class='form-group col-md-12 mb-3')),
+            Row(
+                Column('groups', css_class='form-group col-md-6 mb-3'),
+                Column('is_active', css_class='form-group col-md-6 mb-3 d-flex align-items-center mt-4'),
+                css_class='form-row'
+            ),
+        )
+
 
 # ──────────────────────────────────────────────
 # Screen Form
@@ -239,6 +325,19 @@ class ScreenForm(forms.ModelForm):
             "name": forms.TextInput(attrs={"placeholder": _("Screen name")}),
             "groups": forms.SelectMultiple(attrs={"class": "select2", "data-placeholder": _("Assign to groups")}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(
+                Column('system', css_class='form-group col-md-6 mb-3'),
+                Column('name', css_class='form-group col-md-6 mb-3'),
+                css_class='form-row'
+            ),
+            Row(Column('groups', css_class='form-group col-md-12 mb-3')),
+        )
 
 
 # ──────────────────────────────────────────────
@@ -285,6 +384,17 @@ class GroupForm(forms.ModelForm):
                  self.fields["screens"].queryset = Screen.objects.filter(system_id__in=system_ids)
              except (ValueError, TypeError):
                  pass
+
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(Column('name', css_class='form-group col-md-12 mb-3')),
+            Row(
+                Column('systems', css_class='form-group col-md-6 mb-3'),
+                Column('screens', css_class='form-group col-md-6 mb-3'),
+                css_class='form-row'
+            ),
+        )
 
     def save(self, commit=True):
         group = super().save(commit=commit)
@@ -333,3 +443,27 @@ class ReportFilterForm(forms.Form):
         required=False,
         widget=forms.Select(attrs={"class": "form-select"})
     )
+
+# ──────────────────────────────────────────────
+# User Profile Form
+# ──────────────────────────────────────────────
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'avatar']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Row(
+                Column('first_name', css_class='form-group col-md-6 mb-3'),
+                Column('last_name', css_class='form-group col-md-6 mb-3'),
+                css_class='form-row'
+            ),
+            'email',
+            'avatar',
+            Submit('submit', _('Save Changes'), css_class='btn btn-primary mt-3')
+        )
+

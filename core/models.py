@@ -70,6 +70,13 @@ class User(AbstractUser):
         choices=Role.choices,
         default=Role.FRONTEND,
     )
+    
+    avatar = models.ImageField(
+        _("Avatar"),
+        upload_to="users/avatars/",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = _("User")
@@ -158,7 +165,7 @@ class Issue(models.Model):
     )
 
     issue_type = models.CharField(
-        _("Issue Type"),
+        _("Error Type"),
         max_length=20,
         choices=IssueType.choices,
     )
@@ -205,8 +212,8 @@ class Issue(models.Model):
     updated_at = models.DateTimeField(_("Updated At"), auto_now=True)
 
     class Meta:
-        verbose_name = _("Issue")
-        verbose_name_plural = _("Issues")
+        verbose_name = _("Error")
+        verbose_name_plural = _("Errors")
         ordering = ["-created_at"]
 
     def __str__(self):
@@ -246,11 +253,12 @@ class Comment(models.Model):
 # Issue Log (Audit Trail)
 # ──────────────────────────────────────────────
 class IssueLog(models.Model):
+#: .\core\models.py:248
     issue = models.ForeignKey(
         Issue,
         on_delete=models.CASCADE,
         related_name="logs",
-        verbose_name=_("Issue"),
+        verbose_name=_("Error"),
     )
     action = models.CharField(_("Action"), max_length=255)
     old_value = models.TextField(_("Old Value"), null=True, blank=True)
@@ -287,7 +295,7 @@ class Notification(models.Model):
         Issue,
         on_delete=models.CASCADE,
         related_name="notifications",
-        verbose_name=_("Issue")
+        verbose_name=_("Error")
     )
     message = models.CharField(_("Message"), max_length=255)
     is_read = models.BooleanField(_("Is Read"), default=False)

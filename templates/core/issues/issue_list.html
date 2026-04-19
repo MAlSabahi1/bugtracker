@@ -1,13 +1,13 @@
 {% extends 'layout/layout_vertical.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Issues List" %}{% endblock %}
+{% block title %}{% trans "Errors List" %}{% endblock %}
 
 {% block content %}
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center border-bottom mb-4">
-    <h5 class="card-title mb-0">{% trans "Issues List" %}</h5>
-    <a href="{% url 'issue-create' %}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> {% trans "Add Issue" %}</a>
+    <h5 class="card-title mb-0">{% trans "Errors List" %}</h5>
+    <a href="{% url 'issue-create' %}" class="btn btn-primary"><i class="icon-base bx bx-plus me-1"></i> {% trans "Add Error" %}</a>
   </div>
 
   <!-- Filters -->
@@ -105,7 +105,7 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="8" class="text-center py-4">{% trans "No issues found matching your criteria." %}</td>
+          <td colspan="8" class="text-center py-4">{% trans "No errors found matching your criteria." %}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -142,7 +142,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col mb-3">
-            <p>{% trans "Are you sure you want to change the status of this problem?" %}</p>
+            <p>{% trans "Are you sure you want to change the status of this error?" %}</p>
           </div>
         </div>
         <div class="row g-2">
@@ -176,7 +176,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body py-4">
-        <p class="fs-6 mb-0">{% trans "The problem status has been synchronized across the system." %}</p>
+        <p class="fs-6 mb-0">{% trans "The error status has been synchronized across the system." %}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-bs-dismiss="modal">{% trans "OK" %}</button>

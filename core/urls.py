@@ -39,6 +39,8 @@ urlpatterns = [
     path("screens/<int:pk>/delete/", views.ScreenDeleteView.as_view(), name="screen-delete"),
 
     # Users
+    path("profile/", views.UserProfileView.as_view(), name="user-profile"),
+    path("profile/password/", views.UserPasswordChangeView.as_view(), name="user-password-change"),
     path("users/", views.UserListView.as_view(), name="user-list"),
     path("users/create/", views.UserCreateView.as_view(), name="user-create"),
     path("users/<int:pk>/edit/", views.UserUpdateView.as_view(), name="user-update"),
