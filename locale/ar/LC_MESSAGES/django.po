@@ -1105,8 +1105,8 @@ msgid "Closure Information"
 msgstr "معلومات الإغلاق"
 
 #: .\templates\core\issues\issue_form.html:123
-msgid "Save Error"
-msgstr "حفظ الخطأ"
+msgid "Save"
+msgstr "حفظ"
 
 #: .\templates\core\issues\issue_list.html:4
 #: .\templates\core\issues\issue_list.html:9
@@ -1118,7 +1118,7 @@ msgstr "قائمة الأخطاء"
 #: .\templates\layout\partials\menu\vertical\vertical_menu.html:48
 #: .\templates\layout\partials\navbar\navbar.html:29
 msgid "Add Error"
-msgstr "إضافة خطأ"
+msgstr "إضافة"
 
 #: .\templates\core\issues\issue_list.html:27
 msgid "Filter"
