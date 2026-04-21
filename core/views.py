@@ -521,6 +521,40 @@ def update_issue_status(request, pk):
     return JsonResponse({"success": False, "error": "Invalid request"}, status=400)
 
 
+@login_required
+def quick_resolve_issue(request, pk):
+    """Allows developers to mark an issue as resolved with a single click."""
+    issue = get_object_or_404(Issue, pk=pk)
+    
+    # Permission check: Admin or member of the target team
+    if not request.user.is_admin and issue.target_team != request.user.role:
+        messages.error(request, _("You are not authorized to resolve this issue."))
+        return redirect("issue-list")
+        
+    if issue.status in [Issue.Status.RESOLVED, Issue.Status.CLOSED]:
+        messages.info(request, _("This issue is already resolved or closed."))
+        return redirect("issue-list")
+
+    old_status = issue.get_status_display()
+    issue.status = Issue.Status.RESOLVED
+    issue.resolution = Issue.Resolution.FIXED
+    issue.save()
+    
+    # Create Log entry
+    IssueLog.objects.create(
+        issue=issue,
+        action=_("Quick Resolve"),
+        old_value=old_status,
+        new_value=issue.get_status_display(),
+        changed_by=request.user,
+    )
+    
+    messages.success(request, _("Excellent! Issue #%(id)s has been marked as Resolved.") % {"id": issue.pk})
+    
+    # Redirect back to the previous page or issue list
+    return redirect(request.META.get('HTTP_REFERER', 'issue-list'))
+
+
 # ──────────────────────────────────────────────
 # Comment View
 # ──────────────────────────────────────────────
@@ -845,27 +879,45 @@ def mark_notification_read(request, pk):
 # ──────────────────────────────────────────────
 # Report Views
 # ──────────────────────────────────────────────
-class ReportFilterView(LoginRequiredMixin, TemplateView):
+class ReportFilterView(AdminRequiredMixin, TemplateView):
     template_name = "core/reports/report_filter.html"
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
-        context["form"] = ReportFilterForm(self.request.GET or None)
-        context["open_count"] = Issue.objects.filter(status=Issue.Status.OPEN).count()
-        context["resolved_count"] = Issue.objects.filter(status=Issue.Status.RESOLVED).count()
-        context["frontend_count"] = Issue.objects.filter(target_team=Issue.TargetTeam.FRONTEND).count()
-        context["backend_count"] = Issue.objects.filter(target_team=Issue.TargetTeam.BACKEND).count()
+        user = self.request.user
+        context["form"] = ReportFilterForm(self.request.GET or None, user=user)
+        
+        # Filter stats for non-admins
+        issues_qs = Issue.objects.all()
+        if not user.is_admin:
+            issues_qs = issues_qs.filter(target_team=user.role)
+            user_systems = System.objects.filter(groups__user=user)
+            if user_systems.exists():
+                issues_qs = issues_qs.filter(system__in=user_systems)
+
+        context["open_count"] = issues_qs.filter(status=Issue.Status.OPEN).count()
+        context["resolved_count"] = issues_qs.filter(status=Issue.Status.RESOLVED).count()
+        context["frontend_count"] = issues_qs.filter(target_team=Issue.TargetTeam.FRONTEND).count()
+        context["backend_count"] = issues_qs.filter(target_team=Issue.TargetTeam.BACKEND).count()
         return context
 
 
-class ReportPrintView(LoginRequiredMixin, ListView):
+class ReportPrintView(AdminRequiredMixin, ListView):
     model = Issue
     template_name = "core/reports/report_print.html"
     context_object_name = "issues"
 
     def get_queryset(self):
+        user = self.request.user
         queryset = super().get_queryset().select_related("system", "screen", "reported_by").order_by("-created_at")
         
+        # ── Role-based restriction ──
+        if not user.is_admin:
+            queryset = queryset.filter(target_team=user.role)
+            user_systems = System.objects.filter(groups__user=user).distinct()
+            if user_systems.exists():
+                queryset = queryset.filter(system__in=user_systems)
+
         # Apply filters from GET parameters
         start_date = self.request.GET.get("start_date")
         end_date = self.request.GET.get("end_date")

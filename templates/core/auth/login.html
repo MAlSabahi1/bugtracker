@@ -56,14 +56,14 @@
   /* Centered container to prevent excessive stretching on large screens */
   .content-inner {
     width: 100%;
-    max-width: 1300px;
+    max-width: 1500px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 50px;
+    padding: 0 80px;
     z-index: 10;
-    gap: 60px;
+    gap: 100px;
   }
 
   /* Background decorative elements with floating animation */
@@ -124,11 +124,11 @@
 
   .welcome-content h1 {
     font-family: var(--font-heading);
-    font-size: clamp(40px, 5vw, 65px);
+    font-size: clamp(50px, 6vw, 85px);
     font-weight: 900;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     letter-spacing: -1px;
-    line-height: 1;
+    line-height: 1.1;
     color: var(--bs-primary);
   }
 
@@ -137,9 +137,9 @@
     align-items: center;
     gap: 15px;
     font-family: var(--font-heading);
-    font-size: clamp(20px, 2vw, 28px);
+    font-size: clamp(24px, 2.5vw, 32px);
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
     text-transform: uppercase;
     color: var(--rasid-emerald);
     letter-spacing: 4px;
@@ -194,21 +194,21 @@
   }
 
   .welcome-content p {
-    font-size: 16px;
+    font-size: 19px;
     line-height: 1.8;
     opacity: 0.8;
-    max-width: 500px;
+    max-width: 600px;
     color: var(--bs-body-color);
   }
 
   /* Premium Login Card */
   .login-card {
-    flex: 0 0 420px;
+    flex: 0 0 500px;
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
     border-radius: 40px;
-    padding: 50px 40px;
+    padding: 65px 55px;
     z-index: 10;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
     animation: fadeInUp 1s ease-out;
@@ -227,9 +227,9 @@
 
   .login-card h3 {
     font-family: var(--font-heading);
-    font-size: 32px;
+    font-size: 38px;
     color: var(--bs-heading-color);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-weight: 800;
     text-align: center;
   }
@@ -250,17 +250,17 @@
 
   .rasid-input-box input {
     width: 100%;
-    padding: 15px 18px 15px 48px;
+    padding: 18px 20px 18px 52px;
     border: 1.5px solid var(--bs-border-color) !important;
     border-radius: 16px;
     background: var(--bs-body-bg);
     color: var(--bs-heading-color) !important;
-    font-size: 15px;
+    font-size: 17px;
     transition: all 0.3s ease;
   }
 
   [dir="rtl"] .rasid-input-box input {
-    padding: 15px 48px 15px 18px;
+    padding: 18px 52px 18px 20px;
   }
 
   .rasid-input-box input:focus {
@@ -277,6 +277,7 @@
     color: #a0a8c0;
     pointer-events: none;
     z-index: 5;
+    font-size: 22px;
   }
 
   [dir="rtl"] .input-field-icon {
@@ -327,12 +328,12 @@
 
   .btn-submit {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     background: linear-gradient(135deg, var(--rasid-primary) 0%, #4e51d8 100%);
     color: white;
     border: none;
-    border-radius: 16px;
-    font-size: 16px;
+    border-radius: 18px;
+    font-size: 19px;
     text-align: center;
     font-weight: 700;
     cursor: pointer;
@@ -452,10 +453,7 @@
         {% trans "RASID" %}
       </h2>
       <p>
-        {% trans "Rasid — A leading professional platform for bug tracking and
-        software quality assurance. Provides a centralized system for monitoring
-        application stability and managing security vulnerabilities through
-        precise analytical reports." %}
+        {% trans "Rasid — A leading professional platform for bug tracking and software quality assurance. Provides a centralized system for monitoring application stability and managing security vulnerabilities through precise analytical reports." %}
       </p>
     </div>
 

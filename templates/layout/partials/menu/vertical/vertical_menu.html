@@ -52,12 +52,14 @@
     </li>
 
     <!-- Reports -->
+    {% if request.user.is_admin %}
     <li class="menu-item {% if 'report' in request.resolver_match.url_name %}active{% endif %}">
       <a href="{% url 'report-list' %}" class="menu-link">
         <i class="menu-icon icon-base bx bx-printer"></i>
         <div class="text-truncate">{% trans "Reports" %}</div>
       </a>
     </li>
+    {% endif %}
 
 
     {% if request.user.is_admin %}

@@ -12,19 +12,24 @@
         <h5 class="mb-0">
           <span class="text-muted fw-light">#{{ issue.pk }} /</span> {{ issue.title }}
         </h5>
-        {% if request.user.is_admin %}
-        <div class="dropdown">
-          <button class="btn p-0" type="button" id="issueActions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="icon-base bx bx-dots-vertical-rounded icon-lg"></i>
+        <div class="d-flex align-items-center">
+          {% if issue.status != 'resolved' and issue.status != 'closed' %}
+            {% if request.user.is_admin or issue.target_team == request.user.role %}
+            <a href="{% url 'issue-quick-resolve' issue.pk %}" class="btn btn-success me-2">
+              <i class="bx bx-check-circle me-1"></i> {% trans "Mark as Fixed" %}
+            </a>
+            {% endif %}
+          {% endif %}
+
+          {% if request.user.is_admin %}
+          <a href="{% url 'issue-update' issue.pk %}" class="btn btn-label-primary me-2">
+            <i class="bx bx-edit-alt me-1"></i> {% trans "Edit Issue" %}
+          </a>
+          <button type="button" class="btn btn-label-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'issue-delete' issue.pk %}" data-name="{{ issue.title }}">
+            <i class="bx bx-trash me-1"></i> {% trans "Delete" %}
           </button>
-          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="issueActions">
-            <a class="dropdown-item" href="{% url 'issue-update' issue.pk %}"><i class="bx bx-edit-alt me-1"></i> {% trans "Edit Issue" %}</a>
-            <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'issue-delete' issue.pk %}" data-name="{{ issue.title }}">
-              <i class="bx bx-trash me-1"></i> {% trans "Delete" %}
-            </button>
-          </div>
+          {% endif %}
         </div>
-        {% endif %}
       </div>
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-6">

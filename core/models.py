@@ -15,7 +15,6 @@ class System(models.Model):
         related_name="systems",
         verbose_name=_("Groups"),
         blank=True,
-        help_text=_("Groups that have access to this system.")
     )
 
     class Meta:
@@ -43,7 +42,6 @@ class Screen(models.Model):
         related_name="screens",
         verbose_name=_("Groups"),
         blank=True,
-        help_text=_("Groups that have access to this specific screen.")
     )
 
     class Meta:
@@ -63,6 +61,7 @@ class User(AbstractUser):
         ADMIN    = "admin",    _("Admin")
         FRONTEND = "frontend", _("FrontEnd")
         BACKEND  = "backend",  _("BackEnd")
+        SECURITY = "security", _("Security")
 
     role = models.CharField(
         _("Role"),
@@ -124,6 +123,7 @@ class Issue(models.Model):
     class TargetTeam(models.TextChoices):
         FRONTEND = "frontend", _("FrontEnd")
         BACKEND  = "backend",  _("BackEnd")
+        SECURITY = "security", _("Security")
 
     class Resolution(models.TextChoices):
         FIXED = "fixed", _("Fixed")

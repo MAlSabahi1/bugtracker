@@ -40,7 +40,6 @@ class UserForm(forms.ModelForm):
         label=_("Password"),
         required=False,
         widget=forms.PasswordInput(attrs={"placeholder": _("Leave blank to keep same password")}),
-        help_text=_("Provide a password to set/change it. Leave blank to keep the existing password.")
     )
 
     class Meta:
@@ -55,13 +54,17 @@ class UserForm(forms.ModelForm):
             "groups": forms.SelectMultiple(attrs={"class": "select2", "data-placeholder": _("Select groups")}),
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
+        help_texts = {
+            "groups": "",
+            "is_active": "",
+            "username": "",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if not self.instance.pk:
             # If creating a new user, password is required
             self.fields['password'].required = True
-            self.fields['password'].help_text = _("Required for new users.")
 
         self.helper = FormHelper()
         self.helper.form_tag = False
@@ -297,6 +300,10 @@ class SystemForm(forms.ModelForm):
             "groups": forms.SelectMultiple(attrs={"class": "select2", "data-placeholder": _("Assign to groups")}),
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
+        help_texts = {
+            "groups": "",
+            "is_active": "",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -324,6 +331,9 @@ class ScreenForm(forms.ModelForm):
             "system": forms.Select(),
             "name": forms.TextInput(attrs={"placeholder": _("Screen name")}),
             "groups": forms.SelectMultiple(attrs={"class": "select2", "data-placeholder": _("Assign to groups")}),
+        }
+        help_texts = {
+            "groups": "",
         }
 
     def __init__(self, *args, **kwargs):
@@ -362,6 +372,9 @@ class GroupForm(forms.ModelForm):
         fields = ["name", "systems", "screens"]
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": _("Group name")}),
+        }
+        help_texts = {
+            "name": "",
         }
 
     def __init__(self, *args, **kwargs):
@@ -443,6 +456,27 @@ class ReportFilterForm(forms.Form):
         required=False,
         widget=forms.Select(attrs={"class": "form-select"})
     )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if self.user and not self.user.is_admin:
+            # Filter systems
+            user_systems = System.objects.filter(groups__user=self.user).distinct()
+            self.fields["system"].queryset = user_systems
+            
+            # Restrict target_team to only their team
+            self.fields["target_team"].choices = [
+                (self.user.role, dict(Issue.TargetTeam.choices).get(self.user.role))
+            ]
+            self.fields["target_team"].initial = self.user.role
+            self.fields["target_team"].widget.attrs['readonly'] = True
+
+    def clean_target_team(self):
+        val = self.cleaned_data.get("target_team")
+        if self.user and not self.user.is_admin:
+            return self.user.role
+        return val
 
 # ──────────────────────────────────────────────
 # User Profile Form

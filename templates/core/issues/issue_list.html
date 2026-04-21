@@ -89,17 +89,32 @@
             {% endif %}
           </td>
           <td>
-            <div class="dropdown">
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-              <div class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                <a class="dropdown-item" href="{% url 'issue-detail' issue.pk %}"><i class="icon-base bx bx-show-alt me-1"></i> {% trans "View" %}</a>
-                {% if request.user.is_admin %}
-                <a class="dropdown-item" href="{% url 'issue-update' issue.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
-                <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'issue-delete' issue.pk %}" data-name="{{ issue.title }}">
-                  <i class="icon-base bx bx-trash me-1"></i> {% trans "Delete" %}
-                </button>
+            <div class="d-flex align-items-center gap-1">
+              <!-- View Button -->
+              <a href="{% url 'issue-detail' issue.pk %}" class="btn btn-icon btn-label-secondary" title="{% trans 'View Details' %}">
+                <i class="icon-base bx bx-show-alt"></i>
+              </a>
+
+              {% if issue.status != 'resolved' and issue.status != 'closed' %}
+                {% if request.user.is_admin or issue.target_team == request.user.role %}
+                <!-- Quick Resolve Button -->
+                <a href="{% url 'issue-quick-resolve' issue.pk %}" class="btn btn-icon btn-label-success" title="{% trans 'Mark as Fixed' %}">
+                  <i class="icon-base bx bx-check-circle"></i>
+                </a>
                 {% endif %}
-              </div>
+              {% endif %}
+
+              {% if request.user.is_admin %}
+                <!-- Edit Button -->
+                <a href="{% url 'issue-update' issue.pk %}" class="btn btn-icon btn-label-primary" title="{% trans 'Edit' %}">
+                  <i class="icon-base bx bx-edit-alt"></i>
+                </a>
+                
+                <!-- Delete Button -->
+                <button type="button" class="btn btn-icon btn-label-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'issue-delete' issue.pk %}" data-name="{{ issue.title }}" title="{% trans 'Delete' %}">
+                  <i class="icon-base bx bx-trash"></i>
+                </button>
+              {% endif %}
             </div>
           </td>
         </tr>

@@ -5,129 +5,143 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-xxl">
-      <div class="card mb-6">
-        <div class="card-header d-flex align-items-center justify-content-between">
-          <h5 class="mb-0">{{ page_title }}</h5>
-          <a href="{% url 'issue-list' %}" class="btn btn-sm btn-outline-secondary">{% trans "Back to List" %}</a>
+  <div class="col-12">
+    <div class="card mb-6 shadow-sm border-0">
+      <!-- Card Header -->
+      <div class="card-header d-flex align-items-center justify-content-between border-bottom py-4">
+        <div class="d-flex align-items-center">
+          <div class="avatar flex-shrink-0 me-3">
+            <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-bug-alt fs-4"></i></span>
+          </div>
+          <div>
+            <h5 class="card-title mb-0">{{ page_title }}</h5>
+            <small class="text-muted">{% trans "Please fill in the technical details accurately" %}</small>
+          </div>
         </div>
-        <div class="card-body">
-          <form method="post" enctype="multipart/form-data" class="confirm-save" novalidate>
-            {% csrf_token %}
-            {% include 'layout/partials/form_errors.html' %}
+        <a href="{% url 'issue-list' %}" class="btn btn-label-secondary btn-sm">
+          <i class="bx bx-chevron-left me-1"></i>{% trans "Back to List" %}
+        </a>
+      </div>
 
-            {% load crispy_forms_tags %}
-            
-            <!-- Section 1: Core Information -->
-            <div class="row gx-4 gy-2">
-                <div class="col-12 mb-3">
-                    {{ form.title|as_crispy_field }}
-                </div>
-                <div class="col-12 mb-3">
-                    {{ form.description|as_crispy_field }}
-                </div>
+      <!-- Card Body -->
+      <div class="card-body pt-6">
+        <form method="post" enctype="multipart/form-data" class="confirm-save" novalidate>
+          {% csrf_token %}
+          {% include 'layout/partials/form_errors.html' %}
+          {% load crispy_forms_tags %}
+
+          <!-- Section 1: Basic Information -->
+          <div class="row mb-6">
+            <div class="col-12">
+              <h6 class="fw-bold mb-4"><i class="bx bx-info-circle me-2 text-primary"></i>{% trans "Core Information" %}</h6>
             </div>
-
-            <!-- Section 2: Localization & Classification -->
-            <div class="row gx-4 gy-2">
-                <div class="col-md-6 mb-3">
-                    {{ form.system|as_crispy_field }}
-                </div>
-                <div class="col-md-6 mb-3">
-                    {{ form.screen|as_crispy_field }}
-                </div>
+            <div class="col-md-12 mb-4">
+              {{ form.title|as_crispy_field }}
             </div>
-
-            <div class="row gx-4 gy-2">
-                <div class="col-md-6 mb-3">
-                    {{ form.issue_type|as_crispy_field }}
-                </div>
-                <div class="col-md-6 mb-3">
-                    {{ form.priority|as_crispy_field }}
-                </div>
+            <div class="col-md-6 mb-4">
+              {{ form.system|as_crispy_field }}
             </div>
+            <div class="col-md-6 mb-4">
+              {{ form.screen|as_crispy_field }}
+            </div>
+          </div>
 
-            {% if form.target_team or form.assigned_to or form.status %}
-            <div class="row gx-4 gy-2 align-items-end">
-                {% if form.target_team %}
-                <div class="col-md-4 mb-3">
-                    {{ form.target_team|as_crispy_field }}
-                </div>
-                {% endif %}
-                {% if form.assigned_to %}
-                <div class="col-md-4 mb-3">
-                    {{ form.assigned_to|as_crispy_field }}
-                </div>
-                {% endif %}
-                {% if form.status %}
-                <div class="col-md-4 mb-3">
-                    {{ form.status|as_crispy_field }}
-                </div>
-                {% endif %}
+          <div class="row mb-6">
+            <div class="col-md-4 mb-4">
+              {{ form.issue_type|as_crispy_field }}
+            </div>
+            <div class="col-md-4 mb-4">
+              {{ form.priority|as_crispy_field }}
+            </div>
+            {% if form.target_team %}
+            <div class="col-md-4 mb-4">
+              {{ form.target_team|as_crispy_field }}
             </div>
             {% endif %}
+          </div>
 
-            <!-- Section 3: Technical Details -->
-            <div class="divider text-start my-6">
-                <div class="divider-text text-uppercase small fw-bold text-primary">
-                    <i class="bx bx-code-alt me-1"></i>{% trans "Technical Details" %}
-                </div>
+          <!-- Section 2: Technical Description -->
+          <hr class="my-6 mx-n4">
+          <div class="row mb-6">
+            <div class="col-12">
+              <h6 class="fw-bold mb-4"><i class="bx bx-detail me-2 text-primary"></i>{% trans "Technical Details & Context" %}</h6>
             </div>
+            <div class="col-12 mb-4">
+              {{ form.description|as_crispy_field }}
+            </div>
+            <div class="col-12 mb-4">
+              {{ form.steps_to_reproduce|as_crispy_field }}
+            </div>
+            <div class="col-md-6 mb-4">
+              {{ form.expected_result|as_crispy_field }}
+            </div>
+            <div class="col-md-6 mb-4">
+              {{ form.actual_result|as_crispy_field }}
+            </div>
+          </div>
 
-            <div class="row gx-4 gy-2">
-                <div class="col-12 mb-3">
-                    {{ form.steps_to_reproduce|as_crispy_field }}
-                </div>
+          <!-- Section 3: Classification & Assignment (If Admin/Update) -->
+          {% if form.assigned_to or form.status %}
+          <hr class="my-6 mx-n4">
+          <div class="row mb-6">
+            <div class="col-12">
+              <h6 class="fw-bold mb-4"><i class="bx bx-user-check me-2 text-primary"></i>{% trans "Assignment & Status" %}</h6>
             </div>
-
-            <div class="row gx-4 gy-2">
-                <div class="col-md-6 mb-3">
-                    {{ form.expected_result|as_crispy_field }}
-                </div>
-                <div class="col-md-6 mb-3">
-                    {{ form.actual_result|as_crispy_field }}
-                </div>
-            </div>
-
-            <!-- Section 4: Resolution & Root Cause (Only if visible / Update View) -->
-            {% if form.resolution or form.root_cause %}
-            <div class="divider text-start my-6">
-                <div class="divider-text text-uppercase small fw-bold text-success">
-                    <i class="bx bx-check-shield me-1"></i>{% trans "Closure Information" %}
-                </div>
-            </div>
-            <div class="row gx-4 gy-2">
-                {% if form.resolution %}
-                <div class="col-md-6 mb-3">
-                    {{ form.resolution|as_crispy_field }}
-                </div>
-                {% endif %}
-                {% if form.root_cause %}
-                <div class="col-md-6 mb-3">
-                    {{ form.root_cause|as_crispy_field }}
-                </div>
-                {% endif %}
+            {% if form.assigned_to %}
+            <div class="col-md-6 mb-4">
+              {{ form.assigned_to|as_crispy_field }}
             </div>
             {% endif %}
-
-            <!-- Section 5: Attachments -->
-            <div class="row gx-4 mt-2">
-                <div class="col-12">
-                    {{ form.image|as_crispy_field }}
-                </div>
+            {% if form.status %}
+            <div class="col-md-6 mb-4">
+              {{ form.status|as_crispy_field }}
             </div>
-            
-            <div class="row justify-content-end mt-8">
-              <div class="col-sm-12 text-end">
-                <button type="submit" class="btn btn-primary btn-lg px-8 shadow-sm">
-                    <i class="bx bx-save me-1"></i>{% trans "Save Error" %}
-                </button>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          <!-- Section 4: Resolution (If visible) -->
+          {% if form.resolution or form.root_cause %}
+          <div class="bg-lighter p-4 rounded mb-6">
+            <h6 class="fw-bold mb-4 text-success"><i class="bx bx-check-shield me-2"></i>{% trans "Resolution Data" %}</h6>
+            <div class="row">
+              {% if form.resolution %}
+              <div class="col-md-6 mb-4">
+                {{ form.resolution|as_crispy_field }}
+              </div>
+              {% endif %}
+              {% if form.root_cause %}
+              <div class="col-md-6 mb-4">
+                {{ form.root_cause|as_crispy_field }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Section 5: Attachments -->
+          <div class="row mb-6">
+            <div class="col-12">
+              <div class="p-4 border border-dashed rounded text-center bg-label-primary">
+                <i class="bx bx-cloud-upload fs-1 text-primary mb-2"></i>
+                {{ form.image|as_crispy_field }}
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="row mt-4">
+            <div class="col-12 text-end">
+              <button type="reset" class="btn btn-label-secondary me-2">{% trans "Cancel" %}</button>
+              <button type="submit" class="btn btn-primary px-6">
+                <i class="bx bx-save me-1"></i>{% trans "Save Error Report" %}
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
 </div>
 {% endblock %}
 

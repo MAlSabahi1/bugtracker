@@ -5,69 +5,82 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-xxl">
-    <div class="card mb-6">
-      <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">{{ title }}</h5>
-        <small class="text-muted float-end">{% trans "User Account Information" %}</small>
+  <div class="col-12">
+    <div class="card mb-6 shadow-sm border-0">
+      <div class="card-header d-flex align-items-center justify-content-between border-bottom py-4">
+        <div class="d-flex align-items-center">
+          <div class="avatar flex-shrink-0 me-3">
+            <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-user fs-4"></i></span>
+          </div>
+          <div>
+            <h5 class="card-title mb-0">{{ title }}</h5>
+            <small class="text-muted">{% trans "User account settings and role management" %}</small>
+          </div>
+        </div>
+        <a href="{% url 'user-list' %}" class="btn btn-label-secondary btn-sm">
+          <i class="bx bx-chevron-left me-1"></i>{% trans "Back to List" %}
+        </a>
       </div>
-      <div class="card-body">
+      <div class="card-body pt-6">
         <form method="post" class="confirm-save" novalidate>
           {% csrf_token %}
           {% include 'layout/partials/form_errors.html' %}
-
           {% load crispy_forms_tags %}
           
-          <div class="row gx-4 gy-2">
-            <!-- Section 1: Basic Identity -->
-            <div class="col-md-6 mb-3">
+          <div class="row mb-6">
+            <div class="col-12">
+              <h6 class="fw-bold mb-4 text-primary"><i class="bx bx-id-card me-2"></i>{% trans "Identity" %}</h6>
+            </div>
+            <div class="col-md-6 mb-4">
               {{ form.username|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6 mb-4">
               {{ form.email|as_crispy_field }}
             </div>
-          </div>
-
-          <div class="divider text-start my-6">
-            <div class="divider-text text-uppercase small fw-bold text-primary">
-              <i class="bx bx-shield-quarter me-1"></i>{% trans "Access & Permissions" %}
+            <div class="col-md-6 mb-4">
+              {{ form.first_name|as_crispy_field }}
+            </div>
+            <div class="col-md-6 mb-4">
+              {{ form.last_name|as_crispy_field }}
             </div>
           </div>
 
-          <div class="row gx-4 gy-2">
-            <div class="col-md-6 mb-3">
+          <hr class="my-6 mx-n4">
+          <div class="row mb-6">
+            <div class="col-12">
+              <h6 class="fw-bold mb-4 text-primary"><i class="bx bx-shield-quarter me-2"></i>{% trans "Access & Roles" %}</h6>
+            </div>
+            <div class="col-md-6 mb-4">
               {{ form.role|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-3 d-flex align-items-center mt-4">
-              {{ form.is_active|as_crispy_field }}
+            <div class="col-md-6 mb-4 d-flex align-items-center mt-4">
+               <div class="form-check form-switch mb-0">
+                 {{ form.is_active|as_crispy_field }}
+               </div>
             </div>
-          </div>
-
-          <div class="row gx-4 gy-2 mt-2">
-            <div class="col-12 mb-3">
+            <div class="col-12 mb-4">
               {{ form.groups|as_crispy_field }}
             </div>
           </div>
 
           {% if form.password %}
-          <div class="divider text-start my-6">
-            <div class="divider-text text-uppercase small fw-bold text-warning">
-              <i class="bx bx-key me-1"></i>{% trans "Security" %}
+          <hr class="my-6 mx-n4">
+          <div class="row mb-6">
+            <div class="col-12">
+              <h6 class="fw-bold mb-4 text-warning"><i class="bx bx-key me-2"></i>{% trans "Security" %}</h6>
             </div>
-          </div>
-          <div class="row gx-4 gy-2">
-            <div class="col-md-6 mb-3">
+            <div class="col-md-6 mb-4">
               {{ form.password|as_crispy_field }}
             </div>
           </div>
           {% endif %}
 
-          <div class="row justify-content-end mt-8">
-            <div class="col-sm-12 text-end">
-              <button type="submit" class="btn btn-primary btn-lg px-8 shadow-sm">
-                  <i class="bx bx-save me-1"></i>{% trans "Save User" %}
+          <div class="row mt-4">
+            <div class="col-12 text-end">
+              <button type="reset" class="btn btn-label-secondary me-2">{% trans "Cancel" %}</button>
+              <button type="submit" class="btn btn-primary px-6">
+                <i class="bx bx-save me-1"></i>{% trans "Save User" %}
               </button>
-              <a href="{% url 'user-list' %}" class="btn btn-outline-secondary btn-lg px-6">{% trans "Cancel" %}</a>
             </div>
           </div>
         </form>

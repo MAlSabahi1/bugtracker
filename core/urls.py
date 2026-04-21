@@ -16,6 +16,7 @@ urlpatterns = [
     path("issues/<int:pk>/", views.IssueDetailView.as_view(), name="issue-detail"),
     path("issues/<int:pk>/edit/", views.IssueUpdateView.as_view(), name="issue-update"),
     path("issues/<int:pk>/delete/", views.IssueDeleteView.as_view(), name="issue-delete"),
+    path("issues/<int:pk>/quick-resolve/", views.quick_resolve_issue, name="issue-quick-resolve"),
 
     # Comments
     path("issues/<int:issue_pk>/comment/", views.CommentCreateView.as_view(), name="comment-create"),
