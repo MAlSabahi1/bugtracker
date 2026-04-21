@@ -1,0 +1,19 @@
+{% load i18n %}
+{% if form.errors %}
+<div class="alert-danger">
+    <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <div class="d-flex flex-column">
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <span class="fw-bold">{{ error }}</span>
+            {% endfor %}
+        {% else %}
+            <span class="fw-bold">{% trans "Please correct the errors below and try again." %}</span>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

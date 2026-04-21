@@ -27,7 +27,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: #f0f2f9;
+        background-color: var(--bs-body-bg);
         font-family: var(--font-body);
     }
 
@@ -40,10 +40,10 @@
 
     .rasid-lang-footer {
         display: flex;
-        background: #f8f9ff;
+        background: var(--bs-body-bg);
         padding: 5px;
         border-radius: 12px;
-        border: 1px solid #eef0f7;
+        border: 1px solid var(--bs-border-color);
     }
 
     .rasid-lang-pill {
@@ -55,13 +55,13 @@
         cursor: pointer;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         background: transparent;
-        color: #a0a8c0;
+        color: var(--bs-body-color);
         letter-spacing: 0.5px;
     }
 
     .rasid-lang-pill.active {
-        background: white;
-        color: var(--rasid-primary);
+        background: var(--bs-primary);
+        color: white;
         box-shadow: 0 4px 12px rgba(105, 108, 255, 0.15);
     }
 
@@ -74,7 +74,7 @@
     .main-wrapper {
         width: 100vw;
         height: 100vh;
-        background: linear-gradient(135deg, var(--rasid-deep-navy) 0%, var(--rasid-navy) 100%);
+        background: var(--bs-body-bg);
         display: flex;
         align-items: center;
         padding: 0 8%;
@@ -87,18 +87,18 @@
         position: absolute;
         width: 450px;
         height: 450px;
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(var(--bs-primary-rgb), 0.12);
         border-radius: 50%;
         z-index: 1; /* طبقة خلفية جداً */
     }
 
     .c1 {
-        bottom: -150px;
-        left: -100px;
+        bottom: -50px;
+        left: -50px;
     }
 
     .c2 {
-        top: -100px;
+        top: -50px;
         right: -50px;
         width: 300px;
         height: 300px;
@@ -107,7 +107,7 @@
     /* القسم الأيسر (النصوص الترحيبية) */
     .welcome-content {
         flex: 1;
-        color: white;
+        color: var(--bs-heading-color);
         z-index: 5;
         padding-right: 20px;
         position: relative;
@@ -182,12 +182,13 @@
         line-height: 1.7;
         opacity: 0.85;
         max-width: 400px;
+        color: var(--bs-body-color);
     }
 
     /* القسم الأيمن (الصندوق الأبيض العائم) */
     .login-card {
         width: 380px;
-        background: white;
+        background: var(--bs-paper-bg, #fff);
         border-radius: 35px;
         padding: 45px 35px;
         z-index: 10; /* فوق النصوص والدوارئر */
@@ -196,10 +197,15 @@
         position: relative;
     }
 
+    [data-bs-theme="dark"] .login-card {
+        background: #2b2c40;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
     .login-card h3 {
         font-family: var(--font-heading);
         font-size: 34px;
-        color: var(--rasid-deep-navy);
+        color: var(--bs-heading-color);
         margin-bottom: 8px;
         font-weight: 800;
         text-align: center;
@@ -207,7 +213,7 @@
 
     .login-card .subtitle {
         font-size: 11px;
-        color: #888;
+        color: var(--bs-body-color);
         margin-bottom: 30px;
         text-align: center;
     }
@@ -220,10 +226,10 @@
     .rasid-input-box input {
         width: 100%;
         padding: 14px 18px 14px 45px;
-        border: 1px solid #dcdfe6 !important; /* إطار واحد فقط وصريح */
+        border: 1px solid var(--bs-border-color) !important; /* إطار واحد فقط وصريح */
         border-radius: 12px;
-        background: #f8f9fa;
-        color: #333 !important;
+        background: var(--bs-body-bg);
+        color: var(--bs-heading-color) !important;
         font-size: 14px;
         outline: none !important;
         box-shadow: none !important; /* إزالة أي تكرار ناتج عن المتصفح أو بوتستراب */
@@ -240,13 +246,13 @@
     }
 
     .rasid-input-box input:hover {
-        border: 1px solid #b4bccc !important;
+        border: 1px solid var(--bs-primary) !important;
         box-shadow: none !important;
     }
 
     .rasid-input-box input:focus {
         border: 1px solid var(--rasid-primary) !important;
-        background: white;
+        background: var(--bs-body-bg);
         box-shadow: none !important;
         outline: none !important;
     }
@@ -347,41 +353,7 @@
         font-weight: bold;
     }
 
-    /* Professional Error Styles */
-    .alert-danger {
-        font-size: 13px;
-        background: rgba(209, 46, 46, 0.05);
-        color: #d12e2e;
-        padding: 12px 16px;
-        border-radius: 12px;
-        margin-bottom: 25px;
-        border: 1px solid rgba(209, 46, 46, 0.1);
-        border-left: 4px solid #d12e2e;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        animation: slideInShake 0.5s ease-out;
-    }
 
-    [dir="rtl"] .alert-danger {
-        border-left: 1px solid rgba(209, 46, 46, 0.1);
-        border-right: 4px solid #d12e2e;
-    }
-
-    .error-icon {
-        flex-shrink: 0;
-        width: 18px;
-        height: 18px;
-    }
-
-    @keyframes slideInShake {
-        0% { transform: translateX(20px); opacity: 0; }
-        20% { transform: translateX(-10px); }
-        40% { transform: translateX(8px); }
-        60% { transform: translateX(-5px); }
-        80% { transform: translateX(2px); }
-        100% { transform: translateX(0); opacity: 1; }
-    }
 
     /* --- RESPONSIVE DESIGN --- */
 
@@ -469,16 +441,7 @@
         <h3>{% trans "Sign in" %}</h3>
         <p class="subtitle">{% trans "Please sign in to access the monitoring dashboard." %}</p>
         
-        {% if form.non_field_errors %}
-            <div class="alert-danger">
-                <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <span>{% for error in form.non_field_errors %}{{ error }}{% endfor %}</span>
-            </div>
-        {% endif %}
+        {% include 'layout/partials/form_errors.html' %}
 
         <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}

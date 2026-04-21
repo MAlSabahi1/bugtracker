@@ -146,8 +146,10 @@
         <hr class="my-6" />
         <form action="{% url 'comment-create' issue.pk %}" method="post">
           {% csrf_token %}
+          {% include 'layout/partials/form_errors.html' with form=comment_form %}
           {% load crispy_forms_tags %}
           {{ comment_form|crispy }}
+
           <div class="d-flex justify-content-end mt-4">
             <button type="submit" class="btn btn-primary">
               <i class="bx bx-paper-plane me-1"></i>{% trans "Post Comment" %}

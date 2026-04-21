@@ -65,11 +65,11 @@
             {% if request.user.is_admin %}
               <div class="dropdown">
                 <button type="button" class="btn btn-sm p-0 dropdown-toggle hide-arrow status-indicator-btn" data-bs-toggle="dropdown">
-                  {% if issue.status == 'open' %}<span class="badge bg-label-warning px-2">{% trans "Open" %}</span>
-                  {% elif issue.status == 'in_progress' %}<span class="badge bg-label-info px-2">{% trans "In Progress" %}</span>
-                  {% elif issue.status == 'resolved' %}<span class="badge bg-label-success px-2">{% trans "Resolved" %}</span>
-                  {% elif issue.status == 'closed' %}<span class="badge bg-label-secondary px-2">{% trans "Closed" %}</span>
-                  {% else %}<span class="badge bg-label-danger px-2">{% trans "Reopened" %}</span>{% endif %}
+                  {% if issue.status == 'open' %}<span class="badge bg-label-warning px-2 shadow-xs">{% trans "Open" %}</span>
+                  {% elif issue.status == 'in_progress' %}<span class="badge bg-label-info px-2 shadow-xs">{% trans "In Progress" %}</span>
+                  {% elif issue.status == 'resolved' %}<span class="badge bg-label-success px-2 shadow-xs">{% trans "Resolved" %}</span>
+                  {% elif issue.status == 'closed' %}<span class="badge bg-label-secondary px-2 shadow-xs">{% trans "Closed" %}</span>
+                  {% else %}<span class="badge bg-label-danger px-2 shadow-xs">{% trans "Reopened" %}</span>{% endif %}
                 </button>
                 <div class="dropdown-menu dropdown-menu-end shadow-sm border-0 animate-scale">
                   <h6 class="dropdown-header small text-muted">{% trans "Transition To" %}</h6>
@@ -81,17 +81,17 @@
                 </div>
               </div>
             {% else %}
-              {% if issue.status == 'open' %}<span class="badge bg-label-warning">{% trans "Open" %}</span>
-              {% elif issue.status == 'in_progress' %}<span class="badge bg-label-info">{% trans "In Progress" %}</span>
-              {% elif issue.status == 'resolved' %}<span class="badge bg-label-success">{% trans "Resolved" %}</span>
-              {% elif issue.status == 'closed' %}<span class="badge bg-label-secondary">{% trans "Closed" %}</span>
-              {% else %}<span class="badge bg-label-danger">{% trans "Reopened" %}</span>{% endif %}
+              {% if issue.status == 'open' %}<span class="badge bg-label-warning shadow-xs">{% trans "Open" %}</span>
+              {% elif issue.status == 'in_progress' %}<span class="badge bg-label-info shadow-xs">{% trans "In Progress" %}</span>
+              {% elif issue.status == 'resolved' %}<span class="badge bg-label-success shadow-xs">{% trans "Resolved" %}</span>
+              {% elif issue.status == 'closed' %}<span class="badge bg-label-secondary shadow-xs">{% trans "Closed" %}</span>
+              {% else %}<span class="badge bg-label-danger shadow-xs">{% trans "Reopened" %}</span>{% endif %}
             {% endif %}
           </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu dropdown-menu-end shadow-sm border-0">
                 <a class="dropdown-item" href="{% url 'issue-detail' issue.pk %}"><i class="icon-base bx bx-show-alt me-1"></i> {% trans "View" %}</a>
                 {% if request.user.is_admin %}
                 <a class="dropdown-item" href="{% url 'issue-update' issue.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
@@ -105,7 +105,9 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="8" class="text-center py-4">{% trans "No errors found matching your criteria." %}</td>
+          <td colspan="8">
+            {% include 'layout/partials/empty_state.html' with icon='bx-bug-alt' title=_('No errors tracked') message=_('No issues match your current filters or there are no reports in the system.') action_url='/core/issues/create/' action_text=_('Report New Error') %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

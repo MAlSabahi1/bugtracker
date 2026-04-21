@@ -39,15 +39,15 @@
             {% endif %}
           </td>
           <td>
-            <span class="badge badge-center rounded-pill bg-label-warning">{{ system.issue_set.count }}</span>
+            <span class="badge badge-center rounded-pill bg-label-warning shadow-xs">{{ system.issue_set.count }}</span>
           </td>
           <td>
-            <span class="badge bg-label-info">{{ system.screen_set.count }}</span>
+            <span class="badge bg-label-info shadow-xs">{{ system.screen_set.count }}</span>
           </td>
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu dropdown-menu-end shadow-sm border-0">
                 <a class="dropdown-item" href="{% url 'system-update' system.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
                 <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'system-delete' system.pk %}" data-name="{{ system.name }}">
                   <i class="icon-base bx bx-trash me-1"></i> {% trans "Delete" %}
@@ -58,7 +58,9 @@
         </tr>
         {% empty %}
         <tr>
-          <td colspan="6" class="text-center py-4">{% trans "No systems defined yet." %}</td>
+          <td colspan="6">
+            {% include 'layout/partials/empty_state.html' with icon='bx-collection' title=_('No systems defined') message=_('Start by adding your first system to track errors and issues.') action_url='/core/systems/create/' action_text=_('Create System') %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

@@ -15,18 +15,18 @@
     <!-- Search & Quick Action -->
     <div class="navbar-nav align-items-center flex-grow-1">
       <div class="nav-item d-flex align-items-center w-100 me-4">
-        <div class="input-group input-group-merge shadow-none border-0 w-100 bg-label-secondary rounded-pill px-3">
+        <div class="input-group input-group-merge shadow-none border-0 w-100 bg-label-secondary rounded-pill px-3 transition-all" style="transition: all 0.3s ease;">
           <span class="input-group-text border-0 ps-0 pe-2 bg-transparent"><i class="icon-base bx bx-search fs-4 text-muted"></i></span>
-          <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 bg-transparent" placeholder="{% trans 'Search issues (Ctrl+K)...' %}" aria-label="{% trans 'Search...' %}">
+          <input type="text" class="form-control border-0 shadow-none ps-1 ps-sm-2 bg-transparent" placeholder="{% trans 'Search issues (Ctrl+K)...' %}" aria-label="{% trans 'Search...' %}" onfocus="this.parentElement.classList.replace('bg-label-secondary', 'bg-label-primary')" onblur="this.parentElement.classList.replace('bg-label-primary', 'bg-label-secondary')">
         </div>
       </div>
     </div>
     
     <!-- Quick Report Button -->
     <div class="navbar-nav align-items-center d-none d-md-flex me-4">
-      <a href="{% url 'issue-create' %}" class="btn btn-primary d-flex align-items-center shadow-sm">
-        <i class="bx bx-plus me-1"></i>
-        <span class="d-none d-lg-inline">{% trans "Add Error" %}</span>
+      <a href="{% url 'issue-create' %}" class="btn btn-primary d-flex align-items-center shadow-md transform-hover" style="transition: transform 0.2s;">
+        <i class="bx bx-plus-circle me-1 fs-5"></i>
+        <span class="d-none d-lg-inline fw-semibold">{% trans "Add Error" %}</span>
       </a>
     </div>
     <!-- /Search & Quick Action -->

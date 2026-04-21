@@ -131,6 +131,42 @@
     display: block;
   }
   
+  /* Professional Global Error Styles (Matching Login Screen) */
+  .alert-danger {
+    font-size: 0.85rem;
+    background: rgba(255, 62, 29, 0.05) !important;
+    color: #ff3e1d !important;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 62, 29, 0.1) !important;
+    border-left: 4px solid #ff3e1d !important;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideInShake 0.5s ease-out;
+  }
+
+  [dir="rtl"] .alert-danger {
+    border-left: 1px solid rgba(255, 62, 29, 0.1) !important;
+    border-right: 4px solid #ff3e1d !important;
+  }
+
+  .error-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  @keyframes slideInShake {
+    0% { transform: translateX(20px); opacity: 0; }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(2px); }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  
   /* Crispy field error text refinement */
   .invalid-feedback strong {
     font-weight: 500;

@@ -78,6 +78,8 @@
 
         <form method="POST" action="{% url 'user-profile' %}" enctype="multipart/form-data">
           {% csrf_token %}
+          {% include 'layout/partials/form_errors.html' %}
+
 
           <!-- Hidden avatar input tied to the camera button -->
           <input type="file" name="avatar" id="avatarFileInput" class="avatar-upload-input" accept="image/*">

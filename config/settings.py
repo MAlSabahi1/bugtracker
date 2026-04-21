@@ -20,8 +20,7 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
-
+ALLOWED_HOSTS = ['my-app.onrender.com', 'localhost', '127.0.0.1']
 ENVIRONMENT = os.environ.get("DJANGO_ENVIRONMENT", "local")
 
 # Application definition

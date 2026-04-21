@@ -5,8 +5,8 @@
 
 {% block content %}
 <div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">{% trans "Users List" %}</h5>
+  <div class="card-header d-flex justify-content-between align-items-center border-bottom mb-4">
+    <h5 class="card-title mb-0">{% trans "Users List" %}</h5>
     {% if request.user.is_admin %}
     <a href="{% url 'user-create' %}" class="btn btn-primary">
         <i class="icon-base bx bx-user-plus me-1"></i> {% trans "Add User" %}
@@ -31,7 +31,7 @@
           <td>
             <div class="d-flex align-items-center">
               <div class="avatar avatar-sm me-3">
-                <span class="avatar-initial rounded-circle bg-label-primary">{{ member.username.0|upper }}</span>
+                <span class="avatar-initial rounded-circle bg-label-primary shadow-xs">{{ member.username.0|upper }}</span>
               </div>
               <div class="d-flex flex-column">
                 <span class="user-name fw-semibold text-heading">{{ member.username }}</span>
@@ -46,9 +46,9 @@
           </td>
           <td>
             {% if member.groups.all %}
-              <div class="d-flex flex-column">
+              <div class="d-flex flex-wrap gap-1">
                 {% for group in member.groups.all %}
-                    <span class="badge bg-label-info mb-1">{{ group.name }}</span>
+                    <span class="badge bg-label-info">{{ group.name }}</span>
                 {% endfor %}
               </div>
             {% else %}
@@ -65,7 +65,7 @@
           <td>
             <div class="dropdown">
               <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="icon-base bx bx-dots-vertical-rounded"></i></button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu dropdown-menu-end shadow-sm border-0">
                 {% if request.user.is_admin %}
                 <a class="dropdown-item" href="{% url 'user-update' member.pk %}"><i class="icon-base bx bx-edit-alt me-1"></i> {% trans "Edit" %}</a>
                 <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-url="{% url 'user-delete' member.pk %}" data-name="{{ member.username }}">
@@ -80,7 +80,9 @@
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5" class="text-center py-4">{% trans "No users found in the system." %}</td>
+            <td colspan="5">
+                {% include 'layout/partials/empty_state.html' with icon='bx-group' title=_('No users found') message=_('There are currently no users registered in the system.') action_url='/core/users/create/' action_text=_('Add First User') %}
+            </td>
         </tr>
         {% endfor %}
       </tbody>

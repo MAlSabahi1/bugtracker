@@ -14,15 +14,43 @@
       <div class="card-body">
         <form method="post" class="confirm-save" novalidate>
           {% csrf_token %}
-          {% load crispy_forms_tags %}
-          {{ form|crispy }}
+          {% include 'layout/partials/form_errors.html' %}
 
-          <div class="row justify-content-end mt-6">
+          {% load crispy_forms_tags %}
+          
+          <div class="row gx-4">
+            <div class="col-md-8 mb-3">
+              {{ form.name|as_crispy_field }}
+            </div>
+            <div class="col-md-4 mb-3 d-flex align-items-center mt-4">
+              {{ form.is_active|as_crispy_field }}
+            </div>
+          </div>
+
+          <div class="row gx-4 mt-2">
+            <div class="col-12 mb-3">
+              {{ form.description|as_crispy_field }}
+            </div>
+          </div>
+
+          <div class="divider text-start my-6">
+            <div class="divider-text text-uppercase small fw-bold text-primary">
+              <i class="bx bx-group me-1"></i>{% trans "Stakeholders" %}
+            </div>
+          </div>
+
+          <div class="row gx-4">
+            <div class="col-12 mb-3">
+              {{ form.groups|as_crispy_field }}
+            </div>
+          </div>
+
+          <div class="row justify-content-end mt-8">
             <div class="col-sm-12 text-end">
-              <button type="submit" class="btn btn-primary me-2">
+              <button type="submit" class="btn btn-primary btn-lg px-8 shadow-sm me-2">
                 <i class="bx bx-save me-1"></i>{% trans "Save System" %}
               </button>
-              <a href="{% url 'system-list' %}" class="btn btn-outline-secondary">{% trans "Cancel" %}</a>
+              <a href="{% url 'system-list' %}" class="btn btn-outline-secondary btn-lg px-6">{% trans "Cancel" %}</a>
             </div>
           </div>
         </form>

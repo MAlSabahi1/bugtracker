@@ -1,0 +1,15 @@
+{% load i18n %}
+<div class="text-center py-5 my-4">
+    <div class="mb-4">
+        <div class="avatar avatar-xl bg-label-secondary d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 80px; height: 80px;">
+            <i class="bx {{ icon|default:'bx-box' }} fs-1 text-muted"></i>
+        </div>
+    </div>
+    <h5 class="text-heading fw-bold mb-2">{{ title|default:_("No results found") }}</h5>
+    <p class="text-muted mb-4 mx-auto" style="max-width: 350px;">{{ message|default:_("We couldn't find any items matching your current view.") }}</p>
+    {% if action_url %}
+    <a href="{{ action_url }}" class="btn btn-primary">
+        <i class="bx bx-plus me-1"></i> {{ action_text|default:_("Add New") }}
+    </a>
+    {% endif %}
+</div>

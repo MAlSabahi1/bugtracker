@@ -1,331 +1,90 @@
-import re
+import os
 
-translations = {
-    'Bug Tracking & Security Testing System built with Django and Sneat Bootstrap Template.': 'نظام تتبع الأخطاء واختبار الأمان مبني باستخدام Django وقالب Sneat Bootstrap.',
-    'BugTracker — Bug Tracking & Security Testing System': 'BugTracker — نظام تتبع الأخطاء واختبار الأمان',
-    'Provide a password to set/change it. Leave blank to keep the existing password.': 'أدخل كلمة مرور لتحديدها أو تغييرها. اتركها فارغة للاحتفاظ بكلمة المرور الحالية.',
-    'Select groups': 'اختر المجموعات',
-    'Assign to groups': 'تعيين للمجموعات',
-    'Accessible': 'الأنظمة المتاحة',
-    'Select screens': 'اختر الشاشات',
-    'Specific Screens Assigned': 'شاشات محددة معينة',
-    'Groups that have access to this system.': 'المجموعات التي لديها صلاحية الوصول لهذا النظام.',
-    'Groups that have access to this specific screen.': 'المجموعات التي لديها صلاحية الوصول لهذه الشاشة المحددة.',
-    'Users': 'المستخدمين',
-    'Image Attachment': 'مرفق صورة',
-    'Comment Content': 'محتوى التعليق',
-    'Issue Log': 'سجل المشكلة',
-    'Issue Logs': 'سجلات المشاكل',
-    'New Issue': 'مشكلة جديدة',
-    "Issue '%s' created successfully.": "تم إنشاء المشكلة '%s' بنجاح.",
-    "Issue '%s' updated successfully.": "تم تحديث المشكلة '%s' بنجاح.",
-    "Issue '%s' deleted successfully.": "تم حذف المشكلة '%s' بنجاح.",
-    "Comment added successfully.": "تم إضافة التعليق بنجاح.",
-    "System '%s' created successfully.": "تم إنشاء النظام '%s' بنجاح.",
-    "System '%s' updated successfully.": "تم تحديث النظام '%s' بنجاح.",
-    "System '%s' deleted successfully.": "تم حذف النظام '%s' بنجاح.",
-    "Group '%s' created successfully.": "تم إنشاء المجموعة '%s' بنجاح.",
-    "Group '%s' updated successfully.": "تم تحديث المجموعة '%s' بنجاح.",
-    "Group '%s' deleted successfully.": "تم حذف المجموعة '%s' بنجاح.",
-    "Screen '%s' created successfully.": "تم إنشاء الشاشة '%s' بنجاح.",
-    "Screen '%s' updated successfully.": "تم تحديث الشاشة '%s' بنجاح.",
-    "Screen '%s' deleted successfully.": "تم حذف الشاشة '%s' بنجاح.",
-    "User '%s' created successfully.": "تم إنشاء المستخدم '%s' بنجاح.",
-    "User '%s' updated successfully.": "تم تحديث المستخدم '%s' بنجاح.",
-    "User '%s' deleted successfully.": "تم حذف المستخدم '%s' بنجاح.",
-    'Delete Team': 'حذف الفريق',
-    'Teams': 'الفرق',
-    'Deployment Team Configuration': 'إعدادات فريق التطوير',
-    'Team Directory': 'قائمة الفرق',
-    'No teams configured.': 'لا يوجد فرق مهيأة.',
-    'Confirm User Deletion': 'تأكيد حذف المستخدم',
-    'User Account Information': 'بيانات حساب المستخدم',
-    'made with': 'صُنع بـ',
-    'by': 'بواسطة',
-    'Confirm Save': 'تأكيد الحفظ',
-    'Are you sure you want to save these changes?': 'هل أنت متأكد من رغبتك في حفظ هذه التغييرات؟',
-    'Save changes': 'حفظ التغييرات',
-    'Are you sure you want to delete:': 'هل أنت متأكد من حذف:',
-    'Success': 'تم بنجاح',
-    'Error': 'خطأ',
-    'Notification': 'تنبيه',
-    'OK': 'موافق',
-    'Issues List': 'قائمة البلاغات',
-    'Add Issue': 'إضافة بلاغ',
-    '- List': 'قائمة الأنظمة',
-    'Add System': 'إضافة نظام',
-    'Screens List': 'قائمة الشاشات',
-    'Add Screen': 'إضافة شاشة',
-    'Groups List': 'قائمة المجموعات',
-    'Add Group': 'إضافة مجموعة',
-    'Users List': 'قائمة المستخدمين',
-    'Add User': 'إضافة مستخدم',
-    '-': 'الأنظمة',
-    'Screens': 'الشاشات',
-    'Groups': 'المجموعات',
-    'Users': 'المستخدمين',
-    'Issues': 'البلاغات',
-    'Read Only': 'قراءة فقط',
-    'Resolution': 'سبب الإغلاق',
-    'Root Cause': 'السبب الرئيسي',
-    'Notifications': 'الإشعارات',
-    'No notifications': 'لا توجد إشعارات',
-    'View all issues': 'عرض جميع البلاغات',
-    'ago': 'منذ',
-    'Fixed': 'تم الحل',
-    'Duplicate': 'مكرر',
-    'Won\'t Fix': 'لن يتم الحل',
-    'Works For Me': 'يعمل لدي',
-    'Not a Bug': 'ليس خطأ برمجي',
-    'Unresolved': 'غير محلول',
-    'Resolution details': 'تفاصيل الإغلاق',
-    'Explain the root cause of this issue...': 'اشرح السبب الرئيسي لهذه المشكلة...',
-    'Dashboard': 'لوحة التحكم',
-    'Tracking Management': 'إدارة التتبع',
-    'System Administration': 'إدارة النظام',
-    'Welcome back': 'مرحباً بك مجدداً',
-    'Check your latest reports below.': 'تحقق من آخر التقارير المرفوعة أدناه.',
-    'View Issues': 'عرض البلاغات',
-    'Recent Issues': 'البلاغات الأخيرة',
-    'View All': 'عرض الكل',
-    'Report Bug': 'إبلاغ عن خطأ',
-    'No recent issues found.': 'لا توجد بلاغات حديثة.',
-    'Total Bugs': 'إجمالي الأخطاء',
-    'In Registry': 'في السجل',
-    'Top Performers': 'الأكثر إنجازاً',
-    'Tasks': 'مهام',
-    'No performance data.': 'لا توجد بيانات أداء.',
-    'System Activity Log': 'سجل نشاط النظام',
-    'Date': 'التاريخ',
-    'User': 'المستخدم',
-    'Action': 'الإجراء',
-    'Issue': 'البلاغ',
-    'No activity recorded.': 'لا يوجد نشاط مسجل.',
-    'Confirm Deletion': 'تأكيد الحذف',
-    'This action cannot be undone and will delete all associated comments and activity logs.': 'هذا الإجراء لا يمكن التراجع عنه وسيتم حذف كافة التعليقات وسجلات النشاط المرتبطة.',
-    'Cancel': 'إلغاء',
-    'Confirm Delete': 'تأكيد الحذف',
-    'Issue Created': 'تم إنشاء البلاغ',
-    'Comment Added': 'تم إضافة تعليق',
-    'Status Changed': 'تم تغيير الحالة',
-    'Priority Changed': 'تم تغيير الأهمية',
-    'Assigned To Changed': 'تم تغيير المسؤول',
-    'Issue Type Changed': 'تم تغيير نوع البلاغ',
-    'Target Team Changed': 'تم تغيير الفريق المستهدف',
-    'Critical': 'حرج',
-    'High': 'عالٍ',
-    'Medium': 'متوسط',
-    'Low': 'منخفض',
-    'Open': 'مفتوح',
-    'In Progress': 'قيد التنفيذ',
-    'Resolved': 'تم الحل',
-    'Closed': 'مغلق',
-    'Reopened': 'أعيد فتحه',
-    'FrontEnd': 'واجهة المستخدم (FrontEnd)',
-    'BackEnd': 'الأنظمة الخلفية (BackEnd)',
-    'System': 'النظام',
-    'Screen': 'الشاشة',
-    'Issue Type': 'نوع البلاغ',
-    'Priority': 'الأهمية',
-    'Status': 'الحالة',
-    'Target Team': 'الفريق المستهدف',
-    'Steps to Reproduce': 'كيف حدثت المشكلة؟',
-    'Expected Result': 'ماذا كان يجب أن يحدث؟ (السلوك الصحيح)',
-    'Actual Result': 'ماذا حدث بالضبط؟ (الخطأ الحالي)',
-    'Steps to reproduce...': 'كيف حدثت المشكلة؟...',
-    'Expected result...': 'ماذا كان يجب أن يحدث؟ (السلوك الصحيح)...',
-    'Actual result...': 'ماذا حدث بالضبط؟ (الخطأ الحالي)...',
-    'Evidence / Attachment': 'الدليل / المرفقات',
-    'Discussion': 'المناقشة',
-    'Post Comment': 'نشر التعليق',
-    'Write a comment...': 'اكتب تعليقاً...',
-    'Information': 'المعلومات',
-    'Assignee': 'المسؤول',
-    'Unassigned': 'غير معين',
-    'Last Update': 'آخر تحديث',
-    'History Timeline': 'سجل الأحداث',
-    'Zero activity recorded.': 'لم يتم تسجيل أي نشاط.',
-    'By': 'بواسطة',
-    'To': 'إلى',
-    'Search issues...': 'البحث في البلاغات...',
-    'Filter': 'تصفية',
-    'No issues found matching your criteria.': 'لم يتم العثور على بلاغات تطابق معايير البحث.',
-    'User': 'المستخدم',
-    'Role': 'الدور',
-    'Assigned Groups': 'المجموعات المعينة',
-    'No assignments': 'لا توجد تعيينات',
-    'Active': 'نشط',
-    'Inactive': 'غير نشط',
-    'Edit': 'تعديل',
-    'Delete': 'حذف',
-    'No users found in the system.': 'لا يوجد مستخدمون في النظام.',
-    'Group Name': 'اسم المجموعة',
-    'Assigned Systems': 'الأنظمة المعينة',
-    'Members Count': 'عدد الأعضاء',
-    'No systems': 'لا توجد أنظمة',
-    'No user groups configured.': 'لا توجد مجموعات مستخدمين مهيأة.',
-    'Screen Name': 'اسم الشاشة',
-    'No screens defined yet.': 'لم يتم تعريف أي شاشات بعد.',
-    'Name': 'الاسم',
-    'Description': 'الوصف',
-    'No systems defined yet.': 'لم يتم تعريف أي أنظمة بعد.',
-    'Username': 'اسم المستخدم',
-    'Password': 'كلمة المرور',
-    'Enter your username': 'أدخل اسم المستخدم الخاص بك',
-    'Remember Me': 'تذكرني',
-    'Welcome to': 'مرحباً بك في',
-    'Please sign-in to your account and start the adventure': 'يرجى تسجيل الدخول إلى حسابك لبدء المهمة',
-    'New on our platform?': 'جديد في منصتنا؟',
-    'Create an account': 'إنشاء حساب الجديد',
-    'Login': 'تسجيل الدخول',
-    'Profile': 'الملف الشخصي',
-    'Settings': 'الإعدادات',
-    'Logout': 'تسجيل الخروج',
-    'Search...': 'بحث...',
-    'Admin Templates': 'قوالب الإدارة',
-    'License': 'الترخيص',
-    'Bootstrap Dashboard': 'لوحة تحكم بوتستراب',
-    'Documentation': 'التوثيق',
-    'Support': 'الدعم الفني',
-    'System': 'نظام',
-    'Light': 'فاتح',
-    'Dark': 'داكن',
-    'Admin': 'مدير النظام',
-    'Back to List': 'العودبة للقائمة',
-    'Save Issue': 'حفظ البلاغ',
-    'Save User': 'حفظ المستخدم',
-    'Save System': 'حفظ النظام',
-    'Save Group': 'حفظ المجموعة',
-    'Save Screen': 'حفظ الشاشة',
-    'Core System Profile': 'بيانات النظام الأساسية',
-    'Permission Group Profile': 'بيانات مجموعة الصلاحيات',
-    'System Screen Profile': 'بيانات شاشة النظام',
-    'User Account Information': 'بيانات حساب المستخدم',
-    # New chart labels
-    'Status Overview': 'نظرة عامة على الحالات',
-    'Priority Statistics': 'إحصائيات الأولوية',
-    'Reports by System': 'التقارير حسب النظام',
-    'Monthly Reporting Trend': 'اتجاه التقارير الشهرية',
-    'Last 6 Months': 'آخر 6 أشهر',
-    'Resolution Rate': 'معدل الحل',
-    'Issue Type Distribution': 'توزيع أنواع البلاغات',
-    'Team Workload': 'عبء العمل حسب الفريق',
-    'Open vs Resolved': 'المفتوحة مقابل المحلولة',
-    'Issues Reported': 'البلاغات المرفوعة',
-    'Bug': 'خطأ برمجي',
-    'Security': 'أمني',
-    'UI': 'واجهة المستخدم',
-    'Issues': 'البلاغات',
-    'Total': 'الإجمالي',
-    'Priority': 'الأولوية',
-    'Status': 'الحالة',
-    'High Priority': 'أولوية عالية',
-    'Title': 'العنوان',
-    'Active': 'نشط',
-    'Fixed': 'محلول',
-    'In Registry': 'في السجل',
-    'Resolved for Review': 'بلاغات تنتظر المراجعة والإغلاق',
-    'Awaiting final verification and closure': 'في انتظار التحقق النهائي والإغلاق',
-    'Review & Close': 'تعميد وإغلاق',
-    'Problem Title': 'عنوان البلاغ',
-    'System & Screen': 'النظام والشاشة',
-    'Resolved By': 'بواسطة المبرمج',
-    'Management Action': 'إجراءات الإدارة',
-    'Tasks Pending': 'بلاغات قيد المراجعة',
-    'Verification queue for finalized engineering tasks': 'قائمة التحقق للمهام البرمجية المكتملة',
-    'Audit & Close': 'تعميد وإغلاق',
-    'Engineer': 'مبرمج',
-    'Closing an issue here will archive it and notify the development team.': 'إغلاق البلاغ هنا سيؤدي لأرشفته وتنبيه فريق التطوير.',
-    'Generate Reports': 'إصدار التقارير',
-    'Report Management Center': 'مركز إدارة التقارير',
-    'Filter and export formal administrative reports': 'تصفية وتصدير التقارير الإدارية الرسمية',
-    'Date Range': 'الفترة الزمنية',
-    'Target System': 'النظام المستهدف',
-    'Operational Status': 'الحالة التشغيلية',
-    'Criticality/Priority': 'مستوى الأهمية / الأولوية',
-    'Preview & Print Report': 'معاينة وطباعة التقرير',
-    'Official Template': 'القالب الرسمي المعتمد',
-    'Reports generated here use the Yemeni official administrative template, suitable for cabinet-level submission.': 'التقارير المستخرجة هنا تعتمد القالب الإداري الرسمي، وهي مناسبة للرفع للمستويات القيادية.',
-    'Official Operational Report': 'التقرير العملياتي الرسمي',
-    'Complete Operational Log': 'السجل العملياتي المتكامل',
-    'Problem Title': 'موضوع البلاغ / المشكلة',
-    'System & Screen': 'النظام والشاشة',
-    'Resolved By': 'بواسطة المبرمج',
-    'Management Action': 'إجراءات الإدارة',
-    'Tasks Pending': 'بلاغات قيد المراجعة',
-    'Verification queue for finalized engineering tasks': 'قائمة التحقق للمهام البرمجية المكتملة',
-    'Audit & Close': 'تعميد وإغلاق',
-    'Start Date': 'تاريخ البداية',
-    'End Date': 'تاريخ النهاية',
-    'All Systems': 'كافة الأنظمة',
-    'All Statuses': 'كافة الحالات',
-    'All Priorities': 'كافة المستويات',
-    'Generated on': 'تاريخ الإصدار',
-    'Digital Signature ID': 'رقم التوقيع الرقمي',
-    'Print Now / Save as PDF': 'طباعة الآن / حفظ كـ PDF',
-    'Close Preview': 'إغلاق المعاينة',
-    'Reports': 'التقارير',
-    'Title': 'العنوان',
-    'Screen': 'الشاشة',
-    'Notes': 'ملاحظات',
-    'Report Period': 'فترة التقرير',
-    'Current': 'حتى الآن',
-    'System Records': 'سجلات النظام',
-    'No data available according to filters': 'لا يوجد بيانات متاحة بناءً على الفلاتر المختارة',
-    'Administrative Reporting Center': 'مركز التقارير الإدارية',
-    'Generate, filter, and print official audit reports for FrontEnd and BackEnd teams.': 'توليد وتصفية وطباعة التقارير الرسمية لفريقَي الواجهة والخادم.',
-    'Filter Criteria': 'معايير التصفية',
-    'Report Duration': 'فترة التقرير',
-    'Target System': 'النظام المستهدف',
-    'Issue Status': 'حالة البلاغ',
-    'Priority Level': 'مستوى الأولوية',
-    'Target Team': 'الفريق المستهدف',
-    'All Teams': 'جميع الفرق',
-    'Generate & Print Report': 'توليد وطباعة التقرير',
-    'Quick Print Templates': 'قوالب الطباعة السريعة',
-    'FrontEnd Audit': 'تدقيق الواجهة (FrontEnd)',
-    'UI/UX & Branding Issues': 'مشاكل الواجهة والتصميم',
-    'BackEnd Audit': 'تدقيق الخادم (BackEnd)',
-    'Server, API & Database': 'الخادم، الـ API، وقواعد البيانات',
-    'Urgent Issues': 'البلاغات العاجلة',
-    'Open High-Priority Bugs': 'أخطاء عالية الأولوية ومفتوحة',
-    'Resolution Log': 'سجل الإنجاز',
-    'All Verified Fixed Issues': 'جميع المشاكل التي تم حلها',
-    'Open Issues': 'البلاغات المفتوحة',
-    'Resolved': 'تم الحل',
-    'FrontEnd': 'الواجهة',
-    'UI Team': 'فريق الواجهة',
-    'BackEnd': 'الخادم',
-    'Dev Team': 'فريق التطوير',
-    'Generating...': 'جاري التوليد...',
-    'Generate & Print Directly': 'توليد وطباعة مباشرة',
-    'Team': 'الفريق',
-    'Generating Report...': 'جاري إعداد التقرير...',
-}
+po_file = r'c:\Users\alsabahi\Documents\bugtracker\locale\ar\LC_MESSAGES\django.po'
 
-def translate_po(file_path):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
+new_translations = """
+#: templates/core/dashboard.html:38
+msgid "Welcome back to your operational control center."
+msgstr "مرحباً بك مجدداً في مركز التحكم والعمليات الخاص بك."
 
-    for msgid, msgstr in translations.items():
-        # Handle multi-line msgid if any
-        pattern_id = re.escape(msgid).replace('\\ ', ' ')
-        
-        # 1. Clean up fuzzy matches
-        fuzzy_pattern = re.compile(f'#, fuzzy\\s+msgid "{pattern_id}"\\s+msgstr ".*?"', re.DOTALL)
-        content = fuzzy_pattern.sub(f'msgid "{msgid}"\nmsgstr "{msgstr}"', content)
-        
-        # 2. Replace empty msgstr
-        empty_pattern = re.compile(f'msgid "{pattern_id}"\\s+msgstr ""', re.DOTALL)
-        if empty_pattern.search(content):
-            content = empty_pattern.sub(f'msgid "{msgid}"\nmsgstr "{msgstr}"', content)
-        # 3. Dynamic append disabled to prevent duplicates during makemessages
-        # elif not re.search(f'msgid "{pattern_id}"', content):
-        #     content += f'\nmsgid "{msgid}"\nmsgstr "{msgstr}"\n'
+#: templates/core/dashboard.html:46
+msgid "Errors Found"
+msgstr "أخطاء مكتشفة"
 
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+#: templates/core/dashboard.html:50
+msgid "Resolved"
+msgstr "تم حلها"
 
-if __name__ == "__main__":
-    translate_po(r'c:\Users\alsabahi\Documents\bugtracker\locale\ar\LC_MESSAGES\django.po')
-    print("Translations updated successfully.")
+#: templates/core/dashboard.html:54
+msgid "Growth"
+msgstr "نمو"
+
+#: templates/core/dashboard.html:73
+msgid "Your recent activity is highly efficient: <strong>%(total)s critical errors</strong> have been successfully resolved in the last 24 hours."
+msgstr "نشاطك الأخير فعال للغاية: تم حل <strong>%(total)s أخطاء حرجة</strong> بنجاح خلال الـ 24 ساعة الماضية."
+
+#: templates/core/dashboard.html:75
+msgid "Immediate attention required: <strong>%(open)s pending errors</strong> are currently awaiting audit."
+msgstr "انتباه فوري مطلوب: هناك <strong>%(open)s أخطاء معلقة</strong> بانتظار المراجعة حالياً."
+
+#: templates/core/dashboard.html:82
+msgid "Error Tracking"
+msgstr "تتبع الأخطاء"
+
+#: templates/core/dashboard.html:85
+msgid "New Error"
+msgstr "خطأ جديد"
+
+#: templates/layout/partials/empty_state.html:3
+msgid "No results found"
+msgstr "لم يتم العثور على نتائج"
+
+#: templates/layout/partials/empty_state.html:4
+msgid "We couldn't find any items matching your current view."
+msgstr "لم نتمكن من العثور على أي عناصر تطابق عرضك الحالي."
+
+#: templates/layout/partials/empty_state.html:6
+msgid "Add New"
+msgstr "إضافة جديد"
+
+#: templates/core/users/user_list.html
+msgid "No users found"
+msgstr "لم يتم العثور على مستخدمين"
+
+#: templates/core/users/user_list.html
+msgid "There are currently no users registered in the system."
+msgstr "لا يوجد مستخدمون مسجلون في النظام حالياً."
+
+#: templates/core/users/user_list.html
+msgid "Add First User"
+msgstr "إضافة أول مستخدم"
+
+#: templates/core/systems/system_list.html
+msgid "No systems defined"
+msgstr "لا توجد أنظمة معرفة"
+
+#: templates/core/systems/system_list.html
+msgid "Start by adding your first system to track errors and issues."
+msgstr "ابدأ بإضافة أول نظام لك لتتبع الأخطاء والمشكلات."
+
+#: templates/core/systems/system_list.html
+msgid "Create System"
+msgstr "إنشاء نظام"
+
+#: templates/core/issues/issue_list.html
+msgid "No errors tracked"
+msgstr "لا توجد أخطاء متتبعة"
+
+#: templates/core/issues/issue_list.html
+msgid "No issues match your current filters or there are no reports in the system."
+msgstr "لا توجد أخطاء تطابق فلاتر البحث الحالية أو لا توجد تقارير في النظام."
+
+#: templates/core/issues/issue_list.html
+msgid "Report New Error"
+msgstr "إبلاغ عن خطأ جديد"
+"""
+
+with open(po_file, 'a', encoding='utf-8') as f:
+    f.write(new_translations)
+
+print("Translations appended successfully.")
