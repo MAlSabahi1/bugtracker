@@ -4,15 +4,15 @@ import re
 # Comprehensive Dictionary for Arabic Translations
 # Using the exact strings from HTML to ensure matching
 arabic_dictionary = {
-    "WELCOME": "مرحباً بك في نظام",
-    "RASID": "راصد لمراقبة جودة الأنظمة",
+    "WELCOME": "أهلاً بك",
+    "RASID": "راصد",
     "User Name": "اسم المستخدم",
     "Password": "كلمة المرور",
     "Forgot Password?": "نسيت كلمة المرور؟",
-    "Sign in": "تسجيل الدخول للنظام",
-    "Please sign in to access the monitoring dashboard.": "يرجى إدخال بيانات الاعتماد للوصول إلى لوحة المراقبة المركزية.",
-    "Rasid — A leading professional platform for bug tracking and software quality assurance. Provides a centralized system for monitoring application stability and managing security vulnerabilities through precise analytical reports.": "نظام راصد — المنصة المتخصصة في إدارة وتتبع الأخطاء البرمجية وضمان جودة الأنظمة. يوفر النظام بيئة عمل متكاملة لمراقبة استقرار التطبيقات ومعالجة الثغرات الأمنية عبر تقارير فنية وتحليلية دقيقة.",
-    "Errors List": "قائمة الأخطاء التقنية",
+    "Sign in": "تسجيل الدخول",
+    "Please sign in to access the monitoring dashboard.": "يرجى تسجيل الدخول للوصول إلى لوحة المتابعة.",
+    "Rasid — A leading professional platform for bug tracking and software quality assurance. Provides a centralized system for monitoring application stability and managing security vulnerabilities through precise analytical reports.": "راصد — منصة احترافية رائدة لتتبع الأخطاء وضمان جودة البرمجيات. يوفر نظاماً مركزياً لمراقبة استقرار التطبيقات وإدارة الثغرات الأمنية من خلال تقارير تحليلية دقيقة.",
+    "Errors List": "قائمة الأخطاء",
     "Add Error": "إضافة خطأ جديد",
     "Confirm Status Change": "تأكيد تغيير الحالة",
     "Are you sure you want to change the status of this error?": "هل أنت متأكد من رغبتك في تغيير حالة هذا الخطأ؟",
@@ -142,8 +142,10 @@ arabic_dictionary = {
     "Not a Bug": "ليس خطأً تقنياً",
     "Unresolved": "بانتظار المعالجة",
     "Admin": "مدير النظام",
-    "FrontEnd": "Frontend Developer - مطور الواجهات الأمامية",
-    "BackEnd": "Backend Developer - مطور الواجهات الخلفية",
+    "FrontEnd": "مطور الواجهات الأمامية",
+    "BackEnd": "مطور الواجهات الخلفية",
+    "Frontend Developer": "مطور الواجهات الأمامية",
+    "Backend Developer": "مطور الواجهات الخلفية",
     "Specific Screens Assigned": "الشاشات المسندة",
 }
 

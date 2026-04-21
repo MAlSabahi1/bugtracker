@@ -160,10 +160,10 @@ msgid "Admin"
 msgstr "مدير النظام"
 
 msgid "FrontEnd"
-msgstr "Frontend Developer - مطور الواجهات الأمامية"
+msgstr "مطور الواجهات الأمامية"
 
 msgid "BackEnd"
-msgstr "Backend Developer - مطور الواجهات الخلفية"
+msgstr "مطور الواجهات الخلفية"
 
 msgid "Role"
 msgstr "الصلاحية"
@@ -436,16 +436,16 @@ msgid "Login"
 msgstr "دخول"
 
 msgid "WELCOME"
-msgstr "مرحباً بك في نظام"
+msgstr "أهلاً بك"
 
 msgid "RASID"
-msgstr "راصد لمراقبة جودة الأنظمة"
+msgstr "راصد"
 
 msgid "Sign in"
-msgstr "تسجيل الدخول للنظام"
+msgstr "تسجيل الدخول"
 
 msgid "Please sign in to access the monitoring dashboard."
-msgstr "يرجى إدخال بيانات الاعتماد للوصول إلى لوحة المراقبة المركزية."
+msgstr "يرجى تسجيل الدخول للوصول إلى لوحة المتابعة."
 
 msgid "User Name"
 msgstr "اسم المستخدم"
@@ -661,7 +661,7 @@ msgid "Save"
 msgstr "حفظ"
 
 msgid "Errors List"
-msgstr "قائمة الأخطاء التقنية"
+msgstr "قائمة الأخطاء"
 
 msgid "Add Error"
 msgstr "إضافة خطأ جديد"
@@ -1219,7 +1219,7 @@ msgid "Generate, filter, and print official audit reports for all teams and syst
 msgstr "توليد وتصفية وطباعة تقارير التدقيق الرسمية لكافة الفرق والأنظمة."
 
 msgid "Rasid — A leading professional platform for bug tracking and software quality assurance. Provides a centralized system for monitoring application stability and managing security vulnerabilities through precise analytical reports."
-msgstr "نظام راصد — المنصة المتخصصة في إدارة وتتبع الأخطاء البرمجية وضمان جودة الأنظمة. يوفر النظام بيئة عمل متكاملة لمراقبة استقرار التطبيقات ومعالجة الثغرات الأمنية عبر تقارير فنية وتحليلية دقيقة."
+msgstr "راصد — منصة احترافية رائدة لتتبع الأخطاء وضمان جودة البرمجيات. يوفر نظاماً مركزياً لمراقبة استقرار التطبيقات وإدارة الثغرات الأمنية من خلال تقارير تحليلية دقيقة."
 
 msgid "My Tasks"
 msgstr "المهام المسندة"
@@ -1238,4 +1238,10 @@ msgstr "عرض الملف الشخصي"
 
 msgid "Team Authorized"
 msgstr "صلاحية الفريق الفني"
+
+msgid "Frontend Developer"
+msgstr "مطور الواجهات الأمامية"
+
+msgid "Backend Developer"
+msgstr "مطور الواجهات الخلفية"
 

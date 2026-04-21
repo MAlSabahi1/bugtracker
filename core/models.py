@@ -59,8 +59,8 @@ class Screen(models.Model):
 class User(AbstractUser):
     class Role(models.TextChoices):
         ADMIN    = "admin",    _("Admin")
-        FRONTEND = "frontend", _("FrontEnd")
-        BACKEND  = "backend",  _("BackEnd")
+        FRONTEND = "frontend", _("Frontend Developer")
+        BACKEND  = "backend",  _("Backend Developer")
         SECURITY = "security", _("Security")
 
     role = models.CharField(

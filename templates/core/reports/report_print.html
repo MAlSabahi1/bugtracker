@@ -1,316 +1,360 @@
-{% load static %}
-{% load i18n %}
-<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:'ar' }}" dir="{{ text_direction_value|default:'rtl' }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% load static %} {% load i18n %}
+<!doctype html>
+<html
+  lang="{{ LANGUAGE_CODE|default:'ar' }}"
+  dir="{{ text_direction_value|default:'rtl' }}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% trans "Official Operational Report" %}</title>
-    
-    <!-- تحميل الخطوط والمكتبات الضرورية لضمان عدم وجود "تصميم خارب" -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+
+    <!-- تحميل الخطوط والمكتبات محلياً لدعم العمل بدون إنترنت (Offline) -->
+    <link rel="stylesheet" href="{% static 'vendor/fonts/fonts.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'vendor/fonts/iconify-icons.css' %}"
+    />
 
     <style>
-        /* ============================================================
+      /* ============================================================
            نظام التصميم الموحد (المطابق تماماً لملف المحذوفات)
            ============================================================ */
-        :root {
-            --primary-red: #e11d48;
-            --soft-red: #fff1f2;
-            --text-slate: #334155;
-        }
+      :root {
+        --primary-red: #e11d48;
+        --soft-red: #fff1f2;
+        --text-slate: #334155;
+      }
 
-        * {
-            box-sizing: border-box;
-            -webkit-print-color-adjust: exact;
+      * {
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact;
+      }
+
+      body {
+        background-color: #f1f5f9;
+        margin: 0;
+        padding: 0;
+        font-family: "Tajawal", sans-serif !important;
+      }
+
+      /* شريط التحكم العلوي (في الشاشة فقط) */
+      .preview-toolbar {
+        background: #1e293b;
+        padding: 12px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .btn-action {
+        padding: 10px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+        background: var(--primary-red);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Tajawal", sans-serif;
+        transition: 0.3s;
+      }
+
+      .btn-action:hover {
+        background: #be123c;
+        transform: translateY(-2px);
+      }
+
+      /* حاوية التقرير (A4) */
+      #print-area {
+        background: white;
+        width: 210mm;
+        min-height: 297mm;
+        margin: 80px auto 40px auto;
+        padding: 10mm;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        color: black;
+        border: 2px solid #1e293b;
+        outline: 3px double #1e293b;
+        outline-offset: -8px;
+      }
+
+      /* ------------------------------------------------------------
+           تنسيقات الطباعة (Copy-Paste من الملف الأصلي)
+           ------------------------------------------------------------ */
+      @media print {
+        @page {
+          size: A4;
+          margin: 0mm; /* إزالة هوامش الطابعة لإخفاء العنوان والتاريخ الافتراضي (Headers & Footers) */
         }
 
         body {
-            background-color: #f1f5f9;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif !important;
+          background: white !important;
         }
 
-        /* شريط التحكم العلوي (في الشاشة فقط) */
         .preview-toolbar {
-            background: #1e293b;
-            padding: 12px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 10000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+          display: none !important;
         }
 
-        .btn-action {
-            padding: 10px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            color: white;
-            font-weight: 700;
-            background: var(--primary-red);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Tajawal', sans-serif;
-            transition: 0.3s;
-        }
-
-        .btn-action:hover {
-            background: #be123c;
-            transform: translateY(-2px);
-        }
-
-        /* حاوية التقرير (A4) */
         #print-area {
-            background: white;
-            width: 210mm;
-            min-height: 297mm;
-            margin: 80px auto 40px auto;
-            padding: 20mm;
-            box-shadow: 0 0 40px rgba(0,0,0,0.1);
-            position: relative;
-            color: black;
+          width: 190mm !important;
+          min-height: 277mm !important;
+          margin: 0 !important;
+          padding: 10mm !important; /* مسافة بسيطة 5mm بين الإطار والمحتوى الداخلي */
+          box-sizing: border-box !important;
+          box-shadow: none !important;
+          border: 2px solid #000 !important; /* إطار الورقة الخارجي */
+          outline: 4px double #000 !important; /* إطار داخلي رسمي */
+          outline-offset: -6px !important;
+          position: absolute !important;
+          top: 10mm !important;
+          left: 10mm !important;
+          visibility: visible !important;
         }
 
-        /* ------------------------------------------------------------
-           تنسيقات الطباعة (Copy-Paste من الملف الأصلي)
-           ------------------------------------------------------------ */
-        @media print {
-            @page {
-                size: A4;
-                margin: 0; /* سنستخدم الـ Padding في الـ Div */
-            }
-
-            body {
-                background: white !important;
-            }
-
-            .preview-toolbar {
-                display: none !important;
-            }
-
-            #print-area {
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 15mm !important;
-                box-shadow: none !important;
-                border: 2px double #000 !important;
-                min-height: 100vh;
-                position: absolute;
-                top: 0;
-                left: 0;
-                visibility: visible !important;
-            }
-
-            body * {
-                visibility: hidden;
-            }
-
-            #print-area, #print-area * {
-                visibility: visible !important;
-            }
+        body * {
+          visibility: hidden;
         }
 
-        /* Header Layout - الترويسة الرسمية */
-        .print-header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px double black;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
+        #print-area,
+        #print-area * {
+          visibility: visible !important;
         }
+      }
 
-        .header-left {
-            text-align: left;
-            font-weight: 900;
-            font-size: 13px;
-            width: 30%;
-            line-height: 1.5;
-        }
+      /* Header Layout - الترويسة الرسمية */
+      .print-header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 3px double black;
+        padding-bottom: 15px;
+        margin-bottom: 30px;
+      }
 
-        .header-center {
-            text-align: center;
-            width: 40%;
-        }
+      .header-left {
+        text-align: left;
+        font-weight: 900;
+        font-size: 13px;
+        width: 30%;
+        line-height: 1.5;
+      }
 
-        .header-center img {
-            width: 150px;
-            height: auto;
-        }
+      .header-center {
+        text-align: center;
+        width: 40%;
+      }
 
-        .header-right {
-            text-align: right;
-            font-weight: 900;
-            font-size: 15px;
-            width: 30%;
-            line-height: 1.6;
-        }
+      .header-center img {
+        width: 150px;
+        height: auto;
+      }
 
-        /* Table Design - الجدول الرسمي */
-        .print-table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 2px solid #000;
-            margin-bottom: 30px;
-        }
+      .header-right {
+        text-align: right;
+        font-weight: 900;
+        font-size: 15px;
+        width: 30%;
+        line-height: 1.6;
+      }
 
-        .print-table th, .print-table td {
-            border: 1px solid #000;
-            padding: 12px 10px;
-            text-align: right;
-            font-size: 14px;
-        }
+      /* Table Design - الجدول الرسمي */
+      .print-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid #000;
+        margin-bottom: 30px;
+      }
 
-        .print-table th {
-            background-color: #f8f9fa !important;
-            font-weight: 900;
-            text-align: center;
-            border-bottom: 3px double #000;
-            font-size: 15px;
-        }
+      .print-table th,
+      .print-table td {
+        border: 1px solid #000;
+        padding: 12px 10px;
+        text-align: right;
+        font-size: 14px;
+      }
 
-        .print-footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 14px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-            line-height: 1.8;
-        }
+      .print-table th {
+        background-color: #f8f9fa !important;
+        font-weight: 900;
+        text-align: center;
+        border-bottom: 3px double #000;
+        font-size: 15px;
+      }
 
-        .tag-status {
-            font-size: 12px;
-            padding: 2px 8px;
-            background: #f1f5f9;
-            border-radius: 4px;
-            display: inline-block;
-            margin-top: 5px;
-            font-weight: bold;
-        }
+      .print-footer {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 14px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+        line-height: 1.8;
+      }
+
+      .tag-status {
+        font-size: 12px;
+        padding: 2px 8px;
+        background: #f1f5f9;
+        border-radius: 4px;
+        display: inline-block;
+        margin-top: 5px;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- شريط المهام العلوي -->
     <div class="no-print preview-toolbar">
-        <button onclick="window.print()" class="btn-action">
-            <i class="fa fa-print"></i> {% trans "Print Now / Save as PDF" %}
-        </button>
-        <button onclick="window.close()" style="background:#64748b" class="btn-action">
-            <i class="fa fa-close"></i> {% trans "Close Preview" %}
-        </button>
+      <button onclick="window.print()" class="btn-action">
+        <i class="bx bx-printer"></i> {% trans "Print Now / Save as PDF" %}
+      </button>
+      <button
+        onclick="window.close()"
+        style="background: #64748b"
+        class="btn-action"
+      >
+        <i class="bx bx-x"></i> {% trans "Close Preview" %}
+      </button>
     </div>
 
     <!-- حاوية الطباعة -->
     <div id="print-area">
-        
-        <!-- الترويسة: مطابقة لملف المحذوفات -->
-        <div class="print-header-container">
-            <div class="header-left">
-                <p style="margin:0">الجمهورية اليمنية</p>
-                <p style="margin:0">شركة OpenSoft</p>
-                <p style="margin:0">نظام راصد لإدارة الأخطاء</p>
-            </div>
-            <div class="header-center">
-                <img src="{% static 'img/logo.png' %}" alt="System Logo">
-            </div>
-            <div class="header-right">
-                <p style="margin:0">Republic of Yemen</p>
-                <p style="margin:0">OpenSoft Company</p>
-                <p style="margin:0">Error Tracking System</p>
-            </div>
+      <!-- الترويسة: مطابقة لملف المحذوفات -->
+      <div class="print-header-container">
+        <div class="header-left">
+          <p style="margin: 0">الجمهورية اليمنية</p>
+          <p style="margin: 0">شركة OpenSoft</p>
+          <p style="margin: 0">نظام راصد لإدارة الأخطاء</p>
         </div>
-
-        <!-- العنوان -->
-        <div style="text-align: center; margin-bottom: 30px;">
-            <h2 style="text-decoration: underline; font-weight: 900; font-size: 22px; margin: 0 0 10px 0;">
-                {% trans "Technical Report: Software Errors Logging & Reporting" %}
-            </h2>
-            <div style="font-size: 15px; background: #f8f9fa; padding: 10px; border: 1px solid #ddd; display: inline-block; border-radius: 5px;">
-                <strong>{% trans "System" %}:</strong> {% if filter_system %}{{ filter_system.name }}{% else %}{% trans "All Systems" %}{% endif %}
-                | <strong>{% trans "Status" %}:</strong> {% if filter_status %}{{ filter_status }}{% else %}{% trans "All Statuses" %}{% endif %}
-                {% if filter_team %}
-                | <strong style="color:var(--primary-red)">{% trans "Team" %}:</strong> {{ filter_team }}
-                {% endif %}
-            </div>
-            <p style="font-size: 13px; margin-top: 10px; color: #666;">{% trans "Report Period" %}: {% if request.GET.start_date %}{{ request.GET.start_date }}{% else %}...{% endif %} {% trans "to" %} {% if request.GET.end_date %}{{ request.GET.end_date }}{% else %}{% trans "Current" %}{% endif %}</p>
+        <div class="header-center">
+          <img src="{% static 'img/logo.png' %}" alt="System Logo" />
         </div>
-
-        <!-- الجدول: مطابقة لملف المحذوفات -->
-        <table class="print-table">
-            <thead>
-                <tr>
-                    <th width="5%">#</th>
-                    <th width="30%">{% trans "Title" %} / {% trans "Screen" %}</th>
-                    <th width="30%">{% trans "Description" %} / {% trans "Notes" %}</th>
-                    <th width="15%">{% trans "Target Team" %}</th>
-                    <th width="10%">{% trans "Status" %}</th>
-                    <th width="10%">{% trans "Date" %}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for issue in issues %}
-                <tr>
-                    <td style="text-align: center;">{{ forloop.counter }}</td>
-                    <td>
-                        <strong style="font-size: 15px;">{{ issue.title }}</strong>
-                        <br>
-                        <small style="color: #666;">{{ issue.screen.name }}</small>
-                    </td>
-                    <td style="font-size: 12px; line-height: 1.4;">{{ issue.description|linebreaksbr }}</td>
-                    <td style="text-align: center; font-weight: bold;">
-                        {{ issue.get_target_team_display }}
-                    </td>
-                    <td style="text-align: center;">
-                        <span class="tag-status" style="border: 1px solid #ddd;">{{ issue.get_status_display }}</span>
-                        <br>
-                        <small style="font-weight: bold; color: {% if issue.priority == 'critical' or issue.priority == 'high' %}red{% else %}#555{% endif %};">{{ issue.get_priority_display }}</small>
-                    </td>
-                    <td style="text-align: center; font-size: 12px;">
-                        {{ issue.created_at|date:"Y-m-d" }}
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
-                        {% trans "No data available according to filters" %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <!-- التذييل -->
-        <div class="print-footer">
-            <p style="font-weight: bold; margin: 0;">{% trans "This report was auto-generated by the Bug Tracking System - OpenSoft Company" %}</p>
-            <p style="margin: 0; color: var(--primary-red); font-weight: 800;">OpenSoft IT Solutions</p>
-            <div style="margin-top: 20px; font-size: 11px; color: #777; display: flex; justify-content: space-between;">
-                <span>{% trans "Generated on" %}: {{ report_date|date:"Y-m-d H:i" }}</span>
-                <span>{% trans "Digital Signature ID" %}: #{{ report_date|date:"U" }}</span>
-            </div>
+        <div class="header-right">
+          <p style="margin: 0">Republic of Yemen</p>
+          <p style="margin: 0">OpenSoft Company</p>
+          <p style="margin: 0">Error Tracking System</p>
         </div>
+      </div>
+
+      <!-- العنوان -->
+      <div style="text-align: center; margin-bottom: 30px">
+        <h2
+          style="
+            text-decoration: underline;
+            font-weight: 900;
+            font-size: 22px;
+            margin: 0 0 10px 0;
+          "
+        >
+          {% trans "Technical Report: Software Errors Logging & Reporting" %}
+        </h2>
+        <div
+          style="
+            font-size: 15px;
+            background: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            border-radius: 5px;
+          "
+        >
+          <strong>{% trans "System" %}:</strong> {% if filter_system %}{{ filter_system.name }}{% else %}{% trans "All Systems" %}{% endif %} |
+          <strong>{% trans "Status" %}:</strong> {% if filter_status %}{{ filter_status }}{% else %}{% trans "All Statuses" %}{% endif %} {% if filter_team %} |
+          <strong style="color: var(--primary-red)">{% trans "Team" %}:</strong> {{ filter_team }} {% endif %}
+        </div>
+        <p style="font-size: 13px; margin-top: 10px; color: #666">
+          {% trans "Report Period" %}: {% if request.GET.start_date %}{{ request.GET.start_date }}{% else %}...{% endif %} {% trans "to" %} {% if request.GET.end_date %}{{ request.GET.end_date }}{% else %}{% trans "Current" %}{% endif %}
+        </p>
+      </div>
+
+      <!-- الجدول: مطابقة لملف المحذوفات -->
+      <table class="print-table">
+        <thead>
+          <tr>
+            <th width="5%">#</th>
+            <th width="30%">{% trans "Title" %} / {% trans "Screen" %}</th>
+            <th width="30%">{% trans "Description" %} / {% trans "Notes" %}</th>
+            <th width="15%">{% trans "Target Team" %}</th>
+            <th width="10%">{% trans "Status" %}</th>
+            <th width="10%">{% trans "Date" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for issue in issues %}
+          <tr>
+            <td style="text-align: center">{{ forloop.counter }}</td>
+            <td>
+              <strong style="font-size: 15px">{{ issue.title }}</strong>
+              <br />
+              <small style="color: #666">{{ issue.screen.name }}</small>
+            </td>
+            <td style="font-size: 12px; line-height: 1.4">
+              {{ issue.description|linebreaksbr }}
+            </td>
+            <td style="text-align: center; font-weight: bold">
+              {{ issue.get_target_team_display }}
+            </td>
+            <td style="text-align: center">
+              <span class="tag-status" style="border: 1px solid #ddd"
+                >{{ issue.get_status_display }}</span
+              >
+              <br />
+              <small
+                style="font-weight: bold; color: {% if issue.priority == 'critical' or issue.priority == 'high' %}red{% else %}#555{% endif %};"
+                >{{ issue.get_priority_display }}</small
+              >
+            </td>
+            <td style="text-align: center; font-size: 12px">
+              {{ issue.created_at|date:"Y-m-d" }}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td
+              colspan="6"
+              style="text-align: center; padding: 40px; color: #999"
+            >
+              {% trans "No data available according to filters" %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- التذييل -->
+      <div class="print-footer">
+        <p style="font-weight: bold; margin: 0">
+          {% trans "This report was auto-generated by the Bug Tracking System - OpenSoft Company" %}
+        </p>
+        <p style="margin: 0; color: var(--primary-red); font-weight: 800">
+          OpenSoft IT Solutions
+        </p>
+        <div style="margin-top: 20px; font-size: 11px; color: #777; display: flex; justify-content: space-between;">
+          <span>{% trans "Generated on" %}: {{ report_date|date:"Y-m-d H:i" }}</span>
+          <span>{% trans "Digital Signature ID" %}: #{{ report_date|date:"U" }}</span>
+        </div>
+      </div>
     </div>
 
     <script>
-        // تفعيل نافذة الطباعة تلقائياً عند فتح التقرير
-        window.addEventListener('load', function() {
-            // انتظار بسيط لضمان تحميل كافة العناصر والصور (مثل اللوجو)
-            setTimeout(function() {
-                window.print();
-            }, 800);
-        });
+      // تفعيل نافذة الطباعة تلقائياً عند فتح التقرير
+      window.addEventListener("load", function () {
+        // انتظار بسيط لضمان تحميل كافة العناصر والصور (مثل اللوجو)
+        setTimeout(function () {
+          window.print();
+        }, 800);
+      });
     </script>
-</body>
+  </body>
 </html>
