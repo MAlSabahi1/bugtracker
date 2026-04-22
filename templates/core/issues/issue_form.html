@@ -15,7 +15,6 @@
           </div>
           <div>
             <h5 class="card-title mb-0">{{ page_title }}</h5>
-            <small class="text-muted">{% trans "Please fill in the technical details accurately" %}</small>
           </div>
         </div>
         <a href="{% url 'issue-list' %}" class="btn btn-label-secondary btn-sm">
@@ -30,97 +29,64 @@
           {% include 'layout/partials/form_errors.html' %}
           {% load crispy_forms_tags %}
 
-          <!-- Section 1: Basic Information -->
-          <div class="row mb-6">
-            <div class="col-12">
-              <h6 class="fw-bold mb-4"><i class="bx bx-info-circle me-2 text-primary"></i>{% trans "Core Information" %}</h6>
-            </div>
-            <div class="col-md-12 mb-4">
+          <div class="row g-4 mb-6">
+            <div class="col-md-12">
               {{ form.title|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.system|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.screen|as_crispy_field }}
             </div>
-          </div>
-
-          <div class="row mb-6">
-            <div class="col-md-4 mb-4">
+            
+            <div class="col-md-4">
               {{ form.issue_type|as_crispy_field }}
             </div>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4">
               {{ form.priority|as_crispy_field }}
             </div>
             {% if form.target_team %}
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4">
               {{ form.target_team|as_crispy_field }}
             </div>
             {% endif %}
-          </div>
 
-          <!-- Section 2: Technical Description -->
-          <hr class="my-6 mx-n4">
-          <div class="row mb-6">
             <div class="col-12">
-              <h6 class="fw-bold mb-4"><i class="bx bx-detail me-2 text-primary"></i>{% trans "Technical Details & Context" %}</h6>
-            </div>
-            <div class="col-12 mb-4">
               {{ form.description|as_crispy_field }}
             </div>
-            <div class="col-12 mb-4">
+            <div class="col-12">
               {{ form.steps_to_reproduce|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.expected_result|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.actual_result|as_crispy_field }}
             </div>
-          </div>
 
-          <!-- Section 3: Classification & Assignment (If Admin/Update) -->
-          {% if form.assigned_to or form.status %}
-          <hr class="my-6 mx-n4">
-          <div class="row mb-6">
-            <div class="col-12">
-              <h6 class="fw-bold mb-4"><i class="bx bx-user-check me-2 text-primary"></i>{% trans "Assignment & Status" %}</h6>
-            </div>
             {% if form.assigned_to %}
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.assigned_to|as_crispy_field }}
             </div>
             {% endif %}
             {% if form.status %}
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.status|as_crispy_field }}
             </div>
             {% endif %}
-          </div>
-          {% endif %}
 
-          <!-- Section 4: Resolution (If visible) -->
-          {% if form.resolution or form.root_cause %}
-          <div class="bg-lighter p-4 rounded mb-6">
-            <h6 class="fw-bold mb-4 text-success"><i class="bx bx-check-shield me-2"></i>{% trans "Resolution Data" %}</h6>
-            <div class="row">
-              {% if form.resolution %}
-              <div class="col-md-6 mb-4">
-                {{ form.resolution|as_crispy_field }}
-              </div>
-              {% endif %}
-              {% if form.root_cause %}
-              <div class="col-md-6 mb-4">
-                {{ form.root_cause|as_crispy_field }}
-              </div>
-              {% endif %}
+            {% if form.resolution %}
+            <div class="col-md-6">
+              {{ form.resolution|as_crispy_field }}
             </div>
-          </div>
-          {% endif %}
+            {% endif %}
+            {% if form.root_cause %}
+            <div class="col-md-6">
+              {{ form.root_cause|as_crispy_field }}
+            </div>
+            {% endif %}
 
-          <!-- Section 5: Attachments -->
-          <div class="row mb-6">
             <div class="col-12">
               <div class="p-4 border border-dashed rounded text-center bg-label-primary">
                 <i class="bx bx-cloud-upload fs-1 text-primary mb-2"></i>

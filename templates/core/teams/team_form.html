@@ -1,17 +1,23 @@
 {% extends 'layout/layout_vertical.html' %}
 {% load i18n %}
 
-{% block title %}{{ title }} - {% trans "Teams" %}{% endblock %}
+{% block title %}{{ page_title }} - {% trans "Teams" %}{% endblock %}
 
 {% block content %}
 <div class="row">
   <div class="col-xxl">
     <div class="card mb-6">
-      <div class="card-header d-flex align-items-center justify-content-between">
-        <h5 class="mb-0">{{ title }}</h5>
-        <small class="text-muted float-end">{% trans "Deployment Team Configuration" %}</small>
+      <div class="card-header d-flex align-items-center justify-content-between border-bottom py-4">
+        <div class="d-flex align-items-center">
+          <div class="avatar flex-shrink-0 me-3">
+            <span class="avatar-initial rounded bg-label-info"><i class="bx bx-group fs-4"></i></span>
+          </div>
+          <div>
+            <h5 class="card-title mb-0">{{ page_title }}</h5>
+          </div>
+        </div>
       </div>
-      <div class="card-body">
+      <div class="card-body pt-6">
         <form method="post" class="confirm-save" novalidate>
           {% csrf_token %}
           {% load crispy_forms_tags %}

@@ -1,7 +1,7 @@
 {% extends 'layout/layout_vertical.html' %}
 {% load i18n %}
 
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}{{ page_title }} - {% trans "Users" %}{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -13,8 +13,7 @@
             <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-user fs-4"></i></span>
           </div>
           <div>
-            <h5 class="card-title mb-0">{{ title }}</h5>
-            <small class="text-muted">{% trans "User account settings and role management" %}</small>
+            <h5 class="card-title mb-0">{{ page_title }}</h5>
           </div>
         </div>
         <a href="{% url 'user-list' %}" class="btn btn-label-secondary btn-sm">
@@ -27,53 +26,36 @@
           {% include 'layout/partials/form_errors.html' %}
           {% load crispy_forms_tags %}
           
-          <div class="row mb-6">
-            <div class="col-12">
-              <h6 class="fw-bold mb-4 text-primary"><i class="bx bx-id-card me-2"></i>{% trans "Identity" %}</h6>
-            </div>
-            <div class="col-md-6 mb-4">
+          <div class="row g-4">
+            <div class="col-md-6">
               {{ form.username|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.email|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.first_name|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.last_name|as_crispy_field }}
             </div>
-          </div>
-
-          <hr class="my-6 mx-n4">
-          <div class="row mb-6">
-            <div class="col-12">
-              <h6 class="fw-bold mb-4 text-primary"><i class="bx bx-shield-quarter me-2"></i>{% trans "Access & Roles" %}</h6>
-            </div>
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
               {{ form.role|as_crispy_field }}
             </div>
-            <div class="col-md-6 mb-4 d-flex align-items-center mt-4">
+            <div class="col-md-6 d-flex align-items-center pt-md-4">
                <div class="form-check form-switch mb-0">
                  {{ form.is_active|as_crispy_field }}
                </div>
             </div>
-            <div class="col-12 mb-4">
+            <div class="col-12">
               {{ form.groups|as_crispy_field }}
             </div>
-          </div>
-
-          {% if form.password %}
-          <hr class="my-6 mx-n4">
-          <div class="row mb-6">
-            <div class="col-12">
-              <h6 class="fw-bold mb-4 text-warning"><i class="bx bx-key me-2"></i>{% trans "Security" %}</h6>
-            </div>
-            <div class="col-md-6 mb-4">
+            {% if form.password %}
+            <div class="col-md-6">
               {{ form.password|as_crispy_field }}
             </div>
+            {% endif %}
           </div>
-          {% endif %}
 
           <div class="row mt-4">
             <div class="col-12 text-end">
